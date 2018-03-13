@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PUBGLibrary", "PUBGLibrary\PUBGLibrary.csproj", "{7E62CFBA-D890-4188-B73C-70BF3BD4DFE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryTest", "LibraryTest\LibraryTest.csproj", "{CE414834-E3E8-46BD-AFAC-93A9C8801A15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E62CFBA-D890-4188-B73C-70BF3BD4DFE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E62CFBA-D890-4188-B73C-70BF3BD4DFE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E62CFBA-D890-4188-B73C-70BF3BD4DFE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E62CFBA-D890-4188-B73C-70BF3BD4DFE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE414834-E3E8-46BD-AFAC-93A9C8801A15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE414834-E3E8-46BD-AFAC-93A9C8801A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE414834-E3E8-46BD-AFAC-93A9C8801A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE414834-E3E8-46BD-AFAC-93A9C8801A15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3F43DCFE-4AA6-4AA8-ACDD-27870CE9B027}
+	EndGlobalSection
+EndGlobal
