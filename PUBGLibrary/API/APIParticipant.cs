@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PUBGLibrary.API
+﻿namespace PUBGLibrary.API
 {
     /// <summary>
     /// Participant objects represent each player in the context of a match. Each participant will have a single player relationship which can be used to locate the player's aggregated liftime stats. Participant objects are only meaningful within the context of a match and are not exposed as a standalone resource.

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
 using System.IO;
 using System.Net;
 
@@ -11,6 +10,7 @@ namespace PUBGLibrary.API
     public class APIRequest
     {
         public APIMatch match = new APIMatch();
+        public WebException exception;
         public APIRequest()
         {
 
@@ -45,9 +45,10 @@ namespace PUBGLibrary.API
                  }
                  return null;
             }
-            catch (WebException)
+            catch (WebException e)
             {
-                throw;
+                exception = e;
+                return null;
             }
         }
     }
