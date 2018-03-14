@@ -1,15 +1,19 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
+using System.Net;
 
 namespace PUBGLibrary.API
 {
+    /// <summary>
+    /// Handles single and multi-match requests
+    /// </summary>
     public class APIRequest
     {
         public APIMatch match = new APIMatch();
         public APIRequest()
         {
-            
+
         }
         /// <summary>
         /// Requests a single match from the PUBG Developer API
@@ -20,25 +24,31 @@ namespace PUBGLibrary.API
         /// <returns>If null, the request failed</returns>
         public JObject RequestSingleMatch(string APIKey, string PlatformRegion, string MatchID)
         {
-            string WEBSERVICE_URL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/matches/" + MatchID;
-            var webRequest = System.Net.WebRequest.Create(WEBSERVICE_URL);
-            if (webRequest != null)
+            try
             {
-                webRequest.Method = "GET";
-                webRequest.Timeout = 20000;
-                webRequest.ContentType = "application/json";
-                webRequest.Headers.Add("Authorization", APIKey);
-                webRequest.Headers.Add("Accept", "application/json");
-                using (Stream s = webRequest.GetResponse().GetResponseStream())
-                {
-                    using (StreamReader sr = new StreamReader(s))
-                    {
-                        var jsonResponse = sr.ReadToEnd();
-                        return JObject.Parse(jsonResponse);
-                    }
-                }
+                 string WEBSERVICE_URL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/matches/" + MatchID;
+                 var webRequest = WebRequest.Create(WEBSERVICE_URL);
+                 if (webRequest != null)
+                 {
+                     webRequest.Method = "GET";
+                     webRequest.Timeout = 20000;
+                     webRequest.ContentType = "application/json";
+                     webRequest.Headers.Add("Authorization", APIKey);
+                     using (Stream s = webRequest.GetResponse().GetResponseStream())
+                     {
+                         using (StreamReader sr = new StreamReader(s))
+                         {
+                             var jsonResponse = sr.ReadToEnd();
+                             return JObject.Parse(jsonResponse);
+                         }
+                     }
+                 }
+                 return null;
             }
-            return null;
+            catch (WebException)
+            {
+                throw;
+            }
         }
     }
 }

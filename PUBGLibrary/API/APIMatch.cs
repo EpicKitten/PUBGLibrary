@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PUBGLibrary.API
 {
+    /// <summary>
+    /// Match records are created every time players complete a game session. Each match contains high level information about the game session, i.e.gameMode, etc.
+    /// </summary>
     public class APIMatch
     {
         /// <summary>

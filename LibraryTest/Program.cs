@@ -119,7 +119,7 @@ namespace LibraryTest
             Console.WriteLine("Status - ID = " + APIStatus.ID);
 
             APIRequest APIRequest = new APIRequest();
-            Console.WriteLine(APIRequest.RequestSingleMatch("", "pc-na", "66748dee-1b34-4ce8-beff-0501c07f9392"));
+            Console.WriteLine(APIRequest.RequestSingleMatch("winnerwinnerchickendinner", "pc-na", "66748dee-1b34-4ce8-beff-0501c07f9392"));
 
         }
     }
