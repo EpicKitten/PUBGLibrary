@@ -11,10 +11,6 @@ namespace PUBGLibrary.API
     {
         public APIMatch match = new APIMatch();
         public WebException exception;
-        public APIRequest()
-        {
-
-        }
         /// <summary>
         /// Requests a single match from the PUBG Developer API
         /// </summary>

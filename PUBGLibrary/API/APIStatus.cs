@@ -4,13 +4,34 @@ using System.IO;
 
 namespace PUBGLibrary.API
 {
+    /// <summary>
+    /// Gets the status of the API Service
+    /// </summary>
     public class APIStatus
     {
+        /// <summary>
+        /// Toggles depending on if the API is online
+        /// </summary>
         public bool bIsOnline;
+        /// <summary>
+        /// Holds web errors for direct viewing
+        /// </summary>
         public Exception error;
+        /// <summary>
+        /// 
+        /// </summary>
         public string type;
+        /// <summary>
+        /// The ID of the API (always pubg-api)
+        /// </summary>
         public string ID;
+        /// <summary>
+        /// The most recent release date of the API
+        /// </summary>
         public DateTime APIVersionRelease;
+        /// <summary>
+        /// The version of the API service
+        /// </summary>
         public string Version;
         /// <summary>
         /// Gets the status of the API

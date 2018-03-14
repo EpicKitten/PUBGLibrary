@@ -14,7 +14,7 @@
         /// </summary>
         public string Stats;
         /// <summary>
-        /// N/A
+        /// 
         /// </summary>
         public string Actor;
         /// <summary>

@@ -117,9 +117,12 @@ namespace LibraryTest
             Console.WriteLine("Status - IsOnline = " + APIStatus.bIsOnline);
             Console.WriteLine("Status - APIVerisonRelease = " + APIStatus.APIVersionRelease);
             Console.WriteLine("Status - ID = " + APIStatus.ID);
+            Console.WriteLine("Status - Error Message = " + APIStatus.error.Message);
 
             APIRequest APIRequest = new APIRequest();
             Console.WriteLine(APIRequest.RequestSingleMatch("winnerwinnerchickendinner", "pc-na", "66748dee-1b34-4ce8-beff-0501c07f9392"));
+
+            //API API = new API()
 
         }
     }

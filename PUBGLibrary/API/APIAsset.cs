@@ -18,7 +18,7 @@
         /// </summary>
        public string ShardID;
         /// <summary>
-        /// Telemetry
+        /// Telemetry Name
         /// </summary>
        public string Name;
         /// <summary>

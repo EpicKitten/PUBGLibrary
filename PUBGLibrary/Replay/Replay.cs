@@ -9,6 +9,9 @@ using System.Security.Cryptography;
 
 namespace PUBGLibrary.Replay
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Replay
     {
         /// <summary>

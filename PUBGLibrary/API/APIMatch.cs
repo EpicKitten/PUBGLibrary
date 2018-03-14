@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PUBGLibrary.API
 {
@@ -32,7 +29,7 @@ namespace PUBGLibrary.API
         /// </summary>
         public string stats;
         /// <summary>
-        /// N/A
+        /// The duration of the match
         /// </summary>
         public int Duration;
         /// <summary>
@@ -40,7 +37,7 @@ namespace PUBGLibrary.API
         /// </summary>
         public string GameMode;
         /// <summary>
-        /// N/A
+        /// 
         /// </summary>
         public string PatchVerison;
         /// <summary>
