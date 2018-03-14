@@ -3,8 +3,15 @@ A .NET Core PUBG API and Replay library
 
 ## Replay
 The replay class can be created by adding the path to the directory of the replay as a paramter to the class.
-![](https://i.imgur.com/XPo7hJR.jpg)
+```csharp
+Replay replay = new Replay(@"C:\Users\Master\AppData\Local\TslGame\Saved\Demos\old\match.bro.custom.1cePrime.na.normal.2018.02.02.feef46c6-0c69-49ea-a0fe-3853d41aacb1__USER__3f2737e1fcd7d5e0444298f528c41675");
+```
 
 ## API
 The API class can be created by adding the path to the directory of the replay as a paramter to the class, adding the Replay class as a parameter, or giving a direct Match ID to look up with a API key
-![](https://i.imgur.com/OPa8x6t.jpg)
+```csharp
+            Replay replay = new Replay(@"C:\Users\Master\AppData\Local\TslGame\Saved\Demos\old\match.bro.custom.1cePrime.na.normal.2018.02.02.feef46c6-0c69-49ea-a0fe-3853d41aacb1__USER__3f2737e1fcd7d5e0444298f528c41675");
+            API ReplayAPI = new API(replay, "<API KEY>");
+            API DirectoryAPI = new API(@"C:\Users\Master\AppData\Local\TslGame\Saved\Demos\old\match.bro.custom.1cePrime.na.normal.2018.02.02.feef46c6-0c69-49ea-a0fe-3853d41aacb1__USER__3f2737e1fcd7d5e0444298f528c41675", "<API-Key>");
+            API MatchIDAPI = new API("66748dee-1b34-4ce8-beff-0501c07f9392", Platform.PC, PUBGLibrary.Region.NorthAmerica, "<API-Key>");
+```
