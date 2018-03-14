@@ -16,7 +16,7 @@ namespace PUBGLibrary.Utils
         /// The default replay directory for PUBG
         /// </summary>
         public static string default_replay_dir = Environment.GetEnvironmentVariable("localappdata") + "\\TslGame\\Saved\\Demos";
-        public string default_map_dir = GetPUBGInstallLocation();
+        
         /// <summary>
         /// Reads and serializes the file in file_path with the option of shifting all bytes by the encoded_offset
         /// </summary>
@@ -43,33 +43,7 @@ namespace PUBGLibrary.Utils
                 return Encoding.UTF8.GetString(unencodedbytes, 0, stringBytesLength); // take all the bytes, put the array into UTF8 encoding and return it
             }
         }
-        /// <summary>
-        /// Attempts to get the PUBG Install Location from the Registry
-        /// </summary>
-        /// <returns>If null is returned, it was unable to locate the install location</returns>
-        public static string GetPUBGInstallLocation()
-        {
-            try
-            {
-                using (RegistryKey regkey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Steam App 578080"))
-                {
-                    if (regkey != null)
-                    {
-                        string pubgregloc = (string)regkey.GetValue("InstallLocation");
-                        if (pubgregloc != null && pubgregloc.Contains("PUBG"))
-                        {
-                            return pubgregloc;
-                        }
-                        return null;
-                    }
-                    return null;
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
+       
         /// <summary>
         /// Gets the size of a Directory
         /// </summary>
