@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Runtime.Serialization;
+using PUBGLibrary.API;
 
-namespace PUBGLibrary
+namespace PUBGLibrary.Replay
 {
     /// <summary>
     /// A list of weather types (Missing - fog/rain)
@@ -24,10 +25,10 @@ namespace PUBGLibrary
         Unknown,
         NorthAmerica, //na - North America
         Europe, //eu - Europe
-        KoreaJapan, //krjp - Korea/Japan
+        KoreaJapan, //krjp - 
         Asia, //as - Asia
-        Oceania, // oc - Oceania
-        SouthAmerica, //sa - South and Central Amercia
+        Oceania, // oc - 
+        SouthAmerica, //sa - 
         SouthAsia, //sea - South East Asia
         Kakao,  //Unknown but listed here Mar. 12 2018 5:12PM PST (https://web.archive.org/web/20180313000618/https://developer.playbattlegrounds.com/docs/en/making-requests.html
     }
@@ -64,41 +65,37 @@ namespace PUBGLibrary
                 switch (value)
                 {
                     case "sea":
-                        KnownRegion = Region.SouthAsia;
+                        KnownRegion = PlatformRegionShard.PC_SEA;
                         District = value;
                         break;
                     case "sa":
-                        KnownRegion = Region.SouthAmerica;
+                        KnownRegion = PlatformRegionShard.PC_SA;
                         District = value;
                         break;
                     case "na":
-                        KnownRegion = Region.NorthAmerica;
+                        KnownRegion = PlatformRegionShard.PC_NA;
                         District = value;
                         break;
                     case "oc":
-                        KnownRegion = Region.Oceania;
+                        KnownRegion = PlatformRegionShard.PC_OC;
                         District = value;
                         break;
                     case "as":
-                        KnownRegion = Region.Asia;
+                        KnownRegion = PlatformRegionShard.PC_AS;
                         District = value;
                         break;
                     case "krjp":
-                        KnownRegion = Region.KoreaJapan;
+                        KnownRegion = PlatformRegionShard.PC_KRJP;
                         District = value;
                         break;
                     case "eu":
-                        KnownRegion = Region.Europe;
-                        District = value;
-                        break;
-                    default:
-                        KnownRegion = Region.Unknown;
+                        KnownRegion = PlatformRegionShard.PC_EU;
                         District = value;
                         break;
                 }
             }
         }
-        public Region KnownRegion = Region.Unknown;
+        public PlatformRegionShard KnownRegion = PlatformRegionShard.Unknown;
         public string District;
 
         [JsonProperty("weatherName")]
@@ -136,6 +133,9 @@ namespace PUBGLibrary
             }
         }
         public Weather KnownWeather = Weather.Unknown;
+        /// <summary>
+        /// The direct weather string from the ReplaySummary file
+        /// </summary>
         public string Climate;
 
         [JsonProperty("playerStateSummaries")]

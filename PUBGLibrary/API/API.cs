@@ -1,4 +1,9 @@
-﻿namespace PUBGLibrary.API
+﻿using Newtonsoft.Json;
+using System;
+using System.ComponentModel;
+using System.Reflection;
+
+namespace PUBGLibrary.API
 {
     /// <summary>
     /// The base class for the PUBG API
@@ -9,10 +14,6 @@
         /// The API key used during requests
         /// </summary>
         private string APIKey;
-        /// <summary>
-        /// The Platform-Region shard used during requests
-        /// </summary>
-        public string PlatformRegion;
         public APIRequest APIRequest;
         /// <summary>
         /// The base class for the PUBG API
@@ -21,10 +22,9 @@
         /// <param name="platform">The platform the replay was made on</param>
         /// <param name="KnownRegion">The region the replay was made in</param>
         /// <param name="APIKey">The API key to use</param>
-        public API(string MatchID, Platform platform, Region KnownRegion, string APIKey)
+        public API(string MatchID, PlatformRegionShard platformRegionShard, string APIKey)
         {
-            SetPlatformRegion(KnownRegion, platform);
-            APIRequest.RequestSingleMatch(APIKey, PlatformRegion, MatchID);
+            APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(platformRegionShard), MatchID);
         }
         /// <summary>
         /// The base class for the PUBG API
@@ -34,8 +34,7 @@
         public API(string ReplayDirectoryPath, string APIKey)
         {
             Replay.Replay replay = new Replay.Replay(ReplayDirectoryPath);
-            SetPlatformRegion(replay.Summary.KnownRegion);
-            APIRequest.RequestSingleMatch(APIKey, PlatformRegion, replay.Info.MatchID);
+            APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(replay.Summary.KnownRegion), replay.Info.MatchID);
         }
         /// <summary>
         /// The base class for the PUBG API
@@ -44,74 +43,102 @@
         /// <param name="APIKey">The API key to use</param>
         public API(Replay.Replay replay, string APIKey)
         {
-            SetPlatformRegion(replay.Summary.KnownRegion);
-            APIRequest.RequestSingleMatch(APIKey, PlatformRegion, replay.Info.MatchID);
-            
+            APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(replay.Summary.KnownRegion), replay.Info.MatchID);   
         }
-        /// <summary>
-        /// Sets the Platform-Region
-        /// </summary>
-        /// <param name="region">The region the API should query about</param>
-        /// <param name="platform">The platform the API should query about</param>
-        public void SetPlatformRegion(Region region, Platform platform = Platform.PC)
+        public static string GetEnumDescription(Enum value)
         {
-            switch (platform)
+            FieldInfo fi = value.GetType().GetField(value.ToString());
+
+            DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+            if (attributes != null && attributes.Length > 0)
             {
-                case Platform.PC:
-                    switch (region)
-                    {
-                        case Region.NorthAmerica:
-                            PlatformRegion = "pc-na";
-                            break;
-                        case Region.Europe:
-                            PlatformRegion = "pc-eu";
-                            break;
-                        case Region.KoreaJapan:
-                            PlatformRegion = "pc-krjp";
-                            break;
-                        case Region.Asia:
-                            PlatformRegion = "pc-as";
-                            break;
-                        case Region.Oceania:
-                            PlatformRegion = "pc-oc";
-                            break;
-                        case Region.SouthAmerica:
-                            PlatformRegion = "pc-sa";
-                            break;
-                        case Region.SouthAsia:
-                            PlatformRegion = "pc-sea";
-                            break;
-                        case Region.Kakao:
-                            PlatformRegion = "pc-kakao";
-                            break;
-                    }
-                    break;
-                case Platform.Xbox:
-                    switch (region)
-                    {
-                        case Region.NorthAmerica:
-                            PlatformRegion = "xbox-na";
-                            break;
-                        case Region.Europe:
-                            PlatformRegion = "xbox-eu";
-                            break;
-                        case Region.Asia:
-                            PlatformRegion = "xbox-as";
-                            break;
-                        case Region.Oceania:
-                            PlatformRegion = "xbox-oc";
-                            break;
-                    }
-                    break;
+                return attributes[0].Description;
+            }
+            else
+            {
+                return value.ToString();
             }
         }
+
     }
     /// <summary>
-    /// The platforms replays are recorded on
+    /// The Platform and Region varibles
     /// </summary>
-    public enum Platform
+    public enum PlatformRegionShard
     {
-        PC,
-        Xbox,
+        Unknown,
+        /// <summary>
+        /// PC North America
+        /// </summary>
+        [JsonProperty("pc-na")]
+        [Description("pc-na")]
+        PC_NA,
+        /// <summary>
+        /// PC Europe
+        /// </summary>
+        [JsonProperty("pc-eu")]
+        [Description("pc-eu")]
+        PC_EU,
+        /// <summary>
+        /// PC Korea/Japan
+        /// </summary>
+        [JsonProperty("pc-krjp")]
+        [Description("pc-krjp")]
+        PC_KRJP,
+        /// <summary>
+        /// PC Asia
+        /// </summary>
+        [JsonProperty("pc-as")]
+        [Description("pc-as")]
+        PC_AS,
+        /// <summary>
+        /// PC Oceania
+        /// </summary>
+        [JsonProperty("pc-oc")]
+        [Description("pc-oc")]
+        PC_OC,
+        /// <summary>
+        /// PC South and Central Amercia
+        /// </summary>
+        [JsonProperty("pc-sa")]
+        [Description("pc-sa")]
+        PC_SA,
+        /// <summary>
+        /// PC South East Asia
+        /// </summary>
+        [JsonProperty("pc-sea")]
+        [Description("pc-sea")]
+        PC_SEA,
+        /// <summary>
+        /// Alternative platform to Steam (https://www.kakaogames.com/)
+        /// </summary>
+        [JsonProperty("pc-kakao")]
+        [Description("pc-kakao")] 
+        PC_KAKAO,
+        /// <summary>
+        /// Xbox North America
+        /// </summary>
+        [JsonProperty("xbox-na")]
+        [Description("xbox-na")]
+        Xbox_NA,
+        /// <summary>
+        /// Xbox Europe
+        /// </summary>
+        [JsonProperty("xbox-eu")]
+        [Description("xbox-eu")]
+        Xbox_EU,
+        /// <summary>
+        /// Xbox Asia
+        /// </summary>
+        [JsonProperty("xbox-as")]
+        [Description("xbox-as")]
+        Xbox_AS,
+        /// <summary>
+        /// Xbox Oceania
+        /// </summary>
+        [JsonProperty("xbox-as")]
+        [Description("xbox-oc")]
+        Xbox_OC
     }
 }

@@ -1,8 +1,8 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using PUBGLibrary.API;
 using PUBGLibrary.Replay;
-using PUBGLibrary.API;
 using PUBGLibrary.Utils;
+using System;
+using System.IO;
 
 namespace LibraryTest
 {
@@ -10,13 +10,54 @@ namespace LibraryTest
     {
         static void Main(string[] args)
         {
-            APIMethod();
+            Console.WriteLine("Started!");
+            //APIMethod();
+            APIRequest request = new APIRequest();
+            request.Phraser(File.ReadAllText(@"E:\Downloads\exampleMatch.tar\exampleMatch\match.json"));
+            foreach (APIPlayer player in request.match.PlayerList)
+            {
+                Console.WriteLine("---------------------------------------------------");
+                Console.WriteLine("Player Name: " + player.Name);
+                Console.WriteLine("DBNOs: " + player.DbnOs);
+                Console.WriteLine("Assits: " + player.Assists);
+                Console.WriteLine("Boosts: " + player.Boosts);
+                Console.WriteLine("Damage Dealt: " + player.DamageDealt);
+                Console.WriteLine("Death Type: " + player.DeathType);
+                Console.WriteLine("HeadshotKills: " + player.HeadshotKills);
+                Console.WriteLine("Heals: " + player.Heals);
+                Console.WriteLine("Kill Place: " + player.KillPlace);
+                Console.WriteLine("Kill Streaks: " + player.KillStreaks);
+                Console.WriteLine("Kills: " + player.Kills);
+                Console.WriteLine("Longest Kill: " + player.LongestKill);
+                Console.WriteLine("PlayerID: " + player.PlayerId);
+                Console.WriteLine("Revives: " + player.Revives);
+                Console.WriteLine("Ride Distance: " + player.RideDistance);
+                Console.WriteLine("Road Kills: " + player.RoadKills);
+                Console.WriteLine("Team Kills: " + player.TeamKills);
+                Console.WriteLine("Time Survived: " + player.TimeSurvived);
+                Console.WriteLine("Walk Distance: " + player.WalkDistance);
+                Console.WriteLine("Weapons Acquired: " + player.WeaponsAcquired);
+                Console.WriteLine("Win Place: " + player.WinPlace);
+                Console.WriteLine("---------------------------------------------------");
+            }
+            foreach (APITeam team in request.match.TeamList)
+            {
+                Console.WriteLine("---------------------------------------------------");
+                Console.WriteLine("Rank: " + team.rank);
+                Console.WriteLine("TeamID: " + team.TeamID);
+                foreach (string id in team.TeammateIDList)
+                {
+                    Console.WriteLine("Teammate ID: " + id);
+                }
+                Console.WriteLine("Team size: " + team.TeamSize);
+                Console.WriteLine("---------------------------------------------------");
+            }
+            Console.WriteLine("Player Count: " + (request.match.PlayerList.Count + 1));
             Console.ReadLine();
         }
         static void ReplayMethod()
         {
-            string replay_path = @"C:\Users\Master\AppData\Local\TslGame\Saved\Demos\old\match.bro.custom.1cePrime.na.normal.2018.02.02.feef46c6-0c69-49ea-a0fe-3853d41aacb1__USER__3f2737e1fcd7d5e0444298f528c41675";
-            Replay replay = new Replay(replay_path);
+            Replay replay = new Replay(@"C:\Users\Master\AppData\Local\TslGame\Saved\Demos\old\match.bro.custom.1cePrime.na.normal.2018.02.02.feef46c6-0c69-49ea-a0fe-3853d41aacb1__USER__3f2737e1fcd7d5e0444298f528c41675");
             Console.WriteLine("CustomName = " + replay.CustomName);
             Console.WriteLine("Path = " + replay.Path);
             Console.WriteLine("Info - AllDeadOrWin = " + replay.Info.AllDeadOrWin);
@@ -108,22 +149,25 @@ namespace LibraryTest
                 Console.WriteLine(singlereplay.Info.FriendlyName);
             }
             Console.WriteLine("---- End Replays ----");
-
+            
 
         }
         static void APIMethod()
         {
+
             APIStatus APIStatus = new APIStatus();
             Console.WriteLine("Status - IsOnline = " + APIStatus.bIsOnline);
             Console.WriteLine("Status - APIVerisonRelease = " + APIStatus.APIVersionRelease);
             Console.WriteLine("Status - ID = " + APIStatus.ID);
-            Console.WriteLine("Status - Error Message = " + APIStatus.error.Message);
+            //Console.WriteLine("Status - Error Message = " + APIStatus.error.Message);
 
             APIRequest APIRequest = new APIRequest();
-            Console.WriteLine(APIRequest.RequestSingleMatch("winnerwinnerchickendinner", "pc-na", "66748dee-1b34-4ce8-beff-0501c07f9392"));
+            APIRequest.RequestSingleMatch("winnerwinnerchickendinner", "pc-na", "66748dee-1b34-4ce8-beff-0501c07f9392");
+            Console.WriteLine(APIRequest.exception.Message);
+            Console.WriteLine(APIRequest.ContentType);
 
             //API API = new API()
-
+            
         }
     }
 }

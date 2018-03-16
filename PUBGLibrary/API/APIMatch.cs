@@ -3,55 +3,26 @@ using System.Collections.Generic;
 
 namespace PUBGLibrary.API
 {
-    /// <summary>
-    /// Match records are created every time players complete a game session. Each match contains high level information about the game session, i.e.gameMode, etc.
-    /// </summary>
     public class APIMatch
     {
-        /// <summary>
-        /// Match ID
-        /// </summary>
-        public string ID;
         /// <summary>
         /// Time of match completion
         /// </summary>
         public DateTime CreatedAt;
         /// <summary>
-        /// 
+        /// List of players with stats included
         /// </summary>
-        public List<APIRoster> Rosters;
+        public List<APIPlayer> PlayerList = new List<APIPlayer>();
         /// <summary>
-        /// 
-        /// </summary>
-        public List<APIAsset> assets;
-        /// <summary>
-        /// 
-        /// </summary>
-        public string stats;
-        /// <summary>
-        /// The duration of the match
+        /// Length of match in seconds
         /// </summary>
         public int Duration;
         /// <summary>
-        /// Game mode played
+        /// The gamemode played
         /// </summary>
-        public string GameMode;
-        /// <summary>
-        /// 
-        /// </summary>
-        public string PatchVerison;
-        /// <summary>
-        /// Identifies the studio and game
-        /// </summary>
-        public string TitleID;
-        /// <summary>
-        /// Platform-region shard
-        /// </summary>
-        public string ShardID;
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Tags;
-
+        /// <remarks>Might be the same as the Gamemode enum</remarks>
+        public string Gamemode;
+        public PlatformRegionShard PRS_ID;
+        public List<APITeam> TeamList = new List<APITeam>();
     }
 }

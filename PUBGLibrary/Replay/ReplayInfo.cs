@@ -60,7 +60,9 @@ namespace PUBGLibrary
         Official,
         Custom,
     }
-
+    /// <summary>
+    /// Information from the PUBG .replayinfo file
+    /// </summary>
     public class ReplayInfo
     {
         /// <summary>
@@ -83,6 +85,7 @@ namespace PUBGLibrary
         /// <remarks>
         /// Has never changed since Dec. 25 2017
         /// Update Mar. 7 2018 - Still 0
+        /// </remarks>
         public int Changelist; 
 
 
