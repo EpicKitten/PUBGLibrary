@@ -22,32 +22,36 @@ namespace PUBGLibrary.API
         /// <returns>If null, the request failed</returns>
         public void RequestSingleMatch(string APIKey, string PlatformRegion, string MatchID)
         {
-            try
+            APIStatus status = new APIStatus();
+            if (status.bIsOnline)
             {
-                 string WEBSERVICE_URL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/matches/" + MatchID;
-                 var webRequest = WebRequest.Create(WEBSERVICE_URL);
-                 if (webRequest != null)
-                 {
-                    webRequest.Method = "GET";
-                    webRequest.Timeout = 20000;
-                    webRequest.ContentType = ContentType;
-                    webRequest.Headers.Add("Authorization", APIKey);
-                    webRequest.Headers.Add("Access-Control-Allow-Origins", "*");
-                    webRequest.Headers.Add("Access-Control-Expose-Headers", "Content-Length");
-                    using (Stream s = webRequest.GetResponse().GetResponseStream())
-                     {
-                         using (StreamReader sr = new StreamReader(s))
-                         {
-                            Phraser(sr.ReadToEnd());
-                         }
-                     }
-                 }
-                 return;
-            }
-            catch (WebException e)
-            {
-                exception = e;
-                return;
+                try
+                {
+                    string WEBSERVICE_URL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/matches/" + MatchID;
+                    var webRequest = WebRequest.Create(WEBSERVICE_URL);
+                    if (webRequest != null)
+                    {
+                        webRequest.Method = "GET";
+                        webRequest.Timeout = 20000;
+                        webRequest.ContentType = ContentType;
+                        webRequest.Headers.Add("Authorization", APIKey);
+                        webRequest.Headers.Add("Access-Control-Allow-Origins", "*");
+                        webRequest.Headers.Add("Access-Control-Expose-Headers", "Content-Length");
+                        using (Stream s = webRequest.GetResponse().GetResponseStream())
+                        {
+                            using (StreamReader sr = new StreamReader(s))
+                            {
+                                Phraser(sr.ReadToEnd());
+                            }
+                        }
+                    }
+                    return;
+                }
+                catch (WebException e)
+                {
+                    exception = e;
+                    return;
+                }
             }
         }
         public void Phraser(string JSONstring)

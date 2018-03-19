@@ -11,48 +11,7 @@ namespace LibraryTest
         static void Main(string[] args)
         {
             Console.WriteLine("Started!");
-            //APIMethod();
-            APIRequest request = new APIRequest();
-            request.Phraser(File.ReadAllText(@"E:\Downloads\exampleMatch.tar\exampleMatch\match.json"));
-            foreach (APIPlayer player in request.match.PlayerList)
-            {
-                Console.WriteLine("---------------------------------------------------");
-                Console.WriteLine("Player Name: " + player.Name);
-                Console.WriteLine("DBNOs: " + player.DbnOs);
-                Console.WriteLine("Assits: " + player.Assists);
-                Console.WriteLine("Boosts: " + player.Boosts);
-                Console.WriteLine("Damage Dealt: " + player.DamageDealt);
-                Console.WriteLine("Death Type: " + player.DeathType);
-                Console.WriteLine("HeadshotKills: " + player.HeadshotKills);
-                Console.WriteLine("Heals: " + player.Heals);
-                Console.WriteLine("Kill Place: " + player.KillPlace);
-                Console.WriteLine("Kill Streaks: " + player.KillStreaks);
-                Console.WriteLine("Kills: " + player.Kills);
-                Console.WriteLine("Longest Kill: " + player.LongestKill);
-                Console.WriteLine("PlayerID: " + player.PlayerId);
-                Console.WriteLine("Revives: " + player.Revives);
-                Console.WriteLine("Ride Distance: " + player.RideDistance);
-                Console.WriteLine("Road Kills: " + player.RoadKills);
-                Console.WriteLine("Team Kills: " + player.TeamKills);
-                Console.WriteLine("Time Survived: " + player.TimeSurvived);
-                Console.WriteLine("Walk Distance: " + player.WalkDistance);
-                Console.WriteLine("Weapons Acquired: " + player.WeaponsAcquired);
-                Console.WriteLine("Win Place: " + player.WinPlace);
-                Console.WriteLine("---------------------------------------------------");
-            }
-            foreach (APITeam team in request.match.TeamList)
-            {
-                Console.WriteLine("---------------------------------------------------");
-                Console.WriteLine("Rank: " + team.rank);
-                Console.WriteLine("TeamID: " + team.TeamID);
-                foreach (string id in team.TeammateIDList)
-                {
-                    Console.WriteLine("Teammate ID: " + id);
-                }
-                Console.WriteLine("Team size: " + team.TeamSize);
-                Console.WriteLine("---------------------------------------------------");
-            }
-            Console.WriteLine("Player Count: " + (request.match.PlayerList.Count + 1));
+            
             Console.ReadLine();
         }
         static void ReplayMethod()
@@ -168,6 +127,52 @@ namespace LibraryTest
 
             //API API = new API()
             
+        }
+        static void Mid()
+        {
+            Replay replay = new Replay(@"C:\Users\Master\AppData\Local\TslGame\Saved\old\match.bro.custom.1cePrime.na.normal.2018.02.02.feef46c6-0c69-49ea-a0fe-3853d41aacb1__USER__3f2737e1fcd7d5e0444298f528c41675");
+            //APIMethod();
+            APIRequest request = new APIRequest();
+            request.Phraser(File.ReadAllText(@"E:\Downloads\exampleMatch.tar\exampleMatch\match.json"));
+            foreach (APIPlayer player in request.match.PlayerList)
+            {
+                Console.WriteLine("---------------------------------------------------");
+                Console.WriteLine("Player Name: " + player.Name);
+                Console.WriteLine("DBNOs: " + player.DbnOs);
+                Console.WriteLine("Assits: " + player.Assists);
+                Console.WriteLine("Boosts: " + player.Boosts);
+                Console.WriteLine("Damage Dealt: " + player.DamageDealt);
+                Console.WriteLine("Death Type: " + player.DeathType);
+                Console.WriteLine("HeadshotKills: " + player.HeadshotKills);
+                Console.WriteLine("Heals: " + player.Heals);
+                Console.WriteLine("Kill Place: " + player.KillPlace);
+                Console.WriteLine("Kill Streaks: " + player.KillStreaks);
+                Console.WriteLine("Kills: " + player.Kills);
+                Console.WriteLine("Longest Kill: " + player.LongestKill);
+                Console.WriteLine("PlayerID: " + player.PlayerId);
+                Console.WriteLine("Revives: " + player.Revives);
+                Console.WriteLine("Ride Distance: " + player.RideDistance);
+                Console.WriteLine("Road Kills: " + player.RoadKills);
+                Console.WriteLine("Team Kills: " + player.TeamKills);
+                Console.WriteLine("Time Survived: " + player.TimeSurvived);
+                Console.WriteLine("Walk Distance: " + player.WalkDistance);
+                Console.WriteLine("Weapons Acquired: " + player.WeaponsAcquired);
+                Console.WriteLine("Win Place: " + player.WinPlace);
+                Console.WriteLine("---------------------------------------------------");
+            }
+            foreach (APITeam team in request.match.TeamList)
+            {
+                Console.WriteLine("---------------------------------------------------");
+                Console.WriteLine("Rank: " + team.rank);
+                Console.WriteLine("TeamID: " + team.TeamID);
+                foreach (string id in team.TeammateIDList)
+                {
+                    Console.WriteLine("Teammate ID: " + id);
+                }
+                Console.WriteLine("Team size: " + team.TeamSize);
+                Console.WriteLine("---------------------------------------------------");
+            }
+            Console.WriteLine("Player Count: " + (request.match.PlayerList.Count + 1));
         }
     }
 }

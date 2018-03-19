@@ -13,7 +13,6 @@ namespace PUBGLibrary.API
         /// <summary>
         /// The API key used during requests
         /// </summary>
-        private string APIKey;
         public APIRequest APIRequest;
         /// <summary>
         /// The base class for the PUBG API

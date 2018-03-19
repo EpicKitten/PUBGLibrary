@@ -22,18 +22,18 @@ namespace PUBGLibrary.Utils
         /// <returns>A serialized string of the file</returns>
         public static string UE4StringSerializer(string file_path, int encoded_offset = 0)
         {
-            using (FileStream fs = new FileStream(file_path, FileMode.Open, FileAccess.Read))
+            using (FileStream fs = new FileStream(file_path, FileMode.Open, FileAccess.Read)) //Request access to read the file
             {
-                byte[] length_bytes = new byte[4];
-                fs.Read(length_bytes, 0, length_bytes.Length);
-                uint bytestoread = BitConverter.ToUInt32(length_bytes, 0);
-                byte[] unencodedbytes = new byte[bytestoread];
-                for (int i = 0; i < bytestoread; i++)
+                byte[] length_bytes = new byte[4];//Create a byte varible with the space for 4 bytes
+                fs.Read(length_bytes, 0, length_bytes.Length);//read the first 4 bytes of the file
+                uint bytestoread = BitConverter.ToUInt32(length_bytes, 0);//Change the bytes into a UInt32, telling us the length of the file
+                byte[] unencodedbytes = new byte[bytestoread];//Create a byte array with the size of the file we got in the 3 lines above for the decoded bytes
+                for (int i = 0; i < bytestoread; i++)//For the length of the file...
                 {
-                    int encodedbyte = fs.ReadByte();
-                    if (encodedbyte > 0) 
+                    int encodedbyte = fs.ReadByte();//...read the byte
+                    if (encodedbyte > 0) //if it's bigger than 0 than...
                     {
-                        unencodedbytes[i] = (byte)(encodedbyte + encoded_offset);
+                        unencodedbytes[i] = (byte)(encodedbyte + encoded_offset); //...Add the offset (usually 1 for UE4 files) to the byte, cast it back into a byte and put it into the decoded array
                     }
                 }
                 int stringBytesLength = unencodedbytes[unencodedbytes.Length - 1] == 0 ? unencodedbytes.Length - 1 : unencodedbytes.Length; // Skip last byte if its zero
