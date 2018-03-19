@@ -2,6 +2,8 @@
 using System.IO;
 using System.Net;
 using System.Collections.Generic;
+using System.Text;
+
 namespace PUBGLibrary.API
 {
     /// <summary>
@@ -11,8 +13,7 @@ namespace PUBGLibrary.API
     {
         public APIMatch match;
         public WebException exception;
-        
-        public readonly string ContentType = "application/json";
+        public string JSONString;
         /// <summary>
         /// Requests a single match from the PUBG Developer API
         /// </summary>
@@ -27,25 +28,23 @@ namespace PUBGLibrary.API
             {
                 try
                 {
-                    string WEBSERVICE_URL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/matches/" + MatchID;
-                    var webRequest = WebRequest.Create(WEBSERVICE_URL);
-                    if (webRequest != null)
+                    string APIURL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/matches/" + MatchID;
+                    var webRequest = WebRequest.Create(APIURL);
+                    var APIRequest = (HttpWebRequest)webRequest;
+                    APIRequest.PreAuthenticate = true;
+                    APIRequest.Headers.Add("Authorization", "Bearer "+APIKey);
+                    APIRequest.Headers.Add("Access-Control-Allow-Origins", "*");
+                    APIRequest.Headers.Add("Access-Control-Expose-Headers", "Content-Length");
+                    APIRequest.Accept = "application/json";
+                    using (var APIResponse = APIRequest.GetResponse())
                     {
-                        webRequest.Method = "GET";
-                        webRequest.Timeout = 20000;
-                        webRequest.ContentType = ContentType;
-                        webRequest.Headers.Add("Authorization", APIKey);
-                        webRequest.Headers.Add("Access-Control-Allow-Origins", "*");
-                        webRequest.Headers.Add("Access-Control-Expose-Headers", "Content-Length");
-                        using (Stream s = webRequest.GetResponse().GetResponseStream())
+                        using (var responseStream = APIResponse.GetResponseStream())
                         {
-                            using (StreamReader sr = new StreamReader(s))
-                            {
-                                Phraser(sr.ReadToEnd());
-                            }
+                            var myStreamReader = new StreamReader(responseStream, Encoding.Default);
+                            JSONString = myStreamReader.ReadToEnd();
+                            //Phraser(JSONString);
                         }
                     }
-                    return;
                 }
                 catch (WebException e)
                 {

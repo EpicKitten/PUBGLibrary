@@ -3,6 +3,8 @@ using PUBGLibrary.Replay;
 using PUBGLibrary.Utils;
 using System;
 using System.IO;
+using System.Net;
+using System.Text;
 
 namespace LibraryTest
 {
@@ -11,7 +13,7 @@ namespace LibraryTest
         static void Main(string[] args)
         {
             Console.WriteLine("Started!");
-            
+            APIMethod();
             Console.ReadLine();
         }
         static void ReplayMethod()
@@ -118,15 +120,14 @@ namespace LibraryTest
             Console.WriteLine("Status - IsOnline = " + APIStatus.bIsOnline);
             Console.WriteLine("Status - APIVerisonRelease = " + APIStatus.APIVersionRelease);
             Console.WriteLine("Status - ID = " + APIStatus.ID);
-            //Console.WriteLine("Status - Error Message = " + APIStatus.error.Message);
-
-            APIRequest APIRequest = new APIRequest();
-            APIRequest.RequestSingleMatch("winnerwinnerchickendinner", "pc-na", "66748dee-1b34-4ce8-beff-0501c07f9392");
-            Console.WriteLine(APIRequest.exception.Message);
-            Console.WriteLine(APIRequest.ContentType);
-
-            //API API = new API()
             
+            APIRequest APIRequest = new APIRequest();
+            APIRequest.RequestSingleMatch("this-is-where-my-api-key-will-go", "pc-na", "66748dee-1b34-4ce8-beff-0501c07f9392");
+            if (APIRequest.exception != null)
+            {
+                Console.WriteLine(APIRequest.exception.Message);
+            }
+            Console.WriteLine(APIRequest.JSONString);
         }
         static void Mid()
         {
