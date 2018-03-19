@@ -32,7 +32,7 @@ namespace PUBGLibrary.API
                     var webRequest = WebRequest.Create(APIURL);
                     var APIRequest = (HttpWebRequest)webRequest;
                     APIRequest.PreAuthenticate = true;
-                    APIRequest.Headers.Add("Authorization", "Bearer "+APIKey);
+                    APIRequest.Headers.Add("Authorization", "Bearer " + APIKey);
                     APIRequest.Headers.Add("Access-Control-Allow-Origins", "*");
                     APIRequest.Headers.Add("Access-Control-Expose-Headers", "Content-Length");
                     APIRequest.Accept = "application/json";
@@ -42,7 +42,7 @@ namespace PUBGLibrary.API
                         {
                             var myStreamReader = new StreamReader(responseStream, Encoding.Default);
                             JSONString = myStreamReader.ReadToEnd();
-                            //Phraser(JSONString);
+                            Phraser(JSONString);
                         }
                     }
                 }

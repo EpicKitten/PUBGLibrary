@@ -13,36 +13,15 @@ namespace PUBGLibrary.API
         /// <summary>
         /// The API key used during requests
         /// </summary>
-        public APIRequest APIRequest;
+        private string APIKey;
+        public APIRequest APIRequest = new APIRequest();
         /// <summary>
         /// The base class for the PUBG API
         /// </summary>
-        /// <param name="MatchID">The match ID to look up</param>
-        /// <param name="platform">The platform the replay was made on</param>
-        /// <param name="KnownRegion">The region the replay was made in</param>
-        /// <param name="APIKey">The API key to use</param>
-        public API(string MatchID, PlatformRegionShard platformRegionShard, string APIKey)
+        /// <param name="APIKey">The API key to use during requests</param>
+        public API(string API_Key)
         {
-            APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(platformRegionShard), MatchID);
-        }
-        /// <summary>
-        /// The base class for the PUBG API
-        /// </summary>
-        /// <param name="ReplayDirectoryPath">The directory path to the replay folder</param>
-        /// <param name="APIKey">The API key to use</param>
-        public API(string ReplayDirectoryPath, string APIKey)
-        {
-            Replay.Replay replay = new Replay.Replay(ReplayDirectoryPath);
-            APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(replay.Summary.KnownRegion), replay.Info.MatchID);
-        }
-        /// <summary>
-        /// The base class for the PUBG API
-        /// </summary>
-        /// <param name="replay">The replay class for a PUBG replay</param>
-        /// <param name="APIKey">The API key to use</param>
-        public API(Replay.Replay replay, string APIKey)
-        {
-            APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(replay.Summary.KnownRegion), replay.Info.MatchID);   
+            APIKey = API_Key;
         }
         public static string GetEnumDescription(Enum value)
         {
@@ -59,7 +38,19 @@ namespace PUBGLibrary.API
                 return value.ToString();
             }
         }
-
+        public void RequestMatch(string MatchID, PlatformRegionShard platformRegionShard)
+        {
+            APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(platformRegionShard), MatchID);
+        }
+        public void RequestMatch(string ReplayDirectoryPath)
+        {
+            Replay.Replay replay = new Replay.Replay(ReplayDirectoryPath);
+            APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(replay.Summary.KnownRegion), replay.Info.MatchID);
+        }
+        public void RequestMatch(Replay.Replay replay)
+        {
+            APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(replay.Summary.KnownRegion), replay.Info.MatchID);
+        }
     }
     /// <summary>
     /// The Platform and Region varibles

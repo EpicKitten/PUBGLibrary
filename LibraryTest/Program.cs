@@ -3,8 +3,6 @@ using PUBGLibrary.Replay;
 using PUBGLibrary.Utils;
 using System;
 using System.IO;
-using System.Net;
-using System.Text;
 
 namespace LibraryTest
 {
@@ -118,62 +116,58 @@ namespace LibraryTest
 
             APIStatus APIStatus = new APIStatus();
             Console.WriteLine("Status - IsOnline = " + APIStatus.bIsOnline);
-            Console.WriteLine("Status - APIVerisonRelease = " + APIStatus.APIVersionRelease);
+            Console.WriteLine("Status - APIVersionRelease = " + APIStatus.APIVersionRelease);
             Console.WriteLine("Status - ID = " + APIStatus.ID);
-            
-            APIRequest APIRequest = new APIRequest();
-            APIRequest.RequestSingleMatch("this-is-where-my-api-key-will-go", "pc-na", "66748dee-1b34-4ce8-beff-0501c07f9392");
-            if (APIRequest.exception != null)
+            PrivateAPIKey key = new PrivateAPIKey();
+            API pubgapi = new API(key.TheKey);
+            pubgapi.RequestMatch("64041845-2c1b-4fc3-8bc8-8752844b8ddf", PlatformRegionShard.PC_NA);
+            if (pubgapi.APIRequest.exception != null)
             {
-                Console.WriteLine(APIRequest.exception.Message);
+                Console.WriteLine(pubgapi.APIRequest.exception.Message);
             }
-            Console.WriteLine(APIRequest.JSONString);
-        }
-        static void Mid()
-        {
-            Replay replay = new Replay(@"C:\Users\Master\AppData\Local\TslGame\Saved\old\match.bro.custom.1cePrime.na.normal.2018.02.02.feef46c6-0c69-49ea-a0fe-3853d41aacb1__USER__3f2737e1fcd7d5e0444298f528c41675");
-            //APIMethod();
-            APIRequest request = new APIRequest();
-            request.Phraser(File.ReadAllText(@"E:\Downloads\exampleMatch.tar\exampleMatch\match.json"));
-            foreach (APIPlayer player in request.match.PlayerList)
+            else
             {
-                Console.WriteLine("---------------------------------------------------");
-                Console.WriteLine("Player Name: " + player.Name);
-                Console.WriteLine("DBNOs: " + player.DbnOs);
-                Console.WriteLine("Assits: " + player.Assists);
-                Console.WriteLine("Boosts: " + player.Boosts);
-                Console.WriteLine("Damage Dealt: " + player.DamageDealt);
-                Console.WriteLine("Death Type: " + player.DeathType);
-                Console.WriteLine("HeadshotKills: " + player.HeadshotKills);
-                Console.WriteLine("Heals: " + player.Heals);
-                Console.WriteLine("Kill Place: " + player.KillPlace);
-                Console.WriteLine("Kill Streaks: " + player.KillStreaks);
-                Console.WriteLine("Kills: " + player.Kills);
-                Console.WriteLine("Longest Kill: " + player.LongestKill);
-                Console.WriteLine("PlayerID: " + player.PlayerId);
-                Console.WriteLine("Revives: " + player.Revives);
-                Console.WriteLine("Ride Distance: " + player.RideDistance);
-                Console.WriteLine("Road Kills: " + player.RoadKills);
-                Console.WriteLine("Team Kills: " + player.TeamKills);
-                Console.WriteLine("Time Survived: " + player.TimeSurvived);
-                Console.WriteLine("Walk Distance: " + player.WalkDistance);
-                Console.WriteLine("Weapons Acquired: " + player.WeaponsAcquired);
-                Console.WriteLine("Win Place: " + player.WinPlace);
-                Console.WriteLine("---------------------------------------------------");
-            }
-            foreach (APITeam team in request.match.TeamList)
-            {
-                Console.WriteLine("---------------------------------------------------");
-                Console.WriteLine("Rank: " + team.rank);
-                Console.WriteLine("TeamID: " + team.TeamID);
-                foreach (string id in team.TeammateIDList)
+                //Console.WriteLine(pubgapi.APIRequest.JSONString);
+                foreach (APIPlayer player in pubgapi.APIRequest.match.PlayerList)
                 {
-                    Console.WriteLine("Teammate ID: " + id);
+                    Console.WriteLine("---------------------------------------------------");
+                    Console.WriteLine("Player Name: " + player.Name);
+                    Console.WriteLine("DBNOs: " + player.DbnOs);
+                    Console.WriteLine("Assits: " + player.Assists);
+                    Console.WriteLine("Boosts: " + player.Boosts);
+                    Console.WriteLine("Damage Dealt: " + player.DamageDealt);
+                    Console.WriteLine("Death Type: " + player.DeathType);
+                    Console.WriteLine("HeadshotKills: " + player.HeadshotKills);
+                    Console.WriteLine("Heals: " + player.Heals);
+                    Console.WriteLine("Kill Place: " + player.KillPlace);
+                    Console.WriteLine("Kill Streaks: " + player.KillStreaks);
+                    Console.WriteLine("Kills: " + player.Kills);
+                    Console.WriteLine("Longest Kill: " + player.LongestKill);
+                    Console.WriteLine("PlayerID: " + player.PlayerId);
+                    Console.WriteLine("Revives: " + player.Revives);
+                    Console.WriteLine("Ride Distance: " + player.RideDistance);
+                    Console.WriteLine("Road Kills: " + player.RoadKills);
+                    Console.WriteLine("Team Kills: " + player.TeamKills);
+                    Console.WriteLine("Time Survived: " + player.TimeSurvived);
+                    Console.WriteLine("Walk Distance: " + player.WalkDistance);
+                    Console.WriteLine("Weapons Acquired: " + player.WeaponsAcquired);
+                    Console.WriteLine("Win Place: " + player.WinPlace);
+                    Console.WriteLine("---------------------------------------------------");
                 }
-                Console.WriteLine("Team size: " + team.TeamSize);
-                Console.WriteLine("---------------------------------------------------");
+                foreach (APITeam team in pubgapi.APIRequest.match.TeamList)
+                {
+                    Console.WriteLine("---------------------------------------------------");
+                    Console.WriteLine("Rank: " + team.rank);
+                    Console.WriteLine("TeamID: " + team.TeamID);
+                    foreach (string id in team.TeammateIDList)
+                    {
+                        Console.WriteLine("Teammate ID: " + id);
+                    }
+                    Console.WriteLine("Team size: " + team.TeamSize);
+                    Console.WriteLine("---------------------------------------------------");
+                }
+                Console.WriteLine("Player Count: " + (pubgapi.APIRequest.match.PlayerList.Count + 1));
             }
-            Console.WriteLine("Player Count: " + (request.match.PlayerList.Count + 1));
         }
     }
 }

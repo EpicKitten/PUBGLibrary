@@ -1,7 +1,15 @@
-﻿namespace PUBGLibrary.API
+﻿// To parse this JSON data, add NuGet 'Newtonsoft.Json' then do:
+//
+//    using PUBGLibrary.API;
+//
+//    var Phraser = Phraser.FromJson(jsonString);
+
+namespace PUBGLibrary.API
 {
     using System;
     using System.Collections.Generic;
+    using System.Net;
+
     using System.Globalization;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -9,7 +17,7 @@
     public partial class Phraser
     {
         [JsonProperty("data")]
-        public List<Datum> Data { get; set; }
+        public Data Data { get; set; }
 
         [JsonProperty("included")]
         public List<Included> Included { get; set; }
@@ -18,10 +26,10 @@
         public PhraserLinks Links { get; set; }
 
         [JsonProperty("meta")]
-        public PhraserMeta Meta { get; set; }
+        public Meta Meta { get; set; }
     }
 
-    public partial class Datum
+    public partial class Data
     {
         [JsonProperty("type")]
         public string Type { get; set; }
@@ -30,16 +38,16 @@
         public string Id { get; set; }
 
         [JsonProperty("attributes")]
-        public DatumAttributes Attributes { get; set; }
+        public DataAttributes Attributes { get; set; }
 
         [JsonProperty("relationships")]
-        public DatumRelationships Relationships { get; set; }
+        public DataRelationships Relationships { get; set; }
 
         [JsonProperty("links")]
-        public DatumLinks Links { get; set; }
+        public DataLinks Links { get; set; }
     }
 
-    public partial class DatumAttributes
+    public partial class DataAttributes
     {
         [JsonProperty("createdAt")]
         public System.DateTimeOffset? CreatedAt { get; set; }
@@ -57,7 +65,7 @@
         public string ShardId { get; set; }
 
         [JsonProperty("stats")]
-        public PhraserMeta Stats { get; set; }
+        public object Stats { get; set; }
 
         [JsonProperty("tags")]
         public object Tags { get; set; }
@@ -66,20 +74,16 @@
         public string TitleId { get; set; }
     }
 
-    public partial class PhraserMeta
-    {
-    }
-
-    public partial class DatumLinks
+    public partial class DataLinks
     {
         [JsonProperty("schema")]
-        public Schema? Schema { get; set; }
+        public string Schema { get; set; }
 
         [JsonProperty("self")]
         public string Self { get; set; }
     }
 
-    public partial class DatumRelationships
+    public partial class DataRelationships
     {
         [JsonProperty("assets")]
         public Assets Assets { get; set; }
@@ -97,10 +101,10 @@
     public partial class Assets
     {
         [JsonProperty("data")]
-        public List<Dat> Data { get; set; }
+        public List<Datum> Data { get; set; }
     }
 
-    public partial class Dat
+    public partial class Datum
     {
         [JsonProperty("type")]
         public DatumType? Type { get; set; }
@@ -122,30 +126,18 @@
 
         [JsonProperty("relationships")]
         public IncludedRelationships Relationships { get; set; }
-
-        [JsonProperty("links")]
-        public DatumLinks Links { get; set; }
     }
 
     public partial class IncludedAttributes
     {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("patchVersion")]
-        public Schema? PatchVersion { get; set; }
+        [JsonProperty("actor")]
+        public Actor? Actor { get; set; }
 
         [JsonProperty("shardId")]
         public ShardId? ShardId { get; set; }
 
         [JsonProperty("stats")]
         public APIPlayer Stats { get; set; }
-
-        [JsonProperty("titleId")]
-        public TitleId? TitleId { get; set; }
-
-        [JsonProperty("actor")]
-        public Schema? Actor { get; set; }
 
         [JsonProperty("won")]
         public Won? Won { get; set; }
@@ -158,6 +150,9 @@
 
         [JsonProperty("description")]
         public string Description { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
     }
 
     public partial class APIPlayer
@@ -186,8 +181,11 @@
         [JsonProperty("killPlace")]
         public long? KillPlace { get; set; }
 
+        [JsonProperty("killPoints")]
+        public long? KillPoints { get; set; }
+
         [JsonProperty("killPointsDelta")]
-        public long? KillPointsDelta { get; set; }
+        public double? KillPointsDelta { get; set; }
 
         [JsonProperty("killStreaks")]
         public long? KillStreaks { get; set; }
@@ -202,7 +200,7 @@
         public long? LastWinPoints { get; set; }
 
         [JsonProperty("longestKill")]
-        public double? LongestKill { get; set; }
+        public long? LongestKill { get; set; }
 
         [JsonProperty("mostDamage")]
         public long? MostDamage { get; set; }
@@ -226,7 +224,7 @@
         public long? TeamKills { get; set; }
 
         [JsonProperty("timeSurvived")]
-        public double? TimeSurvived { get; set; }
+        public long? TimeSurvived { get; set; }
 
         [JsonProperty("vehicleDestroys")]
         public long? VehicleDestroys { get; set; }
@@ -240,24 +238,21 @@
         [JsonProperty("winPlace")]
         public long? WinPlace { get; set; }
 
+        [JsonProperty("winPoints")]
+        public long? WinPoints { get; set; }
+
         [JsonProperty("winPointsDelta")]
-        public long? WinPointsDelta { get; set; }
+        public double? WinPointsDelta { get; set; }
 
         [JsonProperty("rank")]
         public long? Rank { get; set; }
 
         [JsonProperty("teamId")]
-        public int? TeamId { get; set; }
+        public long? TeamId { get; set; }
     }
 
     public partial class IncludedRelationships
     {
-        [JsonProperty("assets")]
-        public Assets Assets { get; set; }
-
-        [JsonProperty("player")]
-        public Player Player { get; set; }
-
         [JsonProperty("participants")]
         public Assets Participants { get; set; }
 
@@ -265,64 +260,29 @@
         public Assets Team { get; set; }
     }
 
-    public partial class Player
-    {
-        [JsonProperty("data")]
-        public Dat Data { get; set; }
-    }
-
     public partial class PhraserLinks
     {
-        [JsonProperty("next")]
-        public string Next { get; set; }
-
         [JsonProperty("self")]
         public string Self { get; set; }
     }
 
-    public enum Schema { Empty };
+    public partial class Meta
+    {
+    }
 
-    public enum DatumType { Asset, Participant, Player, Roster };
+    public enum DatumType { Asset, Participant, Roster };
+
+    public enum Actor { Empty };
 
     public enum ShardId { PcNa };
 
     public enum DeathType { Alive, Byplayer, Suicide };
-
-    public enum TitleId { BlueholePubg };
 
     public enum Won { False, True };
 
     public partial class Phraser
     {
         public static Phraser FromJson(string json) => JsonConvert.DeserializeObject<Phraser>(json, PUBGLibrary.API.Converter.Settings);
-    }
-
-    static class SchemaExtensions
-    {
-        public static Schema? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "": return Schema.Empty;
-                default: return null;
-            }
-        }
-
-        public static Schema ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this Schema value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case Schema.Empty: serializer.Serialize(writer, ""); break;
-            }
-        }
     }
 
     static class DatumTypeExtensions
@@ -333,7 +293,6 @@
             {
                 case "asset": return DatumType.Asset;
                 case "participant": return DatumType.Participant;
-                case "player": return DatumType.Player;
                 case "roster": return DatumType.Roster;
                 default: return null;
             }
@@ -353,8 +312,35 @@
             {
                 case DatumType.Asset: serializer.Serialize(writer, "asset"); break;
                 case DatumType.Participant: serializer.Serialize(writer, "participant"); break;
-                case DatumType.Player: serializer.Serialize(writer, "player"); break;
                 case DatumType.Roster: serializer.Serialize(writer, "roster"); break;
+            }
+        }
+    }
+
+    static class ActorExtensions
+    {
+        public static Actor? ValueForString(string str)
+        {
+            switch (str)
+            {
+                case "": return Actor.Empty;
+                default: return null;
+            }
+        }
+
+        public static Actor ReadJson(JsonReader reader, JsonSerializer serializer)
+        {
+            var str = serializer.Deserialize<string>(reader);
+            var maybeValue = ValueForString(str);
+            if (maybeValue.HasValue) return maybeValue.Value;
+            throw new Exception("Unknown enum case " + str);
+        }
+
+        public static void WriteJson(this Actor value, JsonWriter writer, JsonSerializer serializer)
+        {
+            switch (value)
+            {
+                case Actor.Empty: serializer.Serialize(writer, ""); break;
             }
         }
     }
@@ -419,34 +405,6 @@
         }
     }
 
-    static class TitleIdExtensions
-    {
-        public static TitleId? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "bluehole-pubg": return TitleId.BlueholePubg;
-                default: return null;
-            }
-        }
-
-        public static TitleId ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this TitleId value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case TitleId.BlueholePubg: serializer.Serialize(writer, "bluehole-pubg"); break;
-            }
-        }
-    }
-
     static class WonExtensions
     {
         public static Won? ValueForString(string str)
@@ -484,31 +442,29 @@
 
     internal class Converter : JsonConverter
     {
-        public override bool CanConvert(Type t) => t == typeof(Schema) || t == typeof(DatumType) || t == typeof(ShardId) || t == typeof(DeathType) || t == typeof(TitleId) || t == typeof(Won) || t == typeof(Schema?) || t == typeof(DatumType?) || t == typeof(ShardId?) || t == typeof(DeathType?) || t == typeof(TitleId?) || t == typeof(Won?);
+        public override bool CanConvert(Type t) => t == typeof(DatumType) || t == typeof(Actor) || t == typeof(ShardId) || t == typeof(DeathType) || t == typeof(Won) || t == typeof(DatumType?) || t == typeof(Actor?) || t == typeof(ShardId?) || t == typeof(DeathType?) || t == typeof(Won?);
 
         public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
         {
-            if (t == typeof(Schema))
-                return SchemaExtensions.ReadJson(reader, serializer);
             if (t == typeof(DatumType))
                 return DatumTypeExtensions.ReadJson(reader, serializer);
+            if (t == typeof(Actor))
+                return ActorExtensions.ReadJson(reader, serializer);
             if (t == typeof(ShardId))
                 return ShardIdExtensions.ReadJson(reader, serializer);
             if (t == typeof(DeathType))
                 return DeathTypeExtensions.ReadJson(reader, serializer);
-            if (t == typeof(TitleId))
-                return TitleIdExtensions.ReadJson(reader, serializer);
             if (t == typeof(Won))
                 return WonExtensions.ReadJson(reader, serializer);
-            if (t == typeof(Schema?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return SchemaExtensions.ReadJson(reader, serializer);
-            }
             if (t == typeof(DatumType?))
             {
                 if (reader.TokenType == JsonToken.Null) return null;
                 return DatumTypeExtensions.ReadJson(reader, serializer);
+            }
+            if (t == typeof(Actor?))
+            {
+                if (reader.TokenType == JsonToken.Null) return null;
+                return ActorExtensions.ReadJson(reader, serializer);
             }
             if (t == typeof(ShardId?))
             {
@@ -519,11 +475,6 @@
             {
                 if (reader.TokenType == JsonToken.Null) return null;
                 return DeathTypeExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(TitleId?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return TitleIdExtensions.ReadJson(reader, serializer);
             }
             if (t == typeof(Won?))
             {
@@ -536,14 +487,14 @@
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             var t = value.GetType();
-            if (t == typeof(Schema))
-            {
-                ((Schema)value).WriteJson(writer, serializer);
-                return;
-            }
             if (t == typeof(DatumType))
             {
                 ((DatumType)value).WriteJson(writer, serializer);
+                return;
+            }
+            if (t == typeof(Actor))
+            {
+                ((Actor)value).WriteJson(writer, serializer);
                 return;
             }
             if (t == typeof(ShardId))
@@ -554,11 +505,6 @@
             if (t == typeof(DeathType))
             {
                 ((DeathType)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(TitleId))
-            {
-                ((TitleId)value).WriteJson(writer, serializer);
                 return;
             }
             if (t == typeof(Won))
