@@ -295,16 +295,16 @@ namespace PUBGLibrary.API
 
     public enum SubCategory { Backpack, Boost, Empty, Fuel, Handgun, Headgear, Heal, Main, Melee, None, Throwable, Vest };
 
-    public enum MapName { DesertMain, Empty };
+    public enum MapName { DesertMain, ErangelMain, Empty };
 
     public enum DamageReason { ArmShot, HeadShot, LegShot, NonSpecific, None, PelvisShot, TorsoShot };
 
-    public enum DamageTypeCategory { DamageBlueZone, DamageExplosionGrenade, DamageExplosionRedZone, DamageGroggy, DamageGun, DamageInstantFall, DamageMelee, DamageMolotov, DamageVehicleCrashHit, DamageVehicleHit, Empty };
+    public enum DamageTypeCategory { DamageBlueZone, DamageDrown, DamageExplosionGrenade, DamageExplosionRedZone, DamageExplosionVehicle, DamageGroggy, DamageGun, DamageInstantFall, DamageMelee, DamageMolotov, DamageVehicleCrashHit, DamageVehicleHit, Empty };
 
     public enum T { LogCarePackageLand, LogCarePackageSpawn, LogGameStatePeriodic, LogItemAttach, LogItemDetach, LogItemDrop, LogItemEquip, LogItemPickup, LogItemUnequip, LogItemUse, LogMatchDefinition, LogMatchEnd, LogMatchStart, LogPlayerAttack, LogPlayerCreate, LogPlayerKill, LogPlayerLogin, LogPlayerLogout, LogPlayerPosition, LogPlayerTakeDamage, LogVehicleDestroy, LogVehicleLeave, LogVehicleRide };
 
-    public enum VehicleId { AquaRailA01_C, BpMotorbike04_DesertC, BpMotorbike04_SideCarDesertC, BpPickupTruckA02_C, BpPickupTruckA03_C, BpPickupTruckA04_C, BpPickupTruckB01_C, BpPickupTruckB02_C, BpPickupTruckB03_C, BpVanA01_C, BpVanA02_C, BpVanA03_C, BuggyA04_C, BuggyA05_C, BuggyA06_C, DummyTransportAircraftC, Empty, ParachutePlayerC };
-
+    public enum VehicleId { AquaRailA01_C, BoatPG117_C, BpMotorbike04_C, BpMotorbike04_Desert_C, BpMotorbike04_SideCar_C, BpMotorbike04_SideCarDesert_C, BpPickupTruckA01_C, BpPickupTruckA02_C, BpPickupTruckA03_C, BpPickupTruckA04_C, BpPickupTruckA05_C, BpPickupTruckB01_C, BpPickupTruckB02_C, BpPickupTruckB03_C, BpPickupTruckB04_C, BpPickupTruckB05_C, BpVanA01_C, BpVanA02_C, BpVanA03_C, BuggyA01_C, BuggyA02_C, BuggyA03_C, BuggyA04_C, BuggyA05_C, BuggyA06_C, DaciaA02v2_C, DaciaA03v2_C, DaciaA03v2_C, DummyTransportAircraft_C, Empty, ParachutePlayer_C }
+    
     public enum VehicleType { Empty, FloatingVehicle, Parachute, TransportAircraft, WheeledVehicle };
 
     public partial class TelemetryPhrase
@@ -399,6 +399,7 @@ namespace PUBGLibrary.API
             switch (str)
             {
                 case "Desert_Main": return MapName.DesertMain;
+                case "Erangel_Main": return MapName.ErangelMain;
                 case "": return MapName.Empty;
                 default: return null;
             }
@@ -417,6 +418,7 @@ namespace PUBGLibrary.API
             switch (value)
             {
                 case MapName.DesertMain: serializer.Serialize(writer, "Desert_Main"); break;
+                case MapName.ErangelMain: serializer.Serialize(writer, "Erangel_Main"); break;
                 case MapName.Empty: serializer.Serialize(writer, ""); break;
             }
         }
@@ -470,8 +472,10 @@ namespace PUBGLibrary.API
             switch (str)
             {
                 case "Damage_BlueZone": return DamageTypeCategory.DamageBlueZone;
+                case "Damage_Drown": return DamageTypeCategory.DamageDrown;
                 case "Damage_Explosion_Grenade": return DamageTypeCategory.DamageExplosionGrenade;
                 case "Damage_Explosion_RedZone": return DamageTypeCategory.DamageExplosionRedZone;
+                case "Damage_Explosion_Vehicle": return DamageTypeCategory.DamageExplosionVehicle;
                 case "Damage_Groggy": return DamageTypeCategory.DamageGroggy;
                 case "Damage_Gun": return DamageTypeCategory.DamageGun;
                 case "Damage_Instant_Fall": return DamageTypeCategory.DamageInstantFall;
@@ -497,8 +501,10 @@ namespace PUBGLibrary.API
             switch (value)
             {
                 case DamageTypeCategory.DamageBlueZone: serializer.Serialize(writer, "Damage_BlueZone"); break;
+                case DamageTypeCategory.DamageDrown: serializer.Serialize(writer, "Damage_Drown"); break;
                 case DamageTypeCategory.DamageExplosionGrenade: serializer.Serialize(writer, "Damage_Explosion_Grenade"); break;
                 case DamageTypeCategory.DamageExplosionRedZone: serializer.Serialize(writer, "Damage_Explosion_RedZone"); break;
+                case DamageTypeCategory.DamageExplosionVehicle: serializer.Serialize(writer, "Damage_Explosion_Vehicle"); break;
                 case DamageTypeCategory.DamageGroggy: serializer.Serialize(writer, "Damage_Groggy"); break;
                 case DamageTypeCategory.DamageGun: serializer.Serialize(writer, "Damage_Gun"); break;
                 case DamageTypeCategory.DamageInstantFall: serializer.Serialize(writer, "Damage_Instant_Fall"); break;
@@ -592,23 +598,36 @@ namespace PUBGLibrary.API
             switch (str)
             {
                 case "AquaRail_A_01_C": return VehicleId.AquaRailA01_C;
-                case "BP_Motorbike_04_Desert_C": return VehicleId.BpMotorbike04_DesertC;
-                case "BP_Motorbike_04_SideCar_Desert_C": return VehicleId.BpMotorbike04_SideCarDesertC;
+                case "Boat_PG117_C": return VehicleId.BoatPG117_C;
+                case "BP_Motorbike_04_C": return VehicleId.BpMotorbike04_C;
+                case "BP_Motorbike_04_Desert_C": return VehicleId.BpMotorbike04_Desert_C;
+                case "BP_Motorbike_04_SideCar_C": return VehicleId.BpMotorbike04_SideCar_C;
+                case "BP_Motorbike_04_SideCar_Desert_C": return VehicleId.BpMotorbike04_SideCarDesert_C;
+                case "BP_PickupTruck_A_01_C": return VehicleId.BpPickupTruckA01_C;
                 case "BP_PickupTruck_A_02_C": return VehicleId.BpPickupTruckA02_C;
                 case "BP_PickupTruck_A_03_C": return VehicleId.BpPickupTruckA03_C;
                 case "BP_PickupTruck_A_04_C": return VehicleId.BpPickupTruckA04_C;
+                case "BP_PickupTruck_A_05_C": return VehicleId.BpPickupTruckA05_C;
                 case "BP_PickupTruck_B_01_C": return VehicleId.BpPickupTruckB01_C;
                 case "BP_PickupTruck_B_02_C": return VehicleId.BpPickupTruckB02_C;
                 case "BP_PickupTruck_B_03_C": return VehicleId.BpPickupTruckB03_C;
+                case "BP_PickupTruck_B_04_C": return VehicleId.BpPickupTruckB04_C;
+                case "BP_PickupTruck_B_05_C": return VehicleId.BpPickupTruckB05_C;
                 case "BP_Van_A_01_C": return VehicleId.BpVanA01_C;
                 case "BP_Van_A_02_C": return VehicleId.BpVanA02_C;
                 case "BP_Van_A_03_C": return VehicleId.BpVanA03_C;
+                case "Buggy_A_01_C": return VehicleId.BuggyA01_C;
+                case "Buggy_A_02_C": return VehicleId.BuggyA02_C;
+                case "Buggy_A_03_C": return VehicleId.BuggyA03_C;
                 case "Buggy_A_04_C": return VehicleId.BuggyA04_C;
                 case "Buggy_A_05_C": return VehicleId.BuggyA05_C;
                 case "Buggy_A_06_C": return VehicleId.BuggyA06_C;
-                case "DummyTransportAircraft_C": return VehicleId.DummyTransportAircraftC;
+                case "Dacia_A_02_v2_C": return VehicleId.DaciaA02v2_C;
+                case "Dacia_A_03_v2_C": return VehicleId.DaciaA03v2_C;
+                case "Dacia_A_04_v2_C": return VehicleId.DaciaA04v2_C;
+                case "DummyTransportAircraft_C": return VehicleId.DummyTransportAircraft_C;
                 case "": return VehicleId.Empty;
-                case "ParachutePlayer_C": return VehicleId.ParachutePlayerC;
+                case "ParachutePlayer_C": return VehicleId.ParachutePlayer_C;
                 default: return null;
             }
         }
@@ -626,23 +645,36 @@ namespace PUBGLibrary.API
             switch (value)
             {
                 case VehicleId.AquaRailA01_C: serializer.Serialize(writer, "AquaRail_A_01_C"); break;
-                case VehicleId.BpMotorbike04_DesertC: serializer.Serialize(writer, "BP_Motorbike_04_Desert_C"); break;
-                case VehicleId.BpMotorbike04_SideCarDesertC: serializer.Serialize(writer, "BP_Motorbike_04_SideCar_Desert_C"); break;
+                case VehicleId.BoatPG117_C: serializer.Serialize(writer, "Boat_PG117_C"); break;
+                case VehicleId.BpMotorbike04_C: serializer.Serialize(writer, "BP_Motorbike_04_C"); break;
+                case VehicleId.BpMotorbike04_Desert_C: serializer.Serialize(writer, "BP_Motorbike_04_Desert_C"); break;
+                case VehicleId.BpMotorbike04_SideCar_C: serializer.Serialize(writer, "BP_Motorbike_04_SideCar_C"); break;
+                case VehicleId.BpMotorbike04_SideCarDesert_C: serializer.Serialize(writer, "BP_Motorbike_04_SideCar_Desert_C"); break;
+                case VehicleId.BpPickupTruckA01_C: serializer.Serialize(writer, "BP_PickupTruck_A_01_C"); break;
                 case VehicleId.BpPickupTruckA02_C: serializer.Serialize(writer, "BP_PickupTruck_A_02_C"); break;
                 case VehicleId.BpPickupTruckA03_C: serializer.Serialize(writer, "BP_PickupTruck_A_03_C"); break;
                 case VehicleId.BpPickupTruckA04_C: serializer.Serialize(writer, "BP_PickupTruck_A_04_C"); break;
+                case VehicleId.BpPickupTruckA05_C: serializer.Serialize(writer, "BP_PickupTruck_A_05_C"); break;
                 case VehicleId.BpPickupTruckB01_C: serializer.Serialize(writer, "BP_PickupTruck_B_01_C"); break;
                 case VehicleId.BpPickupTruckB02_C: serializer.Serialize(writer, "BP_PickupTruck_B_02_C"); break;
                 case VehicleId.BpPickupTruckB03_C: serializer.Serialize(writer, "BP_PickupTruck_B_03_C"); break;
+                case VehicleId.BpPickupTruckB04_C: serializer.Serialize(writer, "BP_PickupTruck_B_04_C"); break;
+                case VehicleId.BpPickupTruckB05_C: serializer.Serialize(writer, "BP_PickupTruck_B_05_C"); break;
                 case VehicleId.BpVanA01_C: serializer.Serialize(writer, "BP_Van_A_01_C"); break;
                 case VehicleId.BpVanA02_C: serializer.Serialize(writer, "BP_Van_A_02_C"); break;
                 case VehicleId.BpVanA03_C: serializer.Serialize(writer, "BP_Van_A_03_C"); break;
+                case VehicleId.BuggyA01_C: serializer.Serialize(writer, "Buggy_A_01_C"); break;
+                case VehicleId.BuggyA02_C: serializer.Serialize(writer, "Buggy_A_02_C"); break;
+                case VehicleId.BuggyA03_C: serializer.Serialize(writer, "Buggy_A_03_C"); break;
                 case VehicleId.BuggyA04_C: serializer.Serialize(writer, "Buggy_A_04_C"); break;
                 case VehicleId.BuggyA05_C: serializer.Serialize(writer, "Buggy_A_05_C"); break;
                 case VehicleId.BuggyA06_C: serializer.Serialize(writer, "Buggy_A_06_C"); break;
-                case VehicleId.DummyTransportAircraftC: serializer.Serialize(writer, "DummyTransportAircraft_C"); break;
+                case VehicleId.DaciaA02v2_C: serializer.Serialize(writer, "Dacia_A_02_v2_C"); break;
+                case VehicleId.DaciaA03v2_C: serializer.Serialize(writer, "Dacia_A_03_v2_C"); break;
+                case VehicleId.DaciaA04v2_C: serializer.Serialize(writer, "Dacia_A_04_v2_C"); break;
+                case VehicleId.DummyTransportAircraft_C: serializer.Serialize(writer, "DummyTransportAircraft_C"); break;
                 case VehicleId.Empty: serializer.Serialize(writer, ""); break;
-                case VehicleId.ParachutePlayerC: serializer.Serialize(writer, "ParachutePlayer_C"); break;
+                case VehicleId.ParachutePlayer_C: serializer.Serialize(writer, "ParachutePlayer_C"); break;
             }
         }
     }
