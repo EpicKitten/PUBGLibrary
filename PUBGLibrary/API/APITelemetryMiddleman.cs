@@ -303,7 +303,8 @@ namespace PUBGLibrary.API
 
     public enum T { LogCarePackageLand, LogCarePackageSpawn, LogGameStatePeriodic, LogItemAttach, LogItemDetach, LogItemDrop, LogItemEquip, LogItemPickup, LogItemUnequip, LogItemUse, LogMatchDefinition, LogMatchEnd, LogMatchStart, LogPlayerAttack, LogPlayerCreate, LogPlayerKill, LogPlayerLogin, LogPlayerLogout, LogPlayerPosition, LogPlayerTakeDamage, LogVehicleDestroy, LogVehicleLeave, LogVehicleRide };
 
-    public enum VehicleId { AquaRailA01_C, BoatPG117_C, BpMotorbike04_C, BpMotorbike04_DesertC, BpMotorbike04_SideCar_C, BpMotorbike04_SideCarDesertC, BpPickupTruckA01_C, BpPickupTruckA02_C, BpPickupTruckA03_C, BpPickupTruckA04_C, BpPickupTruckA05_C, BpPickupTruckB01_C, BpPickupTruckB02_C, BpPickupTruckB03_C, BpPickupTruckB04_C, BpPickupTruckB05_C, BpVanA01_C, BpVanA02_C, BpVanA03_C, BuggyA01_C, BuggyA02_C, BuggyA03_C, BuggyA04_C, BuggyA05_C, BuggyA06_C, DaciaA02v2_C, DaciaA03v2_C, DaciaA03v2_C, DummyTransportAircraft_C, Empty, ParachutePlayer_C }
+    public enum VehicleId { AquaRailA01_C, BoatPG117_C, BpMotorbike04_C, BpMotorbike04_Desert_C, BpMotorbike04_SideCar_C, BpMotorbike04_SideCarDesert_C, BpPickupTruckA01_C, BpPickupTruckA02_C, BpPickupTruckA03_C, BpPickupTruckA04_C, BpPickupTruckA05_C, BpPickupTruckB01_C, BpPickupTruckB02_C, BpPickupTruckB03_C, BpPickupTruckB04_C, BpPickupTruckB05_C, BpVanA01_C, BpVanA02_C, BpVanA03_C, BuggyA01_C, BuggyA02_C, BuggyA03_C, BuggyA04_C, BuggyA05_C, BuggyA06_C, DaciaA02v2_C, DaciaA03v2_C, DaciaA03v2_C, DummyTransportAircraft_C, Empty, ParachutePlayer_C }
+    
     public enum VehicleType { Empty, FloatingVehicle, Parachute, TransportAircraft, WheeledVehicle };
 
     public partial class TelemetryPhrase
