@@ -11,8 +11,8 @@ namespace LibraryTest
         static void Main(string[] args)
         {
             Console.WriteLine("Started!");
-            //TelemTest();
-            APIMethod();
+            TelemTest();
+            //APIMethod();
             Console.ReadLine();
         }
         static void ReplayMethod()
@@ -179,11 +179,11 @@ namespace LibraryTest
         static void TelemTest()
         {
             APIRequest request = new APIRequest();
-            request.TelemetryPhraser(File.ReadAllText(@"C:\Users\Master\Desktop\91b623a6-2bce-11e8-b608-0a5864601a9b-telemetry.json"));
-                        Console.WriteLine("------------- Match Start! ----------------");
-            Console.WriteLine("Mapname: " + request.Telemetry.LogMatchStart.MapName);
-            Console.WriteLine("Weather: " + request.Telemetry.LogMatchStart.Weather);
-            foreach (Player player in request.Telemetry.LogMatchStart.PlayerList)
+            APITelemetry Telemetry = request.TelemetryPhraser(File.ReadAllText(@"C:\Users\Master\Desktop\91b623a6-2bce-11e8-b608-0a5864601a9b-telemetry.json"));
+            Console.WriteLine("------------- Match Start! ----------------");
+            Console.WriteLine("Mapname: " + Telemetry.LogMatchStart.MapName);
+            Console.WriteLine("Weather: " + Telemetry.LogMatchStart.Weather);
+            foreach (Player player in Telemetry.LogMatchStart.PlayerList)
             {
                 Console.WriteLine("--------- Joined Player ----------");
                 Console.WriteLine("PUBG Name: " + player.PUBGName);
@@ -196,7 +196,7 @@ namespace LibraryTest
                 Console.WriteLine("----------------------------------");
             }
             Console.WriteLine("---------------------------------------------" + Environment.NewLine);
-            foreach (LogPlayerCreate createdplayer in request.Telemetry.LogPlayerCreateList)
+            foreach (LogPlayerCreate createdplayer in Telemetry.LogPlayerCreateList)
             {
                 Console.WriteLine("------------- Player Created! ----------------");
                 Console.WriteLine("PUBG Name: "+createdplayer.Player.PUBGName);
@@ -208,7 +208,7 @@ namespace LibraryTest
                 Console.WriteLine("Created at Z: " + createdplayer.Player.Location.Z);
                 Console.WriteLine("---------------------------------------------" + Environment.NewLine);
             }
-            foreach (LogCarePackageSpawn lpcs in request.Telemetry.LogCarePackageSpawnList)
+            foreach (LogCarePackageSpawn lpcs in Telemetry.LogCarePackageSpawnList)
             {
                 Console.WriteLine("------------- Carepackage Spawned! ----------------");
                 Console.WriteLine("Carepackage ID: " + lpcs.CarePackage.CarePackageID);
@@ -228,7 +228,7 @@ namespace LibraryTest
 
                 Console.WriteLine("---------------------------------------------" + Environment.NewLine);
             }
-            foreach (LogCarePackageLand lcpl in request.Telemetry.LogCarePackageLandList)
+            foreach (LogCarePackageLand lcpl in Telemetry.LogCarePackageLandList)
             {
                 Console.WriteLine("------------- Carepackage Landed! ----------------");
                 Console.WriteLine("Carepackage ID: " + lcpl.CarePackage.CarePackageID);
@@ -248,7 +248,7 @@ namespace LibraryTest
 
                 Console.WriteLine("---------------------------------------------" + Environment.NewLine);
             }
-            foreach (LogGameStatePeriodic lgsp in request.Telemetry.LogGameStatePeriodicList)
+            foreach (LogGameStatePeriodic lgsp in Telemetry.LogGameStatePeriodicList)
             {
                 Console.WriteLine("------------- Game State Periodic! ----------------");
                 Console.WriteLine("Alive Players: " + lgsp.GameState.NumAlivePlayers);
@@ -256,7 +256,7 @@ namespace LibraryTest
                 Console.WriteLine("DateTimeOffset: " + lgsp.GameState.DateTimeOffset);
                 Console.WriteLine("---------------------------------------------" + Environment.NewLine);
             }
-            foreach (LogPlayerAttack PlayerAttack in request.Telemetry.logPlayerAttackList)
+            foreach (LogPlayerAttack PlayerAttack in Telemetry.logPlayerAttackList)
             {
                 Console.WriteLine("------------- Player Attacked Someone! ----------------");
                 Console.WriteLine("Attack ID: " + PlayerAttack.AttackID);
@@ -278,7 +278,7 @@ namespace LibraryTest
                 Console.WriteLine("Vehicle Type: " + PlayerAttack.Transport.vehicleType);
                 Console.WriteLine("---------------------------------------------" + Environment.NewLine);
             }
-            foreach (LogPlayerKill PlayerKill in request.Telemetry.LogPlayerKillList)
+            foreach (LogPlayerKill PlayerKill in Telemetry.LogPlayerKillList)
             {
                 Console.WriteLine("------------- Player killed Someone! ----------------");
                 Console.WriteLine("Attack ID: " + PlayerKill.AttackID);
@@ -300,8 +300,8 @@ namespace LibraryTest
                 Console.WriteLine("Victim Location Z: " + PlayerKill.Victim.Location.Z);
             }
             Console.WriteLine("------------- Match End! ----------------");
-            Console.WriteLine("Datetime: "+request.Telemetry.LogMatchEnd.DateTimeOffset);
-            foreach (Player player in request.Telemetry.LogMatchEnd.PlayerList)
+            Console.WriteLine("Datetime: "+Telemetry.LogMatchEnd.DateTimeOffset);
+            foreach (Player player in Telemetry.LogMatchEnd.PlayerList)
             {
                 Console.WriteLine("--------- Joined Player ----------");
                 Console.WriteLine("PUBG Name: " + player.PUBGName);
