@@ -24,5 +24,6 @@ namespace PUBGLibrary.API
         public string Gamemode;
         public PlatformRegionShard PRS_ID;
         public List<APITeam> TeamList = new List<APITeam>();
+        public string TelemetryURL;
     }
 }

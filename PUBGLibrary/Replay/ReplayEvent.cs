@@ -18,13 +18,15 @@ namespace PUBGLibrary
         }
         protected List<object> GetList(string id1, string player1, string verb, string id2, string player2)
         {
-            List<object> eventList = new List<object>();
-            eventList.Add(Time);
-            eventList.Add(id1);
-            eventList.Add(player1);
-            eventList.Add(verb);
-            eventList.Add(id2);
-            eventList.Add(player2);
+            List<object> eventList = new List<object>
+            {
+                Time,
+                id1,
+                player1,
+                verb,
+                id2,
+                player2
+            };
             return eventList;
         }
 

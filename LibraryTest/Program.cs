@@ -11,7 +11,8 @@ namespace LibraryTest
         static void Main(string[] args)
         {
             Console.WriteLine("Started!");
-            APIMethod();
+            TelemTest();
+            //APIMethod();
             Console.ReadLine();
         }
         static void ReplayMethod()
@@ -118,56 +119,202 @@ namespace LibraryTest
             Console.WriteLine("Status - IsOnline = " + APIStatus.bIsOnline);
             Console.WriteLine("Status - APIVersionRelease = " + APIStatus.APIVersionRelease);
             Console.WriteLine("Status - ID = " + APIStatus.ID);
+
+            // \/-\/-\/-\/-\/ REMOVE THIS OR CREATE IT WITH YOUR KEY \/-\/-\/-\/-\/
             PrivateAPIKey key = new PrivateAPIKey();
+            // /\-/\-/\-/\-/\ REMOVE THIS OR CREATE IT WITH YOUR KEY /\-/\-/\-/\-/\
+
             API pubgapi = new API(key.TheKey);
-            pubgapi.RequestMatch("64041845-2c1b-4fc3-8bc8-8752844b8ddf", PlatformRegionShard.PC_NA);
+
+
+            pubgapi.RequestMatch("fabe78-6e6f-4e32-bcf6-42aa7ec79aa1", PlatformRegionShard.PC_NA);
             if (pubgapi.APIRequest.exception != null)
             {
                 Console.WriteLine(pubgapi.APIRequest.exception.Message);
             }
             else
             {
+                Console.WriteLine(pubgapi.APIRequest.Match.TelemetryURL);
                 //Console.WriteLine(pubgapi.APIRequest.JSONString);
-                foreach (APIPlayer player in pubgapi.APIRequest.match.PlayerList)
-                {
-                    Console.WriteLine("---------------------------------------------------");
-                    Console.WriteLine("Player Name: " + player.Name);
-                    Console.WriteLine("DBNOs: " + player.DbnOs);
-                    Console.WriteLine("Assits: " + player.Assists);
-                    Console.WriteLine("Boosts: " + player.Boosts);
-                    Console.WriteLine("Damage Dealt: " + player.DamageDealt);
-                    Console.WriteLine("Death Type: " + player.DeathType);
-                    Console.WriteLine("HeadshotKills: " + player.HeadshotKills);
-                    Console.WriteLine("Heals: " + player.Heals);
-                    Console.WriteLine("Kill Place: " + player.KillPlace);
-                    Console.WriteLine("Kill Streaks: " + player.KillStreaks);
-                    Console.WriteLine("Kills: " + player.Kills);
-                    Console.WriteLine("Longest Kill: " + player.LongestKill);
-                    Console.WriteLine("PlayerID: " + player.PlayerId);
-                    Console.WriteLine("Revives: " + player.Revives);
-                    Console.WriteLine("Ride Distance: " + player.RideDistance);
-                    Console.WriteLine("Road Kills: " + player.RoadKills);
-                    Console.WriteLine("Team Kills: " + player.TeamKills);
-                    Console.WriteLine("Time Survived: " + player.TimeSurvived);
-                    Console.WriteLine("Walk Distance: " + player.WalkDistance);
-                    Console.WriteLine("Weapons Acquired: " + player.WeaponsAcquired);
-                    Console.WriteLine("Win Place: " + player.WinPlace);
-                    Console.WriteLine("---------------------------------------------------");
-                }
-                foreach (APITeam team in pubgapi.APIRequest.match.TeamList)
-                {
-                    Console.WriteLine("---------------------------------------------------");
-                    Console.WriteLine("Rank: " + team.rank);
-                    Console.WriteLine("TeamID: " + team.TeamID);
-                    foreach (string id in team.TeammateIDList)
-                    {
-                        Console.WriteLine("Teammate ID: " + id);
-                    }
-                    Console.WriteLine("Team size: " + team.TeamSize);
-                    Console.WriteLine("---------------------------------------------------");
-                }
-                Console.WriteLine("Player Count: " + (pubgapi.APIRequest.match.PlayerList.Count + 1));
+                //foreach (APIPlayer player in pubgapi.APIRequest.match.PlayerList)
+                //{
+                //    Console.WriteLine("---------------------------------------------------");
+                //    Console.WriteLine("Player Name: " + player.Name);
+                //    Console.WriteLine("DBNOs: " + player.DbnOs);
+                //    Console.WriteLine("Assits: " + player.Assists);
+                //    Console.WriteLine("Boosts: " + player.Boosts);
+                //    Console.WriteLine("Damage Dealt: " + player.DamageDealt);
+                //    Console.WriteLine("Death Type: " + player.DeathType);
+                //    Console.WriteLine("HeadshotKills: " + player.HeadshotKills);
+                //    Console.WriteLine("Heals: " + player.Heals);
+                //    Console.WriteLine("Kill Place: " + player.KillPlace);
+                //    Console.WriteLine("Kill Streaks: " + player.KillStreaks);
+                //    Console.WriteLine("Kills: " + player.Kills);
+                //    Console.WriteLine("Longest Kill: " + player.LongestKill);
+                //    Console.WriteLine("PlayerID: " + player.PlayerId);
+                //    Console.WriteLine("Revives: " + player.Revives);
+                //    Console.WriteLine("Ride Distance: " + player.RideDistance);
+                //    Console.WriteLine("Road Kills: " + player.RoadKills);
+                //    Console.WriteLine("Team Kills: " + player.TeamKills);
+                //    Console.WriteLine("Time Survived: " + player.TimeSurvived);
+                //    Console.WriteLine("Walk Distance: " + player.WalkDistance);
+                //    Console.WriteLine("Weapons Acquired: " + player.WeaponsAcquired);
+                //    Console.WriteLine("Win Place: " + player.WinPlace);
+                //    Console.WriteLine("---------------------------------------------------");
+                //}
+                //foreach (APITeam team in pubgapi.APIRequest.match.TeamList)
+                //{
+                //    Console.WriteLine("---------------------------------------------------");
+                //    Console.WriteLine("Rank: " + team.rank);
+                //    Console.WriteLine("TeamID: " + team.TeamID);
+                //    foreach (string id in team.TeammateIDList)
+                //    {
+                //        Console.WriteLine("Teammate ID: " + id);
+                //    }
+                //    Console.WriteLine("Team size: " + team.TeamSize);
+                //    Console.WriteLine("---------------------------------------------------");
+                //}
+                //Console.WriteLine("Player Count: " + (pubgapi.APIRequest.match.PlayerList.Count + 1));
             }
+        }
+        static void TelemTest()
+        {
+            APIRequest request = new APIRequest();
+            request.TelemetryPhraser(File.ReadAllText(@"C:\Users\Master\Desktop\91b623a6-2bce-11e8-b608-0a5864601a9b-telemetry.json"));
+                        Console.WriteLine("------------- Match Start! ----------------");
+            Console.WriteLine("Mapname: " + request.Telemetry.LogMatchStart.MapName);
+            Console.WriteLine("Weather: " + request.Telemetry.LogMatchStart.Weather);
+            foreach (Player player in request.Telemetry.LogMatchStart.PlayerList)
+            {
+                Console.WriteLine("--------- Joined Player ----------");
+                Console.WriteLine("PUBG Name: " + player.PUBGName);
+                Console.WriteLine("AccountID: " + player.AccountID);
+                Console.WriteLine("Health: " + player.Health);
+                Console.WriteLine("Team ID: " + player.TeamID);
+                Console.WriteLine("Created at X: " + player.Location.X);
+                Console.WriteLine("Created at Y: " + player.Location.Y);
+                Console.WriteLine("Created at Z: " + player.Location.Z);
+                Console.WriteLine("----------------------------------");
+            }
+            Console.WriteLine("---------------------------------------------" + Environment.NewLine);
+            foreach (LogPlayerCreate createdplayer in request.Telemetry.LogPlayerCreateList)
+            {
+                Console.WriteLine("------------- Player Created! ----------------");
+                Console.WriteLine("PUBG Name: "+createdplayer.Player.PUBGName);
+                Console.WriteLine("AccountID: " + createdplayer.Player.AccountID);
+                Console.WriteLine("Health: " + createdplayer.Player.Health);
+                Console.WriteLine("Team ID: " + createdplayer.Player.TeamID);
+                Console.WriteLine("Created at X: " + createdplayer.Player.Location.X);
+                Console.WriteLine("Created at Y: " + createdplayer.Player.Location.Y);
+                Console.WriteLine("Created at Z: " + createdplayer.Player.Location.Z);
+                Console.WriteLine("---------------------------------------------" + Environment.NewLine);
+            }
+            foreach (LogCarePackageSpawn lpcs in request.Telemetry.LogCarePackageSpawnList)
+            {
+                Console.WriteLine("------------- Carepackage Spawned! ----------------");
+                Console.WriteLine("Carepackage ID: " + lpcs.CarePackage.CarePackageID);
+                Console.WriteLine("DateTimeOffset: " + lpcs.CarePackage.DateTimeOffset);
+                foreach (Item item in lpcs.CarePackage.Items)
+                {
+                    Console.WriteLine("----- Item in carepackage -----");
+                    Console.WriteLine("Category: " + item.Categroy);
+                    Console.WriteLine("Item ID: " + item.ItemID);
+                    Console.WriteLine("Stack Count: " + item.StackCount);
+                    Console.WriteLine("Sub category: " + item.SubCategroy);
+                    Console.WriteLine("-------------------------------");
+                }
+                Console.WriteLine("X: " + lpcs.CarePackage.Location.X);
+                Console.WriteLine("Y: " + lpcs.CarePackage.Location.Y);
+                Console.WriteLine("Z: " + lpcs.CarePackage.Location.Z);
+
+                Console.WriteLine("---------------------------------------------" + Environment.NewLine);
+            }
+            foreach (LogCarePackageLand lcpl in request.Telemetry.LogCarePackageLandList)
+            {
+                Console.WriteLine("------------- Carepackage Landed! ----------------");
+                Console.WriteLine("Carepackage ID: " + lcpl.CarePackage.CarePackageID);
+                Console.WriteLine("DateTimeOffset: " + lcpl.CarePackage.DateTimeOffset);
+                foreach (Item item in lcpl.CarePackage.Items)
+                {
+                    Console.WriteLine("----- Item in carepackage -----");
+                    Console.WriteLine("Category: " + item.Categroy);
+                    Console.WriteLine("Item ID: " + item.ItemID);
+                    Console.WriteLine("Stack Count: " + item.StackCount);
+                    Console.WriteLine("Sub category: " + item.SubCategroy);
+                    Console.WriteLine("-------------------------------");
+                }
+                Console.WriteLine("X: " + lcpl.CarePackage.Location.X);
+                Console.WriteLine("Y: " + lcpl.CarePackage.Location.Y);
+                Console.WriteLine("Z: " + lcpl.CarePackage.Location.Z);
+
+                Console.WriteLine("---------------------------------------------" + Environment.NewLine);
+            }
+            foreach (LogGameStatePeriodic lgsp in request.Telemetry.LogGameStatePeriodicList)
+            {
+                Console.WriteLine("------------- Game State Periodic! ----------------");
+                Console.WriteLine("Alive Players: " + lgsp.GameState.NumAlivePlayers);
+                Console.WriteLine("Alive Teams: " + lgsp.GameState.NumAliveTeams);
+                Console.WriteLine("DateTimeOffset: " + lgsp.GameState.DateTimeOffset);
+                Console.WriteLine("---------------------------------------------" + Environment.NewLine);
+            }
+            foreach (LogPlayerAttack PlayerAttack in request.Telemetry.logPlayerAttackList)
+            {
+                Console.WriteLine("------------- Player Attacked Someone! ----------------");
+                Console.WriteLine("Attack ID: " + PlayerAttack.AttackID);
+                Console.WriteLine("Attack Type: " + PlayerAttack.AttackType);
+                Console.WriteLine("Date: " + PlayerAttack.DateTimeOffset);
+                Console.WriteLine("Attacker Weapon Categroy: " + PlayerAttack.AttackerWeapon.Categroy);
+                Console.WriteLine("Attacker Weapon SubCategroy: " + PlayerAttack.AttackerWeapon.SubCategroy);
+                Console.WriteLine("Attacker Weapon ItemID: " + PlayerAttack.AttackerWeapon.ItemID);
+                Console.WriteLine("Attacker Weapon Stack Count: " + PlayerAttack.AttackerWeapon.StackCount);
+                Console.WriteLine("Attacker PUBGName: " + PlayerAttack.Attacker.PUBGName);
+                Console.WriteLine("Attacker AccountID: " + PlayerAttack.Attacker.AccountID);
+                Console.WriteLine("Attacker Health: " + PlayerAttack.Attacker.Health);
+                Console.WriteLine("Attacker Location X: " + PlayerAttack.Attacker.Location.X);
+                Console.WriteLine("Attacker Location Y: " + PlayerAttack.Attacker.Location.Y);
+                Console.WriteLine("Attacker Location Z: " + PlayerAttack.Attacker.Location.Z);
+                Console.WriteLine("Vehicle ID: " + PlayerAttack.Transport.vehicleID);
+                Console.WriteLine("Vehicle Health Percent: " + PlayerAttack.Transport.healthPercent);
+                Console.WriteLine("Vehicle Fuel Percent: " + PlayerAttack.Transport.fuelPercent);
+                Console.WriteLine("Vehicle Type: " + PlayerAttack.Transport.vehicleType);
+                Console.WriteLine("---------------------------------------------" + Environment.NewLine);
+            }
+            foreach (LogPlayerKill PlayerKill in request.Telemetry.LogPlayerKillList)
+            {
+                Console.WriteLine("------------- Player killed Someone! ----------------");
+                Console.WriteLine("Attack ID: " + PlayerKill.AttackID);
+                Console.WriteLine("Datetime: " + PlayerKill.DateTimeOffset);                
+                Console.WriteLine("Killer PUBGName: " + PlayerKill.Killer.PUBGName);
+                Console.WriteLine("Killer AccountID: " + PlayerKill.Killer.AccountID);
+                Console.WriteLine("Killer Health: " + PlayerKill.Killer.Health);
+                Console.WriteLine("Killer Location X: " + PlayerKill.Killer.Location.X);
+                Console.WriteLine("Killer Location Y: " + PlayerKill.Killer.Location.Y);
+                Console.WriteLine("Killer Location Z: " + PlayerKill.Killer.Location.Z);
+                Console.WriteLine("Killer Distance: " + PlayerKill.DamageCauser.Distance);
+                Console.WriteLine("Killer DamageCauserTypeCategory: " + PlayerKill.DamageCauser.DamageTypeCategory);
+                Console.WriteLine("Killer DamageCauserName: " + PlayerKill.DamageCauser.DamageCauserName);
+                Console.WriteLine("Victim PUBGName: " + PlayerKill.Victim.PUBGName);
+                Console.WriteLine("Victim AccountID: " + PlayerKill.Victim.AccountID);
+                Console.WriteLine("Victim Health: " + PlayerKill.Victim.Health);
+                Console.WriteLine("Victim Location X: " + PlayerKill.Victim.Location.X);
+                Console.WriteLine("Victim Location Y: " + PlayerKill.Victim.Location.Y);
+                Console.WriteLine("Victim Location Z: " + PlayerKill.Victim.Location.Z);
+            }
+            Console.WriteLine("------------- Match End! ----------------");
+            Console.WriteLine("Datetime: "+request.Telemetry.LogMatchEnd.DateTimeOffset);
+            foreach (Player player in request.Telemetry.LogMatchEnd.PlayerList)
+            {
+                Console.WriteLine("--------- Joined Player ----------");
+                Console.WriteLine("PUBG Name: " + player.PUBGName);
+                Console.WriteLine("AccountID: " + player.AccountID);
+                Console.WriteLine("Health: " + player.Health);
+                Console.WriteLine("Team ID: " + player.TeamID);
+                Console.WriteLine("Created at X: " + player.Location.X);
+                Console.WriteLine("Created at Y: " + player.Location.Y);
+                Console.WriteLine("Created at Z: " + player.Location.Z);
+                Console.WriteLine("----------------------------------");
+            }
+            Console.WriteLine("---------------------------------------------" + Environment.NewLine);
         }
     }
 }

@@ -282,7 +282,7 @@ namespace PUBGLibrary.API
 
     public partial class Phraser
     {
-        public static Phraser FromJson(string json) => JsonConvert.DeserializeObject<Phraser>(json, PUBGLibrary.API.Converter.Settings);
+        public static Phraser FromJson(string json) => JsonConvert.DeserializeObject<Phraser>(json, PUBGLibrary.API.Converter2.Settings);
     }
 
     static class DatumTypeExtensions
@@ -435,12 +435,7 @@ namespace PUBGLibrary.API
         }
     }
 
-    public static class Serialize
-    {
-        public static string ToJson(this Phraser self) => JsonConvert.SerializeObject(self, PUBGLibrary.API.Converter.Settings);
-    }
-
-    internal class Converter : JsonConverter
+    internal class Converter2 : JsonConverter
     {
         public override bool CanConvert(Type t) => t == typeof(DatumType) || t == typeof(Actor) || t == typeof(ShardId) || t == typeof(DeathType) || t == typeof(Won) || t == typeof(DatumType?) || t == typeof(Actor?) || t == typeof(ShardId?) || t == typeof(DeathType?) || t == typeof(Won?);
 
@@ -520,7 +515,7 @@ namespace PUBGLibrary.API
             MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
             DateParseHandling = DateParseHandling.None,
             Converters = {
-                new Converter(),
+                new Converter2(),
                 new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
             },
         };
