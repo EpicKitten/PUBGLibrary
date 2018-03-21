@@ -282,7 +282,7 @@ namespace PUBGLibrary.API
 
     public partial class Phraser
     {
-        public static Phraser FromJson(string json) => JsonConvert.DeserializeObject<Phraser>(json, PUBGLibrary.API.Converter2.Settings);
+        public static Phraser FromJson(string json) => JsonConvert.DeserializeObject<Phraser>(json, Converter2.Settings);
     }
 
     static class DatumTypeExtensions

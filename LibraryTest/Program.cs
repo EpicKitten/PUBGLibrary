@@ -11,8 +11,8 @@ namespace LibraryTest
         static void Main(string[] args)
         {
             Console.WriteLine("Started!");
-            TelemTest();
-            //APIMethod();
+            //TelemTest();
+            APIMethod();
             Console.ReadLine();
         }
         static void ReplayMethod()
@@ -125,16 +125,15 @@ namespace LibraryTest
             // /\-/\-/\-/\-/\ REMOVE THIS OR CREATE IT WITH YOUR KEY /\-/\-/\-/\-/\
 
             API pubgapi = new API(key.TheKey);
-
-
-            pubgapi.RequestMatch("fabe78-6e6f-4e32-bcf6-42aa7ec79aa1", PlatformRegionShard.PC_NA);
-            if (pubgapi.APIRequest.exception != null)
+            APIRequest pubgapirequest = pubgapi.RequestMatch("4594e998-234a-466b-a02c-030add3e7403", PlatformRegionShard.PC_NA);
+            if (pubgapirequest.exception != null)
             {
-                Console.WriteLine(pubgapi.APIRequest.exception.Message);
+                Console.WriteLine(pubgapirequest.exception.Message);
             }
             else
             {
-                Console.WriteLine(pubgapi.APIRequest.Match.TelemetryURL);
+                Console.WriteLine(pubgapirequest.Match.TelemetryURL);
+                Console.WriteLine(pubgapirequest.Telemetry.LogMatchStart.MapName);
                 //Console.WriteLine(pubgapi.APIRequest.JSONString);
                 //foreach (APIPlayer player in pubgapi.APIRequest.match.PlayerList)
                 //{

@@ -23,42 +23,51 @@ namespace PUBGLibrary.API
         /// <param name="PlatformRegion">The platform-region of the request (xbox-na, pc-oc, etc)</param>
         /// <param name="MatchID">The Match ID of the map</param>
         /// <returns>If null, the request failed</returns>
-        public void RequestSingleMatch(string APIKey, string PlatformRegion, string MatchID)
+        public APIRequest RequestSingleMatch(string APIKey, string PlatformRegion, string MatchID)
         {
             APIStatus status = new APIStatus();
+            APIRequest APIRequest = new APIRequest();
             if (status.bIsOnline)
             {
                 try
                 {
                     string APIURL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/matches/" + MatchID;
                     var webRequest = WebRequest.Create(APIURL);
-                    var APIRequest = (HttpWebRequest)webRequest;
-                    APIRequest.PreAuthenticate = true;
-                    APIRequest.Headers.Add("Authorization", "Bearer " + APIKey);
-                    APIRequest.Headers.Add("Access-Control-Allow-Origins", "*");
-                    APIRequest.Headers.Add("Access-Control-Expose-Headers", "Content-Length");
-                    APIRequest.Accept = "application/json";
-                    using (var APIResponse = APIRequest.GetResponse())
+                    var HTTPAPIRequest = (HttpWebRequest)webRequest;
+                    HTTPAPIRequest.PreAuthenticate = true;
+                    HTTPAPIRequest.Headers.Add("Authorization", "Bearer " + APIKey);
+                    HTTPAPIRequest.Headers.Add("Access-Control-Allow-Origins", "*");
+                    HTTPAPIRequest.Headers.Add("Access-Control-Expose-Headers", "Content-Length");
+                    HTTPAPIRequest.Accept = "application/json";
+                    using (var APIResponse = HTTPAPIRequest.GetResponse())
                     {
                         using (var responseStream = APIResponse.GetResponseStream())
                         {
                             var myStreamReader = new StreamReader(responseStream, Encoding.Default);
-                            JSONString = myStreamReader.ReadToEnd();
-                            MatchPhraser(JSONString);
+                            
+                            APIRequest.JSONString = myStreamReader.ReadToEnd();
+                            APIRequest.Match = MatchPhraser(JSONString);
+                            using (WebClient client = new WebClient())
+                            {
+                                APIRequest.Telemetry = TelemetryPhraser(client.DownloadString(APIRequest.Match.TelemetryURL));
+                            }
+                            return APIRequest;
+                            
                         }
                     }
                 }
                 catch (WebException e)
                 {
                     exception = e;
-                    return;
+                    return APIRequest;
                 }
             }
+            return APIRequest;
         }
-        public void MatchPhraser(string JSONstring)
+        public APIMatch MatchPhraser(string JSONstring)
         {
             var jsonmatch = Phraser.FromJson(JSONstring);
-            Match = new APIMatch();
+            APIMatch Match = new APIMatch();
             foreach (var item in jsonmatch.Included)
             {
                 if (item.Type == DatumType.Participant)
@@ -101,11 +110,12 @@ namespace PUBGLibrary.API
                 }
 
             }
+            return Match;
         }
-        public void TelemetryPhraser(string JSONstring)
+        public APITelemetry TelemetryPhraser(string JSONstring)
         {
             var jsontelemetry = TelemetryPhrase.FromJson(JSONstring);
-            Telemetry = new APITelemetry();
+            APITelemetry Telemetry = new APITelemetry();
             foreach (TelemetryPhrase telem in jsontelemetry)
             {
                 switch (telem.T)
@@ -491,6 +501,7 @@ namespace PUBGLibrary.API
                         break;
                 }
             }
+            return Telemetry;
         }
     }
 }
