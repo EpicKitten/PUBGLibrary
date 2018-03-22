@@ -1,9 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System;
 using System.IO;
 using System.Net;
-using System.Collections.Generic;
 using System.Text;
-using System;
 
 namespace PUBGLibrary.API
 {
@@ -46,7 +44,6 @@ namespace PUBGLibrary.API
                             var myStreamReader = new StreamReader(responseStream, Encoding.Default);
                             
                             APIRequest.JSONString = myStreamReader.ReadToEnd();
-                            Console.WriteLine(APIRequest.JSONString);
                             APIRequest.Match = MatchPhraser(APIRequest.JSONString);
                             using (WebClient client = new WebClient())
                             {

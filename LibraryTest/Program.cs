@@ -134,7 +134,7 @@ namespace LibraryTest
             
             API pubgapi = new API(apikey);
             APIRequest pubgapirequest = pubgapi.RequestMatch("3d93e364-833d-4dc8-9f98-8ca4cd796269", PlatformRegionShard.PC_NA);
-            if (pubgapirequest.exception.Message != null)
+            if (pubgapirequest.exception != null)
             {
                 Console.WriteLine(pubgapirequest.exception.Message);
             }
@@ -142,6 +142,17 @@ namespace LibraryTest
             {
                 Console.WriteLine(pubgapirequest.Match.TelemetryURL);
                 Console.WriteLine(pubgapirequest.Telemetry.LogMatchStart.MapName);
+                foreach (LogPlayerPosition posplayer in pubgapirequest.Telemetry.LogPlayerPositionList)
+                {
+                    if (posplayer.LoggedPlayer.PUBGName == "epickitten")
+                    {
+                        Console.WriteLine("DateTime: " + posplayer.DateTimeOffset);
+                        Console.WriteLine("ElapsedTime: "+posplayer.ElapsedTime);
+                        Console.WriteLine("X: " + posplayer.LoggedPlayer.Location.X);
+                        Console.WriteLine("Y: " + posplayer.LoggedPlayer.Location.Y);
+                        Console.WriteLine("Z: " + posplayer.LoggedPlayer.Location.Z);
+                    }
+                }
                 //Console.WriteLine(pubgapi.APIRequest.JSONString);
                 //foreach (APIPlayer player in pubgapi.APIRequest.match.PlayerList)
                 //{

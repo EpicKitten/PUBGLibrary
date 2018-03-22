@@ -291,6 +291,14 @@ namespace PUBGLibrary.API
         public double? FeulPercent { get; set; }
     }
 
+    /// 
+    /// 
+    /// 
+    /// 
+    /// REMEMBER TO ADD STRING TO VALUE TO STRING
+    /// 
+    /// 
+    /// 
     public enum AttackType
     {
         RedZone,
@@ -402,11 +410,13 @@ namespace PUBGLibrary.API
         BuggyA04_C,
         BuggyA05_C,
         BuggyA06_C,
-        DaciaA02v2_C,
-        DaciaA03v2_C,
-        DaciaA0v2_C,
-        DaciaA04v2_C,
+        Uaz_A_01_C,
         Uaz_C_01_C,
+        Uaz_B_01_C,
+        Dacia_A_01_v2_C,
+        Dacia_A_02_v2_C,
+        Dacia_A_03_v2_C,
+        Dacia_A_04_v2_C,
         DummyTransportAircraft_C,
         ParachutePlayer_C,
         Empty
@@ -736,9 +746,13 @@ namespace PUBGLibrary.API
                 case "Buggy_A_04_C": return VehicleId.BuggyA04_C;
                 case "Buggy_A_05_C": return VehicleId.BuggyA05_C;
                 case "Buggy_A_06_C": return VehicleId.BuggyA06_C;
-                case "Dacia_A_02_v2_C": return VehicleId.DaciaA02v2_C;
-                case "Dacia_A_03_v2_C": return VehicleId.DaciaA03v2_C;
-                case "Dacia_A_04_v2_C": return VehicleId.DaciaA04v2_C;
+                case "Uaz_A_01_C": return VehicleId.Uaz_A_01_C;
+                case "Uaz_B_01_C": return VehicleId.Uaz_B_01_C;
+                case "Uaz_C_01_C": return VehicleId.Uaz_C_01_C;
+                case "Dacia_A_01_v2_C": return VehicleId.Dacia_A_01_v2_C;
+                case "Dacia_A_02_v2_C": return VehicleId.Dacia_A_02_v2_C;
+                case "Dacia_A_03_v2_C": return VehicleId.Dacia_A_03_v2_C;
+                case "Dacia_A_04_v2_C": return VehicleId.Dacia_A_04_v2_C;
                 case "DummyTransportAircraft_C": return VehicleId.DummyTransportAircraft_C;
                 case "": return VehicleId.Empty;
                 case "ParachutePlayer_C": return VehicleId.ParachutePlayer_C;
@@ -783,9 +797,12 @@ namespace PUBGLibrary.API
                 case VehicleId.BuggyA04_C: serializer.Serialize(writer, "Buggy_A_04_C"); break;
                 case VehicleId.BuggyA05_C: serializer.Serialize(writer, "Buggy_A_05_C"); break;
                 case VehicleId.BuggyA06_C: serializer.Serialize(writer, "Buggy_A_06_C"); break;
-                case VehicleId.DaciaA02v2_C: serializer.Serialize(writer, "Dacia_A_02_v2_C"); break;
-                case VehicleId.DaciaA03v2_C: serializer.Serialize(writer, "Dacia_A_03_v2_C"); break;
-                case VehicleId.DaciaA04v2_C: serializer.Serialize(writer, "Dacia_A_04_v2_C"); break;
+                case VehicleId.Dacia_A_02_v2_C: serializer.Serialize(writer, "Dacia_A_02_v2_C"); break;
+                case VehicleId.Dacia_A_03_v2_C: serializer.Serialize(writer, "Dacia_A_03_v2_C"); break;
+                case VehicleId.Dacia_A_04_v2_C: serializer.Serialize(writer, "Dacia_A_04_v2_C"); break;
+                case VehicleId.Uaz_A_01_C: serializer.Serialize(writer, "Uaz_A_01_C"); break;
+                case VehicleId.Uaz_B_01_C: serializer.Serialize(writer, "Uaz_B_01_C"); break;
+                case VehicleId.Uaz_C_01_C: serializer.Serialize(writer, "Uaz_C_01_C"); break;
                 case VehicleId.DummyTransportAircraft_C: serializer.Serialize(writer, "DummyTransportAircraft_C"); break;
                 case VehicleId.Empty: serializer.Serialize(writer, ""); break;
                 case VehicleId.ParachutePlayer_C: serializer.Serialize(writer, "ParachutePlayer_C"); break;
