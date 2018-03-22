@@ -11,8 +11,8 @@ namespace LibraryTest
         static void Main(string[] args)
         {
             Console.WriteLine("Started!");
-            TelemTest();
-            //APIMethod();
+            //TelemTest();
+            APIMethod();
             Console.ReadLine();
         }
         static void ReplayMethod()
@@ -114,10 +114,17 @@ namespace LibraryTest
         }
         static void APIMethod()
         {
-            var apikey = Environment.GetEnvironmentVariable("API_KEY");
+            string apikey = Environment.GetEnvironmentVariable("API_KEY", EnvironmentVariableTarget.User);
             if (string.IsNullOrEmpty(apikey))
             {
-                throw new Exception("API_KEY environment variable is empty");
+                //throw new Exception("API_KEY environment variable is empty");
+                Console.WriteLine("API_KEY environment variable is empty");
+                Console.Write("API_KEY:");
+                byte[] inputBuffer = new byte[1024];
+                Stream inputStream = Console.OpenStandardInput(inputBuffer.Length);
+                Console.SetIn(new StreamReader(inputStream, Console.InputEncoding, false, inputBuffer.Length));
+                apikey = Console.ReadLine();
+                Environment.SetEnvironmentVariable("API_KEY", apikey, EnvironmentVariableTarget.User);
             }
             
             APIStatus APIStatus = new APIStatus();
@@ -126,8 +133,8 @@ namespace LibraryTest
             Console.WriteLine("Status - ID = " + APIStatus.ID);
             
             API pubgapi = new API(apikey);
-            APIRequest pubgapirequest = pubgapi.RequestMatch("4594e998-234a-466b-a02c-030add3e7403", PlatformRegionShard.PC_NA);
-            if (pubgapirequest.exception != null)
+            APIRequest pubgapirequest = pubgapi.RequestMatch("3d93e364-833d-4dc8-9f98-8ca4cd796269", PlatformRegionShard.PC_NA);
+            if (pubgapirequest.exception.Message != null)
             {
                 Console.WriteLine(pubgapirequest.exception.Message);
             }

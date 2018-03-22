@@ -46,7 +46,8 @@ namespace PUBGLibrary.API
                             var myStreamReader = new StreamReader(responseStream, Encoding.Default);
                             
                             APIRequest.JSONString = myStreamReader.ReadToEnd();
-                            APIRequest.Match = MatchPhraser(JSONString);
+                            Console.WriteLine(APIRequest.JSONString);
+                            APIRequest.Match = MatchPhraser(APIRequest.JSONString);
                             using (WebClient client = new WebClient())
                             {
                                 APIRequest.Telemetry = TelemetryPhraser(client.DownloadString(APIRequest.Match.TelemetryURL));
@@ -58,7 +59,10 @@ namespace PUBGLibrary.API
                 }
                 catch (WebException e)
                 {
-                    exception = e;
+                    APIRequest = new APIRequest
+                    {
+                        exception = e
+                    };
                     return APIRequest;
                 }
             }

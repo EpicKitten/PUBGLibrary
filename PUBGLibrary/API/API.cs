@@ -41,7 +41,8 @@ namespace PUBGLibrary.API
         public APIRequest RequestMatch(string MatchID, PlatformRegionShard platformRegionShard)
         {
             APIRequest APIRequest = new APIRequest();
-            return APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(platformRegionShard), MatchID);
+            APIRequest request = APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(platformRegionShard), MatchID);
+            return request;
         }
         public APIRequest RequestMatch(string ReplayDirectoryPath)
         {

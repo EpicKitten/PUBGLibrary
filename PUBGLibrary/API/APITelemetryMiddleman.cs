@@ -406,6 +406,7 @@ namespace PUBGLibrary.API
         DaciaA03v2_C,
         DaciaA0v2_C,
         DaciaA04v2_C,
+        Uaz_C_01_C,
         DummyTransportAircraft_C,
         ParachutePlayer_C,
         Empty
