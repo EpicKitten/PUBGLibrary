@@ -126,11 +126,13 @@ namespace PUBGLibrary.API
                         logCarePackageLand.CarePackage.DateTimeOffset = (DateTimeOffset)telem.D;
                         foreach (ChildItem childitem in telem.ItemPackage.Items)
                         {
-                            Item item = new Item();
-                            item.Categroy = childitem.Category;
-                            item.ItemID = childitem.ItemId;
-                            item.StackCount = (int)childitem.StackCount;
-                            item.SubCategroy = childitem.SubCategory;
+                            Item item = new Item
+                            {
+                                Categroy = childitem.Category,
+                                ItemID = childitem.ItemId,
+                                StackCount = (int)childitem.StackCount,
+                                SubCategroy = childitem.SubCategory
+                            };
                             logCarePackageLand.CarePackage.Items.Add(item);
                         }
                         logCarePackageLand.CarePackage.Location.X = (double)telem.ItemPackage.Location.X;
@@ -144,11 +146,13 @@ namespace PUBGLibrary.API
                         logCarePackageSpawn.CarePackage.DateTimeOffset = (DateTimeOffset)telem.D;
                         foreach (ChildItem childitem in telem.ItemPackage.Items)
                         {
-                            Item item = new Item();
-                            item.Categroy = childitem.Category;
-                            item.ItemID = childitem.ItemId;
-                            item.StackCount = (int)childitem.StackCount;
-                            item.SubCategroy = childitem.SubCategory;
+                            Item item = new Item
+                            {
+                                Categroy = childitem.Category,
+                                ItemID = childitem.ItemId,
+                                StackCount = (int)childitem.StackCount,
+                                SubCategroy = childitem.SubCategory
+                            };
                             logCarePackageSpawn.CarePackage.Items.Add(item);
                         }
                         logCarePackageSpawn.CarePackage.Location.X = (double)telem.ItemPackage.Location.X;
@@ -312,10 +316,12 @@ namespace PUBGLibrary.API
                         Telemetry.LogMatchEnd.DateTimeOffset = (DateTimeOffset)telem.D;
                         foreach (Character person in telem.Characters)
                         {
-                            Player player = new Player();
-                            player.AccountID = person.AccountId;
-                            player.PUBGName = person.Name;
-                            player.Health = (double)person.Health;
+                            Player player = new Player
+                            {
+                                AccountID = person.AccountId,
+                                PUBGName = person.Name,
+                                Health = (double)person.Health
+                            };
                             player.Location.X = (double)person.Location.X;
                             player.Location.Y = (double)person.Location.Y;
                             player.Location.Z = (double)person.Location.Z;
@@ -328,10 +334,12 @@ namespace PUBGLibrary.API
                         Telemetry.LogMatchStart.Weather = telem.WeatherId;
                         foreach (Character person in telem.Characters)
                         {
-                            Player player = new Player();
-                            player.AccountID = person.AccountId;
-                            player.PUBGName = person.Name;
-                            player.Health = (double)person.Health;
+                            Player player = new Player
+                            {
+                                AccountID = person.AccountId,
+                                PUBGName = person.Name,
+                                Health = (double)person.Health
+                            };
                             player.Location.X = (double)person.Location.X;
                             player.Location.Y = (double)person.Location.Y;
                             player.Location.Z = (double)person.Location.Z;
@@ -339,12 +347,14 @@ namespace PUBGLibrary.API
                         }
                         break;
                     case T.LogPlayerAttack:
-                        LogPlayerAttack logPlayerAttack = new LogPlayerAttack();
-                        logPlayerAttack.AttackID = (double)telem.AttackId;
-                        logPlayerAttack.AttackType = telem.AttackType;
+                        LogPlayerAttack logPlayerAttack = new LogPlayerAttack
+                        {
+                            AttackID = (double)telem.AttackId,
+                            AttackType = telem.AttackType
+                        };
                         logPlayerAttack.Transport.fuelPercent = (int)telem.Vehicle.FeulPercent;
                         logPlayerAttack.Transport.healthPercent = (double)telem.Vehicle.HealthPercent;
-                        logPlayerAttack.Transport.vehicleID = telem.Vehicle.VehicleId;
+                        logPlayerAttack.Transport.vehicleID = (VehicleId)telem.Vehicle.VehicleId;
                         logPlayerAttack.Transport.vehicleType = telem.Vehicle.VehicleType;
                         logPlayerAttack.Attacker.AccountID = telem.Attacker.AccountId;
                         logPlayerAttack.Attacker.Health = (double)telem.Attacker.Health;
@@ -374,8 +384,10 @@ namespace PUBGLibrary.API
                         Telemetry.LogPlayerCreateList.Add(logPlayerCreate);
                         break;
                     case T.LogPlayerKill:
-                        LogPlayerKill logPlayerKill = new LogPlayerKill();
-                        logPlayerKill.AttackID = (double)telem.AttackId;
+                        LogPlayerKill logPlayerKill = new LogPlayerKill
+                        {
+                            AttackID = (double)telem.AttackId
+                        };
                         logPlayerKill.Killer.AccountID = telem.Killer.AccountId;
                         logPlayerKill.Killer.Health = (double)telem.Killer.Health;
                         logPlayerKill.Killer.Location.X = (double)telem.Killer.Location.X;
@@ -397,16 +409,20 @@ namespace PUBGLibrary.API
                         Telemetry.LogPlayerKillList.Add(logPlayerKill);
                         break;
                     case T.LogPlayerLogin:
-                        LogPlayerLogin logPlayerLogin = new LogPlayerLogin();
-                        logPlayerLogin.AccountID = telem.AccountId;
-                        logPlayerLogin.DateTime = (DateTimeOffset)telem.D;
-                        logPlayerLogin.Result = (bool)telem.Result;
-                        logPlayerLogin.ErrorMessage = telem.ErrorMessage;
+                        LogPlayerLogin logPlayerLogin = new LogPlayerLogin
+                        {
+                            AccountID = telem.AccountId,
+                            DateTime = (DateTimeOffset)telem.D,
+                            Result = (bool)telem.Result,
+                            ErrorMessage = telem.ErrorMessage
+                        };
                         break;
                     case T.LogPlayerLogout:
-                        LogPlayerLogout logPlayerLogout = new LogPlayerLogout();
-                        logPlayerLogout.AccountID = telem.AccountId;
-                        logPlayerLogout.DateTimeOffset = (DateTimeOffset)telem.D;
+                        LogPlayerLogout logPlayerLogout = new LogPlayerLogout
+                        {
+                            AccountID = telem.AccountId,
+                            DateTimeOffset = (DateTimeOffset)telem.D
+                        };
                         Telemetry.LogPlayerLogoutList.Add(logPlayerLogout);
                         break;
                     case T.LogPlayerPosition:
@@ -463,7 +479,7 @@ namespace PUBGLibrary.API
                         logVehicleDestroy.Attacker.TeamID = (int)telem.Attacker.TeamId;
                         logVehicleDestroy.DestroyedVehicle.fuelPercent = (int)telem.Vehicle.FeulPercent;
                         logVehicleDestroy.DestroyedVehicle.healthPercent = (double)telem.Vehicle.HealthPercent;
-                        logVehicleDestroy.DestroyedVehicle.vehicleID = telem.Vehicle.VehicleId;
+                        logVehicleDestroy.DestroyedVehicle.vehicleID = (VehicleId)telem.Vehicle.VehicleId;
                         logVehicleDestroy.DestroyedVehicle.vehicleType = telem.Vehicle.VehicleType;
                         Telemetry.LogVehicleDestroyList.Add(logVehicleDestroy);
                         break;
@@ -479,7 +495,7 @@ namespace PUBGLibrary.API
                         logVehicleLeave.Player.TeamID = (int)telem.Character.TeamId;
                         logVehicleLeave.Vehicle.fuelPercent = (int)telem.Vehicle.FeulPercent;
                         logVehicleLeave.Vehicle.healthPercent = (double)telem.Vehicle.HealthPercent;
-                        logVehicleLeave.Vehicle.vehicleID = telem.Vehicle.VehicleId;
+                        logVehicleLeave.Vehicle.vehicleID = (VehicleId)telem.Vehicle.VehicleId;
                         logVehicleLeave.Vehicle.vehicleType = telem.Vehicle.VehicleType;
                         Telemetry.LogVehicleLeaveList.Add(logVehicleLeave);
                         break;
@@ -495,7 +511,7 @@ namespace PUBGLibrary.API
                         logVehicleRide.Player.TeamID = (int)telem.Character.TeamId;
                         logVehicleRide.Vehicle.fuelPercent = (int)telem.Vehicle.FeulPercent;
                         logVehicleRide.Vehicle.healthPercent = (double)telem.Vehicle.HealthPercent;
-                        logVehicleRide.Vehicle.vehicleID = telem.Vehicle.VehicleId;
+                        logVehicleRide.Vehicle.vehicleID = (VehicleId)telem.Vehicle.VehicleId;
                         logVehicleRide.Vehicle.vehicleType = telem.Vehicle.VehicleType;
                         Telemetry.LogVehicleRideList.Add(logVehicleRide);
                         break;

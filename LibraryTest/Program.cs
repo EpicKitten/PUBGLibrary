@@ -313,7 +313,28 @@ namespace LibraryTest
                 Console.WriteLine("Created at Z: " + player.Location.Z);
                 Console.WriteLine("----------------------------------");
             }
+            Console.WriteLine("------------- Vehcile End! ----------------");
+            foreach (LogVehicleRide rodeVehicle in Telemetry.LogVehicleRideList)
+            {
+                Console.WriteLine("Datetime: " + rodeVehicle.DateTimeOffset);
+                Console.WriteLine("--------- Player ----------");
+                Console.WriteLine("PUBG Name: " + rodeVehicle.Player.PUBGName);
+                Console.WriteLine("AccountID: " + rodeVehicle.Player.AccountID);
+                Console.WriteLine("Health: " + rodeVehicle.Player.Health);
+                Console.WriteLine("Team ID: " + rodeVehicle.Player.TeamID);
+                Console.WriteLine("Created at X: " + rodeVehicle.Player.Location.X);
+                Console.WriteLine("Created at Y: " + rodeVehicle.Player.Location.Y);
+                Console.WriteLine("Created at Z: " + rodeVehicle.Player.Location.Z);
+                Console.WriteLine("------------ Vehicle ------------------");
+                Console.WriteLine("VehicleType: " + rodeVehicle.Vehicle.vehicleType);
+                Console.WriteLine("VehicleID: " + rodeVehicle.Vehicle.vehicleID);
+                Console.WriteLine("VehicleHealth: " + rodeVehicle.Vehicle.healthPercent);
+                Console.WriteLine("VehicleFuel: " + rodeVehicle.Vehicle.fuelPercent);
+                Console.WriteLine("---------------------------------------");
+
+            }
             Console.WriteLine("---------------------------------------------" + Environment.NewLine);
+
         }
     }
 }

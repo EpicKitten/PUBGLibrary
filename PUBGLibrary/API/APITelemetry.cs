@@ -205,7 +205,7 @@ namespace PUBGLibrary.API
     public class Transport
     {
         public string vehicleType;
-        public string vehicleID;
+        public VehicleId vehicleID;
         public double healthPercent;
         public int fuelPercent;
     }

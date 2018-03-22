@@ -282,7 +282,7 @@ namespace PUBGLibrary.API
         public string VehicleType { get; set; }
 
         [JsonProperty("vehicleId")]
-        public string VehicleId { get; set; }
+        public VehicleId? VehicleId { get; set; }
 
         [JsonProperty("healthPercent")]
         public double? HealthPercent { get; set; }
