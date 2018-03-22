@@ -114,17 +114,18 @@ namespace LibraryTest
         }
         static void APIMethod()
         {
-
+            var apikey = Environment.GetEnvironmentVariable("API_KEY");
+            if (string.IsNullOrEmpty(apikey))
+            {
+                throw new Exception("API_KEY environment variable is empty");
+            }
+            
             APIStatus APIStatus = new APIStatus();
             Console.WriteLine("Status - IsOnline = " + APIStatus.bIsOnline);
             Console.WriteLine("Status - APIVersionRelease = " + APIStatus.APIVersionRelease);
             Console.WriteLine("Status - ID = " + APIStatus.ID);
-
-            // \/-\/-\/-\/-\/ REMOVE THIS OR CREATE IT WITH YOUR KEY \/-\/-\/-\/-\/
-            PrivateAPIKey key = new PrivateAPIKey();
-            // /\-/\-/\-/\-/\ REMOVE THIS OR CREATE IT WITH YOUR KEY /\-/\-/\-/\-/\
-
-            API pubgapi = new API(key.TheKey);
+            
+            API pubgapi = new API(apikey);
             APIRequest pubgapirequest = pubgapi.RequestMatch("4594e998-234a-466b-a02c-030add3e7403", PlatformRegionShard.PC_NA);
             if (pubgapirequest.exception != null)
             {
