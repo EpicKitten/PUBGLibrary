@@ -8,8 +8,6 @@ namespace PUBGLibrary.API
 {
     using System;
     using System.Collections.Generic;
-    using System.Net;
-
     using System.Globalization;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -50,7 +48,7 @@ namespace PUBGLibrary.API
     public partial class DataAttributes
     {
         [JsonProperty("createdAt")]
-        public System.DateTimeOffset? CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         [JsonProperty("duration")]
         public long? Duration { get; set; }

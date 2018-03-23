@@ -128,6 +128,15 @@ namespace PUBGLibrary.Utils
             ReplayList.Reverse();
             return ReplayList;
         }
+        /// <summary>
+        /// Upload a file to a FTP server
+        /// </summary>
+        /// <param name="username">Username for the FTP server</param>
+        /// <param name="password">Password for the FTP server</param>
+        /// <param name="baseftpfolder">The base folder of where your going to upload</param>
+        /// <param name="localfolder">The folder path to the file</param>
+        /// <param name="localfile">The file name in the folther path</param>
+        /// <returns></returns>
         public static string UploadToFTP(string username, string password, string baseftpfolder, string localfolder, string localfile)
         {
             try

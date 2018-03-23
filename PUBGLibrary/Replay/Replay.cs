@@ -249,19 +249,21 @@ namespace PUBGLibrary.Replay
             if (RecordingUserStats)
             {
                 JArray RecordingUserStatsArray = new JArray();
-                JObject RUSAContainer = new JObject();
-                RUSAContainer.Add("PlayerName", Recorder.PlayerName);
-                RUSAContainer.Add("PlayerID", Recorder.PlayerID);
-                RUSAContainer.Add("TeamID", Recorder.PlayerTeamID);
-                RUSAContainer.Add("Ranking", Recorder.Ranking);
-                RUSAContainer.Add("IsRecordingPlayer", Recorder.IsRecordingUser);
-                RUSAContainer.Add("Kills", Recorder.Kills);
-                RUSAContainer.Add("Headshots", Recorder.Headshots);
-                RUSAContainer.Add("TotalDamage" ,Recorder.TotalGivenDamages);
-                RUSAContainer.Add("LongestDistanceKillInCM" ,Recorder.LongestDistanceKillInCM);
-                RUSAContainer.Add("LongestDistanceKillInM" ,Recorder.LongestDistanceKillInM);
-                RUSAContainer.Add("TotalDistanceMovedinM" ,Recorder.TotalMovedDistanceInM);
-                RUSAContainer.Add("TotalDistanceMovedinMorKM)", Recorder.TotalMovedDistanceHumanReadable);
+                JObject RUSAContainer = new JObject
+                {
+                    { "PlayerName", Recorder.PlayerName },
+                    { "PlayerID", Recorder.PlayerID },
+                    { "TeamID", Recorder.PlayerTeamID },
+                    { "Ranking", Recorder.Ranking },
+                    { "IsRecordingPlayer", Recorder.IsRecordingUser },
+                    { "Kills", Recorder.Kills },
+                    { "Headshots", Recorder.Headshots },
+                    { "TotalDamage", Recorder.TotalGivenDamages },
+                    { "LongestDistanceKillInCM", Recorder.LongestDistanceKillInCM },
+                    { "LongestDistanceKillInM", Recorder.LongestDistanceKillInM },
+                    { "TotalDistanceMovedinM", Recorder.TotalMovedDistanceInM },
+                    { "TotalDistanceMovedinMorKM)", Recorder.TotalMovedDistanceHumanReadable }
+                };
                 RecordingUserStatsArray.Add(RUSAContainer);
                 MatchOverviewJSON.Add("RecordingUserStatsArray", RecordingUserStatsArray);
              

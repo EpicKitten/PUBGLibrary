@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+using System.Threading;
 
 namespace PUBGLibrary.API
 {
@@ -23,6 +25,74 @@ namespace PUBGLibrary.API
         {
             APIKey = API_Key;
         }
+        /// <summary>
+        /// Request a single match using a MatchID and Platform-Region Shard that the match was played in
+        /// </summary>
+        /// <param name="MatchID">The MatchID to look up</param>
+        /// <param name="platformRegionShard">The region the match was played in</param>
+        /// <returns></returns>
+        public APIRequest RequestMatch(string MatchID, PlatformRegionShard platformRegionShard)
+        {
+            APIRequest APIRequest = new APIRequest();
+            APIRequest request = APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(platformRegionShard), MatchID);
+            return request;
+        }
+        /// <summary>
+        /// Request a single match using a PUBG replay
+        /// </summary>
+        /// <param name="ReplayDirectoryPath">The replay to look up</param>
+        /// <returns></returns>
+        public APIRequest RequestMatch(string ReplayDirectoryPath)
+        {
+            Replay.Replay replay = new Replay.Replay(ReplayDirectoryPath);
+            APIRequest APIRequest = new APIRequest();
+            return APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(replay.Summary.KnownRegion), replay.Info.MatchID);
+        }
+        /// <summary>
+        /// Request a single match using the Replay class
+        /// </summary>
+        /// <param name="replay">The replay to read</param>
+        /// <returns></returns>
+        public APIRequest RequestMatch(Replay.Replay replay)
+        {
+            APIRequest APIRequest = new APIRequest();
+            return APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(replay.Summary.KnownRegion), replay.Info.MatchID);
+        }
+        /// <summary>
+        /// Requests multiple matches from a list of replay files
+        /// </summary>
+        /// <param name="replays">Replays to request</param>
+        /// <param name="RateLimitPerMintue">The ratelimit on the API key given (How many times we can ask the PUBG API about a match)</param>
+        /// <returns></returns>
+        public List<APIRequest> RequestMatches(List<Replay.Replay> replays, int RateLimitPerMintue)
+        {
+            List<APIRequest> APIRequestList = new List<APIRequest>();
+            if (replays.Count <= RateLimitPerMintue)
+            {
+                foreach (Replay.Replay replay in replays)
+                {
+                    APIRequestList.Add(RequestMatch(replay));
+                }
+                return APIRequestList;
+            }
+            else
+            {
+                int requestsmade = 0;
+                do
+                {
+                    for (int i = 0; i < RateLimitPerMintue; i++)
+                    {
+                        
+                        APIRequestList.Add(RequestMatch(replays[requestsmade]));
+                        requestsmade++;
+                    }
+                    Thread.Sleep(60000);
+
+                } while (requestsmade < replays.Count);
+                return APIRequestList;
+            }
+
+        }
         public static string GetEnumDescription(Enum value)
         {
             FieldInfo fi = value.GetType().GetField(value.ToString());
@@ -37,23 +107,6 @@ namespace PUBGLibrary.API
             {
                 return value.ToString();
             }
-        }
-        public APIRequest RequestMatch(string MatchID, PlatformRegionShard platformRegionShard)
-        {
-            APIRequest APIRequest = new APIRequest();
-            APIRequest request = APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(platformRegionShard), MatchID);
-            return request;
-        }
-        public APIRequest RequestMatch(string ReplayDirectoryPath)
-        {
-            Replay.Replay replay = new Replay.Replay(ReplayDirectoryPath);
-            APIRequest APIRequest = new APIRequest();
-            return APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(replay.Summary.KnownRegion), replay.Info.MatchID);
-        }
-        public APIRequest RequestMatch(Replay.Replay replay)
-        {
-            APIRequest APIRequest = new APIRequest();
-            return APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(replay.Summary.KnownRegion), replay.Info.MatchID);
         }
     }
     /// <summary>

@@ -18,21 +18,6 @@ namespace PUBGLibrary.Replay
         Sunset,
     }
     /// <summary>
-    /// A list of regions
-    /// </summary>
-    public enum Region
-    {
-        Unknown,
-        NorthAmerica, //na - North America
-        Europe, //eu - Europe
-        KoreaJapan, //krjp - 
-        Asia, //as - Asia
-        Oceania, // oc - 
-        SouthAmerica, //sa - 
-        SouthAsia, //sea - South East Asia
-        Kakao,  //Unknown but listed here Mar. 12 2018 5:12PM PST (https://web.archive.org/web/20180313000618/https://developer.playbattlegrounds.com/docs/en/making-requests.html
-    }
-    /// <summary>
     /// Used for storing data from the ReplaySummary file found in the replay files
     /// </summary>
     public class ReplaySummary
@@ -58,7 +43,7 @@ namespace PUBGLibrary.Replay
         }
 
         [JsonProperty("regionName")]
-        private string regionName
+        private string RegionName
         {
             set
             {
@@ -99,7 +84,7 @@ namespace PUBGLibrary.Replay
         public string District;
 
         [JsonProperty("weatherName")]
-        private string weatherName
+        private string WeatherName
         {
             set
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -64,6 +65,74 @@ namespace PUBGLibrary.API
                 }
             }
             return APIRequest;
+        }
+        public APIRequest RequestFilteredMatches(string APIKey, string PlatformRegion, string filterstring)
+        {
+            APIStatus status = new APIStatus();
+            APIRequest APIRequest = new APIRequest();
+            if (status.bIsOnline)
+            {
+                try
+                {
+                    string APIURL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/matches/?" + filterstring;
+                    var webRequest = WebRequest.Create(APIURL);
+                    var HTTPAPIRequest = (HttpWebRequest)webRequest;
+                    HTTPAPIRequest.PreAuthenticate = true;
+                    HTTPAPIRequest.Headers.Add("Authorization", "Bearer " + APIKey);
+                    HTTPAPIRequest.Headers.Add("Access-Control-Allow-Origins", "*");
+                    HTTPAPIRequest.Headers.Add("Access-Control-Expose-Headers", "Content-Length");
+                    HTTPAPIRequest.Accept = "application/json";
+                    using (var APIResponse = HTTPAPIRequest.GetResponse())
+                    {
+                        using (var responseStream = APIResponse.GetResponseStream())
+                        {
+                            var myStreamReader = new StreamReader(responseStream, Encoding.Default);
+
+                            APIRequest.JSONString = myStreamReader.ReadToEnd();
+                            //APIRequest.Match = MatchPhraser(APIRequest.JSONString);
+                            //using (WebClient client = new WebClient())
+                            //{
+                            //    APIRequest.Telemetry = TelemetryPhraser(client.DownloadString(APIRequest.Match.TelemetryURL));
+                            //}
+                            return APIRequest;
+
+                        }
+                    }
+                }
+                catch (WebException e)
+                {
+                    APIRequest = new APIRequest
+                    {
+                        exception = e
+                    };
+                    return APIRequest;
+                }
+            }
+            return APIRequest;
+        }
+        public APIRequest RequestFilteredMatches(
+            string APIKey,
+            string PlatformRegion,
+            FilterType filterTypeA,
+            string FilterDataA,
+            FilterType filterTypeB = FilterType.None,
+            string FilterDataB = "",
+            FilterType filterTypeC = FilterType.None,
+            string FilterDataC = ""
+            )
+        {
+            StringBuilder filterbuild = new StringBuilder();
+            filterbuild.Append(API.GetEnumDescription(filterTypeA)).Append(FilterDataA);
+            Console.WriteLine("https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/matches/?" + filterbuild.ToString());
+            return RequestFilteredMatches(APIKey, PlatformRegion, filterbuild.ToString());
+            //if (filterTypeB != FilterType.None)
+            //{
+            //    filterbuild.Append("&").Append(API.GetEnumDescription(filterTypeB)).Append(FilterDataB);
+            //}
+            //if (filterTypeC != FilterType.None)
+            //{
+            //    filterbuild.Append("&").Append(API.GetEnumDescription(filterTypeC)).Append(FilterDataC);
+            //}
         }
         public APIMatch MatchPhraser(string JSONstring)
         {
@@ -520,5 +589,24 @@ namespace PUBGLibrary.API
             }
             return Telemetry;
         }
+    }
+    public enum FilterType
+    {
+        None,
+        /// <summary>
+        /// Filter by player IDs
+        /// </summary>
+        [Description("filter[playerIds]=")]
+        playerIDs,
+        /// <summary>
+        /// Filter by player names
+        /// </summary>
+        [Description("filter[playerNames]=")]
+        playerNames,
+        /// <summary>
+        /// Filter by game mode
+        /// </summary>
+        [Description("filter[gameMode]=")]
+        GameMode,
     }
 }

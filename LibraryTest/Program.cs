@@ -131,7 +131,6 @@ namespace LibraryTest
             Console.WriteLine("Status - IsOnline = " + APIStatus.bIsOnline);
             Console.WriteLine("Status - APIVersionRelease = " + APIStatus.APIVersionRelease);
             Console.WriteLine("Status - ID = " + APIStatus.ID);
-            
             API pubgapi = new API(apikey);
             APIRequest pubgapirequest = pubgapi.RequestMatch("3d93e364-833d-4dc8-9f98-8ca4cd796269", PlatformRegionShard.PC_NA);
             if (pubgapirequest.exception != null)
