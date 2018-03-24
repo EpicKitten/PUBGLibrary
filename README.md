@@ -1,5 +1,5 @@
 # PUBGLibrary
-A .NET Core PUBG API and Replay library
+A .NET Standard PUBG API and Replay library
 
 ## Replay
 The replay class can be created by adding the path to the directory of the replay as a paramter to the class.
