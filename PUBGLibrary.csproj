@@ -9,13 +9,21 @@
     <Description>A .NET Standard PUBG API and Replay library</Description>
     <PackageLicenseUrl>https://github.com/EpicKitten/PUBGLibrary/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/EpicKitten/PUBGLibrary</RepositoryUrl>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <ApplicationIcon />
+    <Win32Resource />
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove=".gitattributes" />
+    <None Remove=".gitignore" />
     <None Remove="LibraryTest.rsls" />
+    <None Remove="LICENSE" />
     <None Remove="NET46LibraryTest.rsls" />
     <None Remove="packages.rsls" />
     <None Remove="PUBGLibrary.sln.rsls" />
+    <None Remove="README.md" />
   </ItemGroup>
 
   <ItemGroup>
