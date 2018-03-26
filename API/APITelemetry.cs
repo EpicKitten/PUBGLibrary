@@ -6,15 +6,213 @@ namespace PUBGLibrary.API
     public class APITelemetry
     {
         public LogMatchDefinition LogMatchDefinition = new LogMatchDefinition();
+        public LogMatchEnd LogMatchEnd = new LogMatchEnd();
+        public LogMatchStart LogMatchStart = new LogMatchStart();
         public List<LogPlayerCreate> LogPlayerCreateList = new List<LogPlayerCreate>();
         public List<LogCarePackageLand> LogCarePackageLandList = new List<LogCarePackageLand>();
         public List<LogCarePackageSpawn> LogCarePackageSpawnList = new List<LogCarePackageSpawn>();
         public List<LogPlayerLogin> LogPlayerLoginList = new List<LogPlayerLogin>();
         public List<LogGameStatePeriodic> LogGameStatePeriodicList = new List<LogGameStatePeriodic>();
-        public LogMatchEnd LogMatchEnd = new LogMatchEnd();
         public List<LogItemAttach> logItemAttachList = new List<LogItemAttach>();
         public List<LogPlayerAttack> logPlayerAttackList = new List<LogPlayerAttack>();
-        public LogMatchStart LogMatchStart = new LogMatchStart();
+        public List<LogPlayerKill> LogPlayerKillList = new List<LogPlayerKill>();
+        public List<LogPlayerPosition> LogPlayerPositionList = new List<LogPlayerPosition>();
+        public List<LogPlayerLogout> LogPlayerLogoutList = new List<LogPlayerLogout>();
+        public List<LogPlayerTakeDamage> LogPlayerTakeDamageList = new List<LogPlayerTakeDamage>();
+        public List<LogVehicleDestroy> LogVehicleDestroyList = new List<LogVehicleDestroy>();
+        public List<LogVehicleLeave> LogVehicleLeaveList = new List<LogVehicleLeave>();
+        public List<LogVehicleRide> LogVehicleRideList = new List<LogVehicleRide>();
+        public List<LogItemUse> LogItemUseList = new List<LogItemUse>();
+        public List<LogItemUnequip> LogItemUnequipList = new List<LogItemUnequip>();
+        public List<LogItemPickup> LogItemPickupList = new List<LogItemPickup>();
+        public List<LogItemEquip> LogItemEquipList = new List<LogItemEquip>();
+        public List<LogItemDrop> LogItemDropList = new List<LogItemDrop>();
+        public List<LogItemDetach> LogItemDetachList = new List<LogItemDetach>();
+
+        /// <summary>
+        /// Creates a list of players with events attached to them
+        /// </summary>
+        /// <remarks>Goes through every list and searches for data from the AccountID</remarks>
+        public List<PlayerSpecificLog> PlayerSpecificLogList
+        {
+            get
+            {
+                List<PlayerSpecificLog> TempPSLL = new List<PlayerSpecificLog>();
+                foreach (Player player in LogMatchStart.PlayerList)
+                {
+                    PlayerSpecificLog playerSpecificLog = new PlayerSpecificLog
+                    {
+                        PUBGName = player.PUBGName,
+                        AccountID = player.AccountID
+                    };
+                    foreach (LogPlayerCreate createdPlayer in LogPlayerCreateList)
+                    {
+                        if (createdPlayer.Player.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.LogPlayerCreateList.Add(createdPlayer);
+                        }
+                    }
+                    foreach (LogPlayerLogin loggedinPlayer in LogPlayerLoginList)
+                    {
+                        if (loggedinPlayer.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.LogPlayerLoginList.Add(loggedinPlayer);
+                        }
+                    }
+                    foreach (LogItemAttach attacheditem in logItemAttachList)
+                    {
+                        if (attacheditem.Player.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.logItemAttachList.Add(attacheditem);
+                        }
+                    }
+                    foreach (LogPlayerAttack playerattack in logPlayerAttackList)
+                    {
+                        if (playerattack.Attacker.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.logPlayerAttackList.Add(playerattack);
+                        }
+                    }
+                    foreach (LogPlayerKill playerkill in LogPlayerKillList)
+                    {
+                        if ((playerkill.Killer.AccountID == player.AccountID) || (playerkill.Victim.AccountID == player.AccountID))
+                        {
+                            playerSpecificLog.LogPlayerKillList.Add(playerkill);
+                        }
+                    }
+                    foreach (LogPlayerPosition playerpos in LogPlayerPositionList)
+                    {
+                        if (playerpos.LoggedPlayer.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.LogPlayerPositionList.Add(playerpos);
+                        }
+                    }
+                    foreach (LogPlayerLogout loggedoutplayer in LogPlayerLogoutList)
+                    {
+                        if (loggedoutplayer.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.LogPlayerLogoutList.Add(loggedoutplayer);
+                        }
+                    }
+                    foreach(LogPlayerTakeDamage playerdmg in LogPlayerTakeDamageList)
+                    {
+                        if ((playerdmg.Attacker.AccountID == player.AccountID) || (playerdmg.Victim.AccountID == player.AccountID))
+                        {
+                            playerSpecificLog.LogPlayerTakeDamageList.Add(playerdmg);
+                        }
+                    }
+                    foreach (LogVehicleDestroy destroyedcar in LogVehicleDestroyList)
+                    {
+                        if (destroyedcar.Attacker.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.LogVehicleDestroyList.Add(destroyedcar);
+                        }
+                    }
+                    foreach (LogVehicleLeave leftcar in LogVehicleLeaveList)
+                    {
+                        if (leftcar.Player.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.LogVehicleLeaveList.Add(leftcar);
+                        }
+                    }
+                    foreach (LogVehicleRide uber in LogVehicleRideList)
+                    {
+                        if (uber.Player.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.LogVehicleRideList.Add(uber);
+                        }
+                    }
+                    foreach (LogItemUse useditem in LogItemUseList)
+                    {
+                        if (useditem.Player.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.LogItemUseList.Add(useditem);
+                        }
+                    }
+                    foreach (LogItemUnequip unequippeditem in LogItemUnequipList)
+                    {
+                        if (unequippeditem.Player.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.LogItemUnequipList.Add(unequippeditem);
+                        }
+                    }
+                    foreach (LogItemPickup pickedupitem in LogItemPickupList)
+                    {
+                        if (pickedupitem.Player.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.LogItemPickupList.Add(pickedupitem);
+                        }
+                    }
+                    foreach (LogItemEquip equippeditem in LogItemEquipList)
+                    {
+                        if (equippeditem.Player.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.LogItemEquipList.Add(equippeditem);
+                        }
+                    }
+                    foreach (LogItemDrop droppeditem in LogItemDropList)
+                    {
+                        if (droppeditem.Player.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.LogItemDropList.Add(droppeditem);
+                        }
+                    }
+                    foreach (LogItemDetach detacheditem in LogItemDetachList)
+                    {
+                        if (detacheditem.Player.AccountID == player.AccountID)
+                        {
+                            playerSpecificLog.LogItemDetachList.Add(detacheditem);
+                        }
+                    }
+                    TempPSLL.Add(playerSpecificLog);
+                }
+                return TempPSLL;
+            }
+        }
+        /// <summary>
+        /// Search the PlayerSpecificLog list for Account ID matching the one provided
+        /// </summary>
+        /// <param name="input">The AccountID (i.e, account.g8743hfb31023bhf13bbuf3190321fwu) or PUBGName of the player to search for </param>
+        /// <param name="searchType">The type of search to perform</param>
+        /// <returns>A PlayerSpecificLog class to call associated lists with</returns>
+        public PlayerSpecificLog GetPlayerSpecificLog(string input, SearchType searchType = SearchType.AccountID)
+        {
+            foreach (PlayerSpecificLog psl in PlayerSpecificLogList)
+            {
+                switch (searchType)
+                {
+                    case SearchType.AccountID:
+                        if (psl.AccountID == input)
+                        {
+                            return psl;
+                        }
+                        break;
+                    case SearchType.PUBGName:
+                        if (psl.PUBGName == input)
+                        {
+                            return psl;
+                        }
+                        break;
+                }
+
+            }
+            return new PlayerSpecificLog();
+        }
+
+    }
+    public enum SearchType
+    {
+        AccountID,
+        PUBGName
+    }
+    public class PlayerSpecificLog
+    {
+        public string PUBGName;
+        public string AccountID;
+        public List<LogPlayerLogin> LogPlayerLoginList = new List<LogPlayerLogin>();
+        public List<LogPlayerCreate> LogPlayerCreateList = new List<LogPlayerCreate>();
+        public List<LogItemAttach> logItemAttachList = new List<LogItemAttach>();
+        public List<LogPlayerAttack> logPlayerAttackList = new List<LogPlayerAttack>();
         public List<LogPlayerKill> LogPlayerKillList = new List<LogPlayerKill>();
         public List<LogPlayerPosition> LogPlayerPositionList = new List<LogPlayerPosition>();
         public List<LogPlayerLogout> LogPlayerLogoutList = new List<LogPlayerLogout>();
@@ -272,4 +470,5 @@ namespace PUBGLibrary.API
         public double Y;
         public double Z;
     }
+    
 }

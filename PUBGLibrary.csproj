@@ -4,6 +4,11 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>PUBGLibrary</AssemblyName>
     <RootNamespace>PUBGLibrary</RootNamespace>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <PackageProjectUrl>https://github.com/EpicKitten/PUBGLibrary</PackageProjectUrl>
+    <Description>A .NET Standard PUBG API and Replay library</Description>
+    <PackageLicenseUrl>https://github.com/EpicKitten/PUBGLibrary/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/EpicKitten/PUBGLibrary</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
