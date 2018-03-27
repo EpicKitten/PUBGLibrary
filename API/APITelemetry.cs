@@ -209,22 +209,73 @@ namespace PUBGLibrary.API
     {
         public string PUBGName;
         public string AccountID;
+        /// <summary>
+        /// When the player logs into the server
+        /// </summary>
         public List<LogPlayerLogin> LogPlayerLoginList = new List<LogPlayerLogin>();
+        /// <summary>
+        /// When the server actually creates the player in game
+        /// </summary>
         public List<LogPlayerCreate> LogPlayerCreateList = new List<LogPlayerCreate>();
+        /// <summary>
+        /// When the player attaches a attachment to a gun
+        /// </summary>
         public List<LogItemAttach> logItemAttachList = new List<LogItemAttach>();
+        /// <summary>
+        /// When the player damages anything that isnt another player
+        /// </summary>
         public List<LogPlayerAttack> logPlayerAttackList = new List<LogPlayerAttack>();
+        /// <summary>
+        /// When the player kills another player
+        /// </summary>
         public List<LogPlayerKill> LogPlayerKillList = new List<LogPlayerKill>();
+        /// <summary>
+        /// The position of the player every 10 seconds
+        /// </summary>
         public List<LogPlayerPosition> LogPlayerPositionList = new List<LogPlayerPosition>();
+        /// <summary>
+        /// When the player logs out
+        /// </summary>
         public List<LogPlayerLogout> LogPlayerLogoutList = new List<LogPlayerLogout>();
+        /// <summary>
+        /// When the player hurts another player
+        /// </summary>
         public List<LogPlayerTakeDamage> LogPlayerTakeDamageList = new List<LogPlayerTakeDamage>();
+        /// <summary>
+        /// When the player causes a vehicle to explode
+        /// </summary>
         public List<LogVehicleDestroy> LogVehicleDestroyList = new List<LogVehicleDestroy>();
+        /// <summary>
+        /// When the player leaves a vehicle (this includes the parachute and plane)
+        /// </summary>
         public List<LogVehicleLeave> LogVehicleLeaveList = new List<LogVehicleLeave>();
+        /// <summary>
+        /// When the player gets in a vehicle (this includes the parachute and plane)
+        /// </summary>
         public List<LogVehicleRide> LogVehicleRideList = new List<LogVehicleRide>();
+        /// <summary>
+        /// When the player uses a item (First Aid Kit, etc)
+        /// </summary>
         public List<LogItemUse> LogItemUseList = new List<LogItemUse>();
+        /// <summary>
+        /// When the player unequips a item 
+        /// </summary>
         public List<LogItemUnequip> LogItemUnequipList = new List<LogItemUnequip>();
+        /// <summary>
+        /// When the player picks up a item
+        /// </summary>
         public List<LogItemPickup> LogItemPickupList = new List<LogItemPickup>();
+        /// <summary>
+        /// When the player equips a item (guns, smokes, etc)
+        /// </summary>
         public List<LogItemEquip> LogItemEquipList = new List<LogItemEquip>();
+        /// <summary>
+        /// When the player drops a item
+        /// </summary>
         public List<LogItemDrop> LogItemDropList = new List<LogItemDrop>();
+        /// <summary>
+        /// When the player removes a attachment
+        /// </summary>
         public List<LogItemDetach> LogItemDetachList = new List<LogItemDetach>();
     }
     /// 

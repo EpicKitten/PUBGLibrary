@@ -4,13 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>PUBGLibrary</AssemblyName>
     <RootNamespace>PUBGLibrary</RootNamespace>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <PackageProjectUrl>https://github.com/EpicKitten/PUBGLibrary</PackageProjectUrl>
     <Description>A .NET Standard PUBG API and Replay library</Description>
     <PackageLicenseUrl>https://github.com/EpicKitten/PUBGLibrary/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/EpicKitten/PUBGLibrary</RepositoryUrl>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <VersionPrefix>1.0.2</VersionPrefix>
     <ApplicationIcon />
     <Win32Resource />
   </PropertyGroup>
@@ -28,6 +28,10 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>
