@@ -18,4 +18,5 @@ The API class can be created by adding the path to the directory of the replay a
 ```
 ## Nuget
 This package is also on Nuget!
+
 https://www.nuget.org/packages/PUBGLibrary/
