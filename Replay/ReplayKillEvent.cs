@@ -17,11 +17,11 @@ namespace PUBGLibrary
         [JsonProperty("victimName")]
         public string VictimName;
         
-        public string ToString()
+        public override string ToString()
         {
             return ToString(KillerId, KillerName, "killed", VictimId, VictimName);
         }
-        public List<object> GetList()
+        public override List<object> GetList()
         {
             return GetList(KillerId, KillerName, "killed", VictimId, VictimName);
         }

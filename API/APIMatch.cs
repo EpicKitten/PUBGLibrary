@@ -3,8 +3,15 @@ using System.Collections.Generic;
 
 namespace PUBGLibrary.API
 {
+    /// <summary>
+    /// The match data requested
+    /// </summary>
     public class APIMatch
     {
+        /// <summary>
+        /// The bare JSON of the request;
+        /// </summary>
+        public string BaseJSON;
         /// <summary>
         /// Time of match completion
         /// </summary>
@@ -22,8 +29,17 @@ namespace PUBGLibrary.API
         /// </summary>
         /// <remarks>Might be the same as the Gamemode enum</remarks>
         public string Gamemode;
+        /// <summary>
+        /// The Platform-Region shard 
+        /// </summary>
         public PlatformRegionShard PRS_ID;
+        /// <summary>
+        /// A list of teams in the match
+        /// </summary>
         public List<APITeam> TeamList = new List<APITeam>();
+        /// <summary>
+        /// The direct link to the Telemetry file
+        /// </summary>
         public string TelemetryURL;
     }
 }

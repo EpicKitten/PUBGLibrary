@@ -10,9 +10,13 @@
     <RepositoryUrl>https://github.com/EpicKitten/PUBGLibrary</RepositoryUrl>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <VersionPrefix>1.0.2</VersionPrefix>
+    <VersionPrefix>1.0.3</VersionPrefix>
     <ApplicationIcon />
     <Win32Resource />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\PUBGLibrary.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -12,7 +12,7 @@ namespace PUBGLibrary
             return TimeSpan.FromSeconds(Time / 1000).ToString(@"mm\:ss");
         }
         
-        public virtual string ToString()
+        public override string ToString()
         {
             return $"[{FormatTime()}]: {GetType().Name}";
         }

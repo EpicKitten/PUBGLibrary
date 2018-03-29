@@ -3,16 +3,47 @@ using System.Collections.Generic;
 
 namespace PUBGLibrary.API
 {
+    /// <summary>
+    /// The structure of the Telemetry file retuend by the API
+    /// </summary>
     public class APITelemetry
     {
+        /// <summary>
+        /// The bare JSON request
+        /// </summary>
+        public string BaseJSON;
+        /// <summary>
+        /// Basic match information about the creation of the match
+        /// </summary>
         public LogMatchDefinition LogMatchDefinition = new LogMatchDefinition();
-        public LogMatchEnd LogMatchEnd = new LogMatchEnd();
+        /// <summary>
+        /// Information about the match start, including a list of players, the weather type, etc
+        /// </summary>
         public LogMatchStart LogMatchStart = new LogMatchStart();
+        /// <summary>
+        /// Information about the match end, including a list of players, and the time
+        /// </summary>
+        public LogMatchEnd LogMatchEnd = new LogMatchEnd();
+        /// <summary>
+        /// A list of all the players created by the server at match start, including location, health, and ranking of the player
+        /// </summary>
         public List<LogPlayerCreate> LogPlayerCreateList = new List<LogPlayerCreate>();
+        /// <summary>
+        /// A list of all air drops that land including the carpackage model, location, and all items in the air drop
+        /// </summary>
         public List<LogCarePackageLand> LogCarePackageLandList = new List<LogCarePackageLand>();
+        /// <summary>
+        /// A list of all air drops that spawn including the carpackage model, location, and all items in the air drop
+        /// </summary>
         public List<LogCarePackageSpawn> LogCarePackageSpawnList = new List<LogCarePackageSpawn>();
+        /// <summary>
+        /// A list of all attempts by players to join the server
+        /// </summary>
         public List<LogPlayerLogin> LogPlayerLoginList = new List<LogPlayerLogin>();
         public List<LogGameStatePeriodic> LogGameStatePeriodicList = new List<LogGameStatePeriodic>();
+        /// <summary>
+        /// A list of all times a ttachment is being attached
+        /// </summary>
         public List<LogItemAttach> logItemAttachList = new List<LogItemAttach>();
         public List<LogPlayerAttack> logPlayerAttackList = new List<LogPlayerAttack>();
         public List<LogPlayerKill> LogPlayerKillList = new List<LogPlayerKill>();
@@ -26,7 +57,13 @@ namespace PUBGLibrary.API
         public List<LogItemUnequip> LogItemUnequipList = new List<LogItemUnequip>();
         public List<LogItemPickup> LogItemPickupList = new List<LogItemPickup>();
         public List<LogItemEquip> LogItemEquipList = new List<LogItemEquip>();
+        /// <summary>
+        /// A list of all times a item is dropped
+        /// </summary>
         public List<LogItemDrop> LogItemDropList = new List<LogItemDrop>();
+        /// <summary>
+        /// A list of all times a attachment is being deattached
+        /// </summary>
         public List<LogItemDetach> LogItemDetachList = new List<LogItemDetach>();
 
         /// <summary>
@@ -170,7 +207,7 @@ namespace PUBGLibrary.API
             }
         }
         /// <summary>
-        /// Search the PlayerSpecificLog list for Account ID matching the one provided
+        /// Search the PlayerSpecificLog list for a Account ID or PUBG Name
         /// </summary>
         /// <param name="input">The AccountID (i.e, account.g8743hfb31023bhf13bbuf3190321fwu) or PUBGName of the player to search for </param>
         /// <param name="searchType">The type of search to perform</param>
@@ -200,14 +237,32 @@ namespace PUBGLibrary.API
         }
 
     }
+    /// <summary>
+    /// The search type to use when searching for player data
+    /// </summary>
     public enum SearchType
     {
+        /// <summary>
+        /// Search by account ID (i.e, account.g8743hfb31023bhf13bbuf3190321fwu)
+        /// </summary>
         AccountID,
+        /// <summary>
+        /// Search by PUBG name (i.e epickitten)
+        /// </summary>
         PUBGName
     }
+    /// <summary>
+    /// All data related to a single player
+    /// </summary>
     public class PlayerSpecificLog
     {
+        /// <summary>
+        /// The player's PUBG name
+        /// </summary>
         public string PUBGName;
+        /// <summary>
+        /// The player's account ID
+        /// </summary>
         public string AccountID;
         /// <summary>
         /// When the player logs into the server
@@ -372,20 +427,53 @@ namespace PUBGLibrary.API
         public Transport Transport = new Transport();
         public DateTimeOffset DateTimeOffset = new DateTimeOffset();
     }
+    /// <summary>
+    /// When a player removes a attachment from a gun
+    /// </summary>
     public class LogItemDetach
     {
+        /// <summary>
+        /// The player performing the action
+        /// </summary>
         public Player Player = new Player();
+        /// <summary>
+        /// The item child item is being removed from (usually a gun)
+        /// </summary>
         public Item ParentItem = new Item();
+        /// <summary>
+        /// The item being removed from the parent item (i.e Item_Attach_Weapon_Magazine_QuickDraw_Large_C, Item_Attach_Weapon_Upper_CQBSS_C, etc)
+        /// </summary>
         public Item ChildItem = new Item();
+        /// <summary>
+        /// When the action was performed
+        /// </summary>
         public DateTimeOffset DateTime = new DateTimeOffset();
     }
+    /// <summary>
+    /// When a player adds a attachment to a gun
+    /// </summary>
     public class LogItemAttach
     {
+        /// <summary>
+        /// The player performing the action
+        /// </summary>
         public Player Player = new Player();
+        /// <summary>
+        /// The item child item is attaching to (usually a gun)
+        /// </summary>
         public Item ParentItem = new Item();
+        /// <summary>
+        /// The item being attached to the parent item (i.e Item_Attach_Weapon_Magazine_QuickDraw_Large_C, Item_Attach_Weapon_Upper_CQBSS_C, etc)
+        /// </summary>
         public Item ChildItem = new Item();
+        /// <summary>
+        /// When the action was performed
+        /// </summary>
         public DateTimeOffset DateTime = new DateTimeOffset();
     }
+    /// <summary>
+    /// Information about the match end, including a list of players, and the time
+    /// </summary>
     public class LogMatchEnd
     {
         public List<Player> PlayerList = new List<Player>();
@@ -401,6 +489,9 @@ namespace PUBGLibrary.API
         public string ErrorMessage;
         public DateTimeOffset DateTime = new DateTimeOffset();
     }
+    /// <summary>
+    /// Information about the match start, including a list of player, the weather type, etc
+    /// </summary>
     public class LogMatchStart
     {
         public string MapName;
@@ -408,11 +499,17 @@ namespace PUBGLibrary.API
         public List<Player> PlayerList = new List<Player>();
         public DateTimeOffset DateTimeOffset = new DateTimeOffset();
     }
+    /// <summary>
+    /// A player created by the server at match start, including location, health, and ranking of the player
+    /// </summary>
     public class LogPlayerCreate
     {
         public Player Player = new Player();
         public DateTime Date = new DateTime();
     }
+    /// <summary>
+    /// Basic match information about the creation of the match
+    /// </summary>
     public class LogMatchDefinition
     {
         public string MatchID;
@@ -420,10 +517,16 @@ namespace PUBGLibrary.API
         public int Version;
         public DateTimeOffset Event_timestamp = new DateTimeOffset();
     }
+    /// <summary>
+    /// Information about air drops loaction and items in the drop
+    /// </summary>
     public class LogCarePackageLand
     {
         public CarePackage CarePackage = new CarePackage();
     }
+    /// <summary>
+    /// Information about air drops loaction and items in the drop
+    /// </summary>
     public class LogCarePackageSpawn
     {
         public CarePackage CarePackage = new CarePackage();
@@ -500,10 +603,25 @@ namespace PUBGLibrary.API
     }
     public class Item
     {
+        /// <summary>
+        /// The name of the item (i.e Item_Attach_Weapon_Magazine_QuickDraw_Large_C, Item_Attach_Weapon_Upper_CQBSS_C, etc)
+        /// </summary>
         public string ItemID;
+        /// <summary>
+        /// The amount in the stack
+        /// </summary>
         public int StackCount;
+        /// <summary>
+        /// The type of item (i.e Attachment, Weapon, Use, etc)
+        /// </summary>
         public string Categroy;
+        /// <summary>
+        /// The sub categroy of the item (i.e Heal, None, etc)
+        /// </summary>
         public string SubCategroy;
+        /// <summary>
+        /// A list of already attached items
+        /// </summary>
         public List<string> AttachedItems;
     }
     public class Player

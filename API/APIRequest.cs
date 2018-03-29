@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Net;
@@ -11,10 +13,22 @@ namespace PUBGLibrary.API
     /// </summary>
     public class APIRequest
     {
+        /// <summary>
+        /// The match requested
+        /// </summary>
         public APIMatch Match;
+        /// <summary>
+        /// The telemetry data from the requested match
+        /// </summary>
         public APITelemetry Telemetry;
+        /// <summary>
+        /// The user data from the requested user
+        /// </summary>
+        public APIUser User;
+        /// <summary>
+        /// If a exception happens during the request, it will be stored in this varible
+        /// </summary>
         public WebException exception;
-        public string JSONString;
         /// <summary>
         /// Requests a single match from the PUBG Developer API
         /// </summary>
@@ -44,8 +58,7 @@ namespace PUBGLibrary.API
                         {
                             var myStreamReader = new StreamReader(responseStream, Encoding.Default);
                             
-                            APIRequest.JSONString = myStreamReader.ReadToEnd();
-                            APIRequest.Match = MatchPhraser(APIRequest.JSONString);
+                            APIRequest.Match = MatchPhraser(myStreamReader.ReadToEnd());
                             using (WebClient client = new WebClient())
                             {
                                 APIRequest.Telemetry = TelemetryPhraser(client.DownloadString(APIRequest.Match.TelemetryURL));
@@ -66,7 +79,13 @@ namespace PUBGLibrary.API
             }
             return APIRequest;
         }
-        public APIRequest RequestFilteredMatches(string APIKey, string PlatformRegion, string filterstring)
+        /// <summary>
+        /// Requests a single user from the PUBG Developer API
+        /// </summary>
+        /// <param name="APIKey"></param>
+        /// <param name="PlatformRegion"></param>
+        /// <param name="AccountID"></param>
+        public APIRequest RequestSingleUser(string APIKey, string PlatformRegion, string AccountID)
         {
             APIStatus status = new APIStatus();
             APIRequest APIRequest = new APIRequest();
@@ -74,7 +93,7 @@ namespace PUBGLibrary.API
             {
                 try
                 {
-                    string APIURL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/matches/?" + filterstring;
+                    string APIURL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/players/" + AccountID;
                     var webRequest = WebRequest.Create(APIURL);
                     var HTTPAPIRequest = (HttpWebRequest)webRequest;
                     HTTPAPIRequest.PreAuthenticate = true;
@@ -87,15 +106,7 @@ namespace PUBGLibrary.API
                         using (var responseStream = APIResponse.GetResponseStream())
                         {
                             var myStreamReader = new StreamReader(responseStream, Encoding.Default);
-
-                            APIRequest.JSONString = myStreamReader.ReadToEnd();
-                            //APIRequest.Match = MatchPhraser(APIRequest.JSONString);
-                            //using (WebClient client = new WebClient())
-                            //{
-                            //    APIRequest.Telemetry = TelemetryPhraser(client.DownloadString(APIRequest.Match.TelemetryURL));
-                            //}
-                            return APIRequest;
-
+                            APIRequest.User = UserPhraser(myStreamReader.ReadToEnd());
                         }
                     }
                 }
@@ -110,34 +121,18 @@ namespace PUBGLibrary.API
             }
             return APIRequest;
         }
-        public APIRequest RequestFilteredMatches(
-            string APIKey,
-            string PlatformRegion,
-            FilterType filterTypeA,
-            string FilterDataA,
-            FilterType filterTypeB = FilterType.None,
-            string FilterDataB = "",
-            FilterType filterTypeC = FilterType.None,
-            string FilterDataC = ""
-            )
-        {
-            StringBuilder filterbuild = new StringBuilder();
-            filterbuild.Append(API.GetEnumDescription(filterTypeA)).Append(FilterDataA);
-            Console.WriteLine("https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/matches/?" + filterbuild.ToString());
-            return RequestFilteredMatches(APIKey, PlatformRegion, filterbuild.ToString());
-            //if (filterTypeB != FilterType.None)
-            //{
-            //    filterbuild.Append("&").Append(API.GetEnumDescription(filterTypeB)).Append(FilterDataB);
-            //}
-            //if (filterTypeC != FilterType.None)
-            //{
-            //    filterbuild.Append("&").Append(API.GetEnumDescription(filterTypeC)).Append(FilterDataC);
-            //}
-        }
+        /// <summary>
+        /// Parses the match JSON string from the API
+        /// </summary>
+        /// <param name="JSONstring">The match JSON string to parse</param>
+        /// <returns></returns>
         public APIMatch MatchPhraser(string JSONstring)
         {
             var jsonmatch = Phraser.FromJson(JSONstring);
-            APIMatch Match = new APIMatch();
+            APIMatch Match = new APIMatch
+            {
+                BaseJSON = JSONstring
+            };
             foreach (var item in jsonmatch.Included)
             {
                 if (item.Type == DatumType.Participant)
@@ -182,10 +177,18 @@ namespace PUBGLibrary.API
             }
             return Match;
         }
+        /// <summary>
+        /// Parses the telemetry JSON string from the API
+        /// </summary>
+        /// <param name="JSONstring">The telemetry JSON string to parse</param>
+        /// <returns></returns>
         public APITelemetry TelemetryPhraser(string JSONstring)
         {
             var jsontelemetry = TelemetryPhrase.FromJson(JSONstring);
-            APITelemetry Telemetry = new APITelemetry();
+            APITelemetry Telemetry = new APITelemetry
+            {
+                BaseJSON = JSONstring
+            };
             foreach (TelemetryPhrase telem in jsontelemetry)
             {
                 switch (telem.T)
@@ -589,24 +592,26 @@ namespace PUBGLibrary.API
             }
             return Telemetry;
         }
-    }
-    public enum FilterType
-    {
-        None,
         /// <summary>
-        /// Filter by player IDs
+        /// Pharses user data from JSON from the API
         /// </summary>
-        [Description("filter[playerIds]=")]
-        playerIDs,
-        /// <summary>
-        /// Filter by player names
-        /// </summary>
-        [Description("filter[playerNames]=")]
-        playerNames,
-        /// <summary>
-        /// Filter by game mode
-        /// </summary>
-        [Description("filter[gameMode]=")]
-        GameMode,
+        /// <param name="JSONstring"></param>
+        /// <returns></returns>
+        public APIUser UserPhraser(string JSONstring)
+        {
+            APIUser user = new APIUser
+            {
+                BaseJSON = JSONstring
+            };
+            JObject parsed = JObject.Parse(JSONstring);
+            user.AccountID = (string)parsed["data"]["id"];
+            user.PUBGName = (string)parsed["data"]["attributes"]["name"];
+            user.PRS = (string)parsed["data"]["attributes"]["shardId"];
+            foreach (JObject matchitem in parsed["data"]["relationships"]["matches"]["data"])
+            {
+                user.ListOfMatches.Add((string)matchitem["id"]);
+            }
+            return user;
+        }
     }
 }

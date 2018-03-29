@@ -20,7 +20,7 @@ namespace PUBGLibrary.API
         /// <summary>
         /// The base class for the PUBG API
         /// </summary>
-        /// <param name="APIKey">The API key to use during requests</param>
+        /// <param name="API_Key">The API key to use during requests</param>
         public API(string API_Key)
         {
             APIKey = API_Key;
@@ -93,6 +93,21 @@ namespace PUBGLibrary.API
             }
 
         }
+        /// <summary>
+        /// Request a single user using their AccountID
+        /// </summary>
+        /// <param name="AccountID"></param>
+        /// <returns></returns>
+        public APIRequest RequestSingleUser(string AccountID, PlatformRegionShard platformRegionShard)
+        {
+            APIRequest request = new APIRequest();
+            return request.RequestSingleUser(APIKey, GetEnumDescription(platformRegionShard), AccountID);
+        }
+        /// <summary>
+        /// Gets the description tag from Enums
+        /// </summary>
+        /// <param name="value">The enum value you want to read</param>
+        /// <returns></returns>
         public static string GetEnumDescription(Enum value)
         {
             FieldInfo fi = value.GetType().GetField(value.ToString());

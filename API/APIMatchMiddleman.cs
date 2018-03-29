@@ -3,7 +3,7 @@
 //    using PUBGLibrary.API;
 //
 //    var Phraser = Phraser.FromJson(jsonString);
-
+#pragma warning disable 1591 //Supresses the need to comment every varible //Supresses the need to comment every varible
 namespace PUBGLibrary.API
 {
     using System;
@@ -519,3 +519,4 @@ namespace PUBGLibrary.API
         };
     }
 }
+#pragma warning restore 1591 //Supresses the need to comment every varible

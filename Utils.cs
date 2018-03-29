@@ -7,6 +7,9 @@ using System.Text;
 
 namespace PUBGLibrary.Utils
 {
+    /// <summary>
+    /// Utilities for use with the API and/or Replay System
+    /// </summary>
     public class Utils
     {
         /// <summary>
