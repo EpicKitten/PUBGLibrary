@@ -377,53 +377,6 @@ namespace PUBGLibrary.Replay
                 return BitConverter.ToString(checksum).Replace("-", String.Empty);
             }
         }
-        public ReplayResult VerifyReplay(LeagueRuleSet leagueRuleSet)
-        {
-            switch (leagueRuleSet)
-            {
-                case LeagueRuleSet.Auzom:
-                    List<string> AuzomHosts = new List<string>()
-                    {
-                        "Auzom",
-                        "Auzom_Observer",
-                        "ThePaddii",
-                        "Auzom_gg"
-                    };
-                    if (!Info.FriendlyName.Contains("fpp"))
-                    {
-                        return ReplayResult.NotFPP; //Server was not First-Person Perspective! Requirements states matches must be played in First-Person Perspective! (Rule 2)
-                    }
-                    if (Info.FriendlyName.Contains("official"))
-                    {
-                        return ReplayResult.NotCustom; //Server was Official! Requirements states matches must be played in custom servers!
-                    }
-                    if (Summary.NumTeammates < 3)
-                    {
-                        return ReplayResult.InsufficientTeammates; //There were not enough teammates! Requirements states atleast 3 people must be in a sqaud! (Rule 3.6, Bullet 3)
-                    }
-                    if (AuzomHosts.Contains(Info.CustomHost))
-                    {
-                        return ReplayResult.Verified; //Verified list of Custom Game Hosters ([3:52 PM] MrPandasaur: Auzom, Auzom_Observer, ThePaddii and maybe Auzom_gg)
-                    }
-                    else
-                    {
-                        return ReplayResult.NotFromVerifiedHostedGame;//Replay wasn't hosted by any custom game hosters from the verified list of Custom Game Hosters
-                    }
-            }
-            return ReplayResult.Verified;
-        }
-    }
-    public enum LeagueRuleSet
-    { 
-        Auzom,
-    }
-    public enum ReplayResult
-    {
-        Verified,
-        NotFPP,
-        NotCustom,
-        InsufficientTeammates,
-        NotFromVerifiedHostedGame,
     }
     class ReplayEventMeta
     {

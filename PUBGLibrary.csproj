@@ -13,6 +13,7 @@
     <VersionPrefix>1.0.3</VersionPrefix>
     <ApplicationIcon />
     <Win32Resource />
+    <Authors>epickitten</Authors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

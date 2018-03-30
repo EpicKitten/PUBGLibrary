@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 
 namespace PUBGLibrary.API
 {
@@ -11,6 +12,10 @@ namespace PUBGLibrary.API
         /// The base JSON of the request
         /// </summary>
         public string BaseJSON;
+        /// <summary>
+        /// If a web execption happens, it will be stored here
+        /// </summary>
+        public WebException WebException;
         /// <summary>
         /// The account ID of the requested user
         /// </summary>

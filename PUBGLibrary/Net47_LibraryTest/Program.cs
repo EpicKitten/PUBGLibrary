@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using PUBGLibrary.API;
 
@@ -30,16 +31,24 @@ namespace Net47_LibraryTest
             Console.WriteLine("Status - APIVersionRelease = " + APIStatus.APIVersionRelease);
             Console.WriteLine("Status - ID = " + APIStatus.ID);
             API pubgapi = new API(apikey);
-            APIRequest request = pubgapi.RequestSingleUser("account.3654e255b77b409e87b10dcb086ab00d", PlatformRegionShard.PC_NA);
-            //Console.WriteLine(request.User.BaseJSON);
-            Console.WriteLine(request.User.PUBGName);
-            Console.WriteLine(request.User.AccountID);
-            Console.WriteLine(request.User.PRS);
-            foreach (string matchid in request.User.ListOfMatches)
-            {
-                Console.WriteLine(matchid);
+            //APIRequest request = pubgapi.RequestSingleUser("account.3654e255b77b409e87b10dcb086ab00d", PlatformRegionShard.PC_NA);
 
+            //Console.WriteLine(request.User.BaseJSON);
+
+            foreach (APIUser users in pubgapi.RequestMultiUser(new List<string>() { "epickitten", "Rakkor" }, PlatformRegionShard.PC_NA, UserSearchType.PUBGName))
+            {
+                Console.WriteLine(users.AccountID);
             }
+            Console.WriteLine("Done");
+
+            //Console.WriteLine(request.User.PUBGName);
+            //Console.WriteLine(request.User.AccountID);
+            //Console.WriteLine(request.User.PRS);
+            //foreach (string matchid in request.User.ListOfMatches)
+            //{
+            //    Console.WriteLine(matchid);
+
+            //}
             //APIRequest pubgapirequest = pubgapi.RequestMatch("6418bb6d-b7a8-41c9-8cb3-886617fdf389", PlatformRegionShard.PC_NA);
             //if (pubgapirequest.exception != null)
             //{

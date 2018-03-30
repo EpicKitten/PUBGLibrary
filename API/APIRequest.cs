@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Collections.Generic;
 
 namespace PUBGLibrary.API
 {
@@ -82,9 +83,9 @@ namespace PUBGLibrary.API
         /// <summary>
         /// Requests a single user from the PUBG Developer API
         /// </summary>
-        /// <param name="APIKey"></param>
-        /// <param name="PlatformRegion"></param>
-        /// <param name="AccountID"></param>
+        /// <param name="APIKey">The API key to use during the request</param>
+        /// <param name="PlatformRegion">The Platform-Region to search (i.e pc-na, xbox-eu)</param>
+        /// <param name="AccountID">The Account ID to look up (i.e account.a417e7c0271d4fc88f307e355142dc7)</param>
         public APIRequest RequestSingleUser(string APIKey, string PlatformRegion, string AccountID)
         {
             APIStatus status = new APIStatus();
@@ -120,6 +121,65 @@ namespace PUBGLibrary.API
                 }
             }
             return APIRequest;
+        }
+        /// <summary>
+        /// Requests multi users from the PUBG Developer API
+        /// </summary>
+        /// <param name="APIKey">The API key to use during the request</param>
+        /// <param name="PlatformRegion">The Platform-Region to search (i.e pc-na, xbox-eu)</param>
+        /// <param name="ID">The list of PUBG Names or AccountIDs to search</param>
+        /// <param name="SearchType"></param>
+        /// <returns></returns>
+        public List<APIUser> RequestMultiUser(string APIKey, string PlatformRegion, List<string> ID, UserSearchType SearchType = UserSearchType.PUBGName)
+        {
+            string filterstring = string.Empty;
+            switch (SearchType)
+            {
+                case UserSearchType.PUBGName:
+                    filterstring = "?filter[playerNames]=";
+                    break;
+                case UserSearchType.AccountID:
+                    filterstring = "?filter[playerIds]=";
+                    break;
+            }
+
+            
+            List<APIUser> users = new List<APIUser>();
+            APIStatus status = new APIStatus();
+            if (status.bIsOnline)
+            {
+                try
+                {
+                    string APIURL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/players" + filterstring + string.Join(",",ID.ToArray());
+                    var webRequest = WebRequest.Create(APIURL);
+                    var HTTPAPIRequest = (HttpWebRequest)webRequest;
+                    HTTPAPIRequest.PreAuthenticate = true;
+                    HTTPAPIRequest.Headers.Add("Authorization", "Bearer " + APIKey);
+                    HTTPAPIRequest.Headers.Add("Access-Control-Allow-Origins", "*");
+                    HTTPAPIRequest.Headers.Add("Access-Control-Expose-Headers", "Content-Length");
+                    HTTPAPIRequest.Accept = "application/json";
+                    using (var APIResponse = HTTPAPIRequest.GetResponse())
+                    {
+                        using (var responseStream = APIResponse.GetResponseStream())
+                        {
+                            var myStreamReader = new StreamReader(responseStream, Encoding.Default);
+                            foreach (JObject jsonuser in JObject.Parse(myStreamReader.ReadToEnd())["data"])
+                            {
+                                users.Add(UserPhraser(jsonuser));
+                            }
+                        }
+                    }
+                }
+                catch (WebException e)
+                {
+                    APIUser user = new APIUser
+                    {
+                        WebException = e
+                    };
+                    users.Add(user);
+                }
+            }
+            return users;
         }
         /// <summary>
         /// Parses the match JSON string from the API
@@ -613,5 +673,39 @@ namespace PUBGLibrary.API
             }
             return user;
         }
+        /// <summary>
+        /// Pharses user data from a JObject from the API
+        /// </summary>
+        /// <param name="userdata">JObject to pharse</param>
+        /// <returns></returns>
+        public APIUser UserPhraser(JObject userdata)
+        {
+            APIUser user = new APIUser
+            {
+                BaseJSON = userdata.ToString()
+            };
+            user.AccountID = (string)userdata["id"];
+            user.PUBGName = (string)userdata["attributes"]["name"];
+            user.PRS = (string)userdata["attributes"]["shardId"];
+            foreach (JObject matchitem in userdata["relationships"]["matches"]["data"])
+            {
+                user.ListOfMatches.Add((string)matchitem["id"]);
+            }
+            return user;
+        }
+    }
+    /// <summary>
+    /// The type of search to perform when doing a multiuser search
+    /// </summary>
+    public enum UserSearchType
+    {
+        /// <summary>
+        /// Searching using PUBG names
+        /// </summary>
+        PUBGName,
+        /// <summary>
+        /// Searching using
+        /// </summary>
+        AccountID
     }
 }

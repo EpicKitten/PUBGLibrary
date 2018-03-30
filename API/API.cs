@@ -97,11 +97,24 @@ namespace PUBGLibrary.API
         /// Request a single user using their AccountID
         /// </summary>
         /// <param name="AccountID"></param>
+        /// <param name="platformRegionShard"></param>
         /// <returns></returns>
         public APIRequest RequestSingleUser(string AccountID, PlatformRegionShard platformRegionShard)
         {
             APIRequest request = new APIRequest();
             return request.RequestSingleUser(APIKey, GetEnumDescription(platformRegionShard), AccountID);
+        }
+        /// <summary>
+        /// Reuest multiple users using either their Account ID or their PUBG Name
+        /// </summary>
+        /// <param name="IDSToSearch">The list of names/ID to search</param>
+        /// <param name="platformRegionShard">The Platform-Region to search</param>
+        /// <param name="userSearchType">The type of search</param>
+        /// <returns></returns>
+        public List<APIUser> RequestMultiUser(List<string> IDSToSearch, PlatformRegionShard platformRegionShard, UserSearchType userSearchType = UserSearchType.PUBGName)
+        {
+            APIRequest request = new APIRequest();
+            return request.RequestMultiUser(APIKey, GetEnumDescription(platformRegionShard), IDSToSearch, userSearchType);
         }
         /// <summary>
         /// Gets the description tag from Enums
@@ -129,7 +142,6 @@ namespace PUBGLibrary.API
     /// </summary>
     public enum PlatformRegionShard
     {
-        Unknown,
         /// <summary>
         /// PC North America
         /// </summary>

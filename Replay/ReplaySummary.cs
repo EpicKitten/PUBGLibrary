@@ -80,7 +80,7 @@ namespace PUBGLibrary.Replay
                 }
             }
         }
-        public PlatformRegionShard KnownRegion = PlatformRegionShard.Unknown;
+        public PlatformRegionShard KnownRegion = PlatformRegionShard.PC_NA;
         public string District;
 
         [JsonProperty("weatherName")]
