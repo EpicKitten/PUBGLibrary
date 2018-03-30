@@ -99,7 +99,7 @@ namespace PUBGLibrary.API
         /// <param name="AccountID"></param>
         /// <param name="platformRegionShard"></param>
         /// <returns></returns>
-        public APIRequest RequestSingleUser(string AccountID, PlatformRegionShard platformRegionShard)
+        public APIUser RequestSingleUser(string AccountID, PlatformRegionShard platformRegionShard)
         {
             APIRequest request = new APIRequest();
             return request.RequestSingleUser(APIKey, GetEnumDescription(platformRegionShard), AccountID);

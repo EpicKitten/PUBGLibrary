@@ -1,11 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Collections.Generic;
 
 namespace PUBGLibrary.API
 {
@@ -22,10 +20,6 @@ namespace PUBGLibrary.API
         /// The telemetry data from the requested match
         /// </summary>
         public APITelemetry Telemetry;
-        /// <summary>
-        /// The user data from the requested user
-        /// </summary>
-        public APIUser User;
         /// <summary>
         /// If a exception happens during the request, it will be stored in this varible
         /// </summary>
@@ -86,10 +80,10 @@ namespace PUBGLibrary.API
         /// <param name="APIKey">The API key to use during the request</param>
         /// <param name="PlatformRegion">The Platform-Region to search (i.e pc-na, xbox-eu)</param>
         /// <param name="AccountID">The Account ID to look up (i.e account.a417e7c0271d4fc88f307e355142dc7)</param>
-        public APIRequest RequestSingleUser(string APIKey, string PlatformRegion, string AccountID)
+        public APIUser RequestSingleUser(string APIKey, string PlatformRegion, string AccountID)
         {
             APIStatus status = new APIStatus();
-            APIRequest APIRequest = new APIRequest();
+            APIUser user = new APIUser();
             if (status.bIsOnline)
             {
                 try
@@ -107,20 +101,20 @@ namespace PUBGLibrary.API
                         using (var responseStream = APIResponse.GetResponseStream())
                         {
                             var myStreamReader = new StreamReader(responseStream, Encoding.Default);
-                            APIRequest.User = UserPhraser(myStreamReader.ReadToEnd());
+                            return UserPhraser(myStreamReader.ReadToEnd());
                         }
                     }
                 }
                 catch (WebException e)
                 {
-                    APIRequest = new APIRequest
+                    user = new APIUser
                     {
-                        exception = e
+                        WebException = e
                     };
-                    return APIRequest;
+                    return user;
                 }
             }
-            return APIRequest;
+            return user;
         }
         /// <summary>
         /// Requests multi users from the PUBG Developer API
