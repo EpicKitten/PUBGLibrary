@@ -10,6 +10,9 @@ namespace PUBGLibrary.Replay
     /// </summary>
     public enum Weather
     {
+        /// <summary>
+        /// For unknown weather types
+        /// </summary>
         Unknown,
         [EnumMember(Value = "Sunny Clear")]
         SunnyClear,

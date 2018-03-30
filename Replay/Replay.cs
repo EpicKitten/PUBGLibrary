@@ -378,6 +378,7 @@ namespace PUBGLibrary.Replay
             }
         }
     }
+#pragma warning disable 649
     class ReplayEventMeta
     {
         [JsonProperty("id")]
@@ -390,3 +391,4 @@ namespace PUBGLibrary.Replay
         public int Time;
     }
 }
+#pragma warning restore 649
