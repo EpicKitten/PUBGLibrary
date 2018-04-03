@@ -31,24 +31,6 @@ namespace Net47_LibraryTest
             Console.WriteLine("Status - APIVersionRelease = " + APIStatus.APIVersionRelease);
             Console.WriteLine("Status - ID = " + APIStatus.ID);
             API pubgapi = new API(apikey);
-            //APIRequest request = pubgapi.RequestSingleUser("account.3654e255b77b409e87b10dcb086ab00d", PlatformRegionShard.PC_NA);
-
-            //Console.WriteLine(request.User.BaseJSON);
-
-            //foreach (APIUser users in pubgapi.RequestMultiUser(new List<string>() { "epickitten", "Rakkor" }, PlatformRegionShard.PC_NA, UserSearchType.PUBGName))
-            //{
-            //    Console.WriteLine(users.AccountID);
-            //}
-            //Console.WriteLine("Done");
-
-            //Console.WriteLine(request.User.PUBGName);
-            //Console.WriteLine(request.User.AccountID);
-            //Console.WriteLine(request.User.PRS);
-            //foreach (string matchid in request.User.ListOfMatches)
-            //{
-            //    Console.WriteLine(matchid);
-
-            //}
             APIRequest pubgapirequest = pubgapi.RequestMatch("b319f99d-fce9-4766-9c2d-b2b45b5ca30a", PlatformRegionShard.PC_NA);
             if (pubgapirequest.exception != null)
             {
@@ -58,22 +40,16 @@ namespace Net47_LibraryTest
             {
                 Console.WriteLine(pubgapirequest.Match.BaseJSON);
                 Console.WriteLine(pubgapirequest.Match.TelemetryURL);
-                PlayerSpecificLog player = pubgapirequest.Telemetry.GetPlayerSpecificLog("epickitten", SearchType.PUBGName);
-                foreach (LogPlayerPosition movement in player.LogPlayerPositionList)
+                foreach (PlayerSpecificLog psl in pubgapirequest.Telemetry.PlayerSpecificLogList)
                 {
-                    Console.WriteLine("============================================");
-                    Console.WriteLine(movement.ElapsedTime);
-                    Console.WriteLine(movement.LoggedPlayer.Location.X);
-                    Console.WriteLine(movement.LoggedPlayer.Location.Y);
-                    Console.WriteLine(movement.LoggedPlayer.Location.Z);
+                    if (psl.PUBGName == "epickitten")
+                    {
+                        foreach (LogPlayerKill lpk in psl.LogPlayerKillList)
+                        {
+                            Console.WriteLine(lpk.Victim.PUBGName);
+                        }
+                    }
                 }
-                //foreach (Player player in pubgapirequest.Telemetry.LogMatchStart.PlayerList)
-                //{
-                //    if (player.PUBGName == "epickitten")
-                //    {
-                //        APISearchFunction(pubgapirequest.Telemetry, player.AccountID);
-                //    }
-                //}
             }
 
         }
