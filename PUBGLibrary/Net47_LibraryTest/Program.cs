@@ -31,40 +31,26 @@ namespace Net47_LibraryTest
             Console.WriteLine("Status - APIVersionRelease = " + APIStatus.APIVersionRelease);
             Console.WriteLine("Status - ID = " + APIStatus.ID);
             API pubgapi = new API(apikey);
-            //APIRequest request = pubgapi.RequestSingleUser("account.3654e255b77b409e87b10dcb086ab00d", PlatformRegionShard.PC_NA);
-
-            //Console.WriteLine(request.User.BaseJSON);
-
-            foreach (APIUser users in pubgapi.RequestMultiUser(new List<string>() { "epickitten", "Rakkor" }, PlatformRegionShard.PC_NA, UserSearchType.PUBGName))
+            APIRequest pubgapirequest = pubgapi.RequestMatch("b319f99d-fce9-4766-9c2d-b2b45b5ca30a", PlatformRegionShard.PC_NA);
+            if (pubgapirequest.exception != null)
             {
-                Console.WriteLine(users.AccountID);
+                Console.WriteLine(pubgapirequest.exception.Message);
             }
-            Console.WriteLine("Done");
-
-            //Console.WriteLine(request.User.PUBGName);
-            //Console.WriteLine(request.User.AccountID);
-            //Console.WriteLine(request.User.PRS);
-            //foreach (string matchid in request.User.ListOfMatches)
-            //{
-            //    Console.WriteLine(matchid);
-
-            //}
-            //APIRequest pubgapirequest = pubgapi.RequestMatch("6418bb6d-b7a8-41c9-8cb3-886617fdf389", PlatformRegionShard.PC_NA);
-            //if (pubgapirequest.exception != null)
-            //{
-            //    Console.WriteLine(pubgapirequest.exception.Message);
-            //}
-            //else
-            //{
-            //    Console.WriteLine(pubgapirequest.Match.TelemetryURL);
-            //    foreach (Player player in pubgapirequest.Telemetry.LogMatchStart.PlayerList)
-            //    {
-            //        if (player.PUBGName == "epickitten")
-            //        {
-            //            APISearchFunction(pubgapirequest.Telemetry, player.AccountID);
-            //        }
-            //    }
-            //}
+            else
+            {
+                Console.WriteLine(pubgapirequest.Match.BaseJSON);
+                Console.WriteLine(pubgapirequest.Match.TelemetryURL);
+                foreach (PlayerSpecificLog psl in pubgapirequest.Telemetry.PlayerSpecificLogList)
+                {
+                    if (psl.PUBGName == "epickitten")
+                    {
+                        foreach (LogPlayerKill lpk in psl.LogPlayerKillList)
+                        {
+                            Console.WriteLine(lpk.Victim.PUBGName);
+                        }
+                    }
+                }
+            }
 
         }
         static void APISearchFunction(APITelemetry telemetry, string AccountID)

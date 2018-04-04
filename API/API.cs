@@ -211,7 +211,7 @@ namespace PUBGLibrary.API
         /// <summary>
         /// Xbox Oceania
         /// </summary>
-        [JsonProperty("xbox-as")]
+        [JsonProperty("xbox-oc")]
         [Description("xbox-oc")]
         Xbox_OC
     }

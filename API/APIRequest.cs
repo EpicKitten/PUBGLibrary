@@ -367,6 +367,7 @@ namespace PUBGLibrary.API
                         logItemDrop.DroppedItem.ItemID = telem.Item.ItemId;
                         logItemDrop.DroppedItem.StackCount = (int)telem.Item.StackCount;
                         logItemDrop.DroppedItem.SubCategroy = telem.Item.SubCategory;
+                        logItemDrop.DateTimeOffset = (DateTimeOffset)telem.D;
                         Telemetry.LogItemDropList.Add(logItemDrop);
                         break;
                     case T.LogItemEquip:
@@ -383,6 +384,7 @@ namespace PUBGLibrary.API
                         logItemEquip.EquipedItem.ItemID = telem.Item.ItemId;
                         logItemEquip.EquipedItem.StackCount = (int)telem.Item.StackCount;
                         logItemEquip.EquipedItem.SubCategroy = telem.Item.SubCategory;
+                        logItemEquip.DateTimeOffset = (DateTimeOffset)telem.D;
                         Telemetry.LogItemEquipList.Add(logItemEquip);
                         break;
                     case T.LogItemPickup:
@@ -399,6 +401,7 @@ namespace PUBGLibrary.API
                         logItemPickup.PickedupItem.ItemID = telem.Item.ItemId;
                         logItemPickup.PickedupItem.StackCount = (int)telem.Item.StackCount;
                         logItemPickup.PickedupItem.SubCategroy = telem.Item.SubCategory;
+                        logItemPickup.DateTimeOffset = (DateTimeOffset)telem.D;
                         Telemetry.LogItemPickupList.Add(logItemPickup);
                         break;
                     case T.LogItemUnequip:
@@ -415,6 +418,7 @@ namespace PUBGLibrary.API
                         logItemUnequip.UnequipedItem.ItemID = telem.Item.ItemId;
                         logItemUnequip.UnequipedItem.StackCount = (int)telem.Item.StackCount;
                         logItemUnequip.UnequipedItem.SubCategroy = telem.Item.SubCategory;
+                        logItemUnequip.DateTimeOffset = (DateTimeOffset)telem.D;
                         Telemetry.LogItemUnequipList.Add(logItemUnequip);
                         break;
                     case T.LogItemUse:
@@ -431,6 +435,7 @@ namespace PUBGLibrary.API
                         logItemUse.UsedItem.ItemID = telem.Item.ItemId;
                         logItemUse.UsedItem.StackCount = (int)telem.Item.StackCount;
                         logItemUse.UsedItem.SubCategroy = telem.Item.SubCategory;
+                        logItemUse.DateTimeOffset = (DateTimeOffset)telem.D;
                         Telemetry.LogItemUseList.Add(logItemUse);
                         break;
                     case T.LogMatchDefinition:
@@ -608,6 +613,7 @@ namespace PUBGLibrary.API
                         logVehicleDestroy.DestroyedVehicle.healthPercent = (double)telem.Vehicle.HealthPercent;
                         logVehicleDestroy.DestroyedVehicle.vehicleID = (VehicleId)telem.Vehicle.VehicleId;
                         logVehicleDestroy.DestroyedVehicle.vehicleType = telem.Vehicle.VehicleType;
+                        logVehicleDestroy.DateTimeOffset = (DateTimeOffset)telem.D;
                         Telemetry.LogVehicleDestroyList.Add(logVehicleDestroy);
                         break;
                     case T.LogVehicleLeave:
@@ -624,6 +630,7 @@ namespace PUBGLibrary.API
                         logVehicleLeave.Vehicle.healthPercent = (double)telem.Vehicle.HealthPercent;
                         logVehicleLeave.Vehicle.vehicleID = (VehicleId)telem.Vehicle.VehicleId;
                         logVehicleLeave.Vehicle.vehicleType = telem.Vehicle.VehicleType;
+                        logVehicleLeave.DateTimeOffset = (DateTimeOffset)telem.D;
                         Telemetry.LogVehicleLeaveList.Add(logVehicleLeave);
                         break;
                     case T.LogVehicleRide:
@@ -640,6 +647,7 @@ namespace PUBGLibrary.API
                         logVehicleRide.Vehicle.healthPercent = (double)telem.Vehicle.HealthPercent;
                         logVehicleRide.Vehicle.vehicleID = (VehicleId)telem.Vehicle.VehicleId;
                         logVehicleRide.Vehicle.vehicleType = telem.Vehicle.VehicleType;
+                        logVehicleRide.DateTimeOffset = (DateTimeOffset)telem.D;
                         Telemetry.LogVehicleRideList.Add(logVehicleRide);
                         break;
                 }

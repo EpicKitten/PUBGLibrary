@@ -10,10 +10,11 @@
     <RepositoryUrl>https://github.com/EpicKitten/PUBGLibrary</RepositoryUrl>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <VersionPrefix>1.0.4</VersionPrefix>
+    <VersionPrefix>1.0.5</VersionPrefix>
     <ApplicationIcon />
     <Win32Resource />
     <Authors>epickitten</Authors>
+    <PackageIconUrl>https://github.com/EpicKitten/PUBGLibrary/raw/master/pubgcsharp.jpg</PackageIconUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
