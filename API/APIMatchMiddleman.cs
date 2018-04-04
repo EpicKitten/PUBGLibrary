@@ -272,7 +272,7 @@ namespace PUBGLibrary.API
 
     public enum Actor { Empty };
 
-    public enum ShardId { PcNa };
+    public enum ShardId { PcNa, PcEu, PcKrJp, PcAs, PcOc, PcSa, PcSea, PcKakao, XBoxNa, XBoxEu, XBoxAs, XBoxOc };
 
     public enum DeathType { Alive, Byplayer, Suicide };
 
@@ -350,6 +350,17 @@ namespace PUBGLibrary.API
             switch (str)
             {
                 case "pc-na": return ShardId.PcNa;
+                case "pc-eu": return ShardId.PcEu;
+                case "pc-krjp": return ShardId.PcKrJp;
+                case "pc-as": return ShardId.PcAs;
+                case "pc-oc": return ShardId.PcOc;
+                case "pc-sa": return ShardId.PcSa;
+                case "pc-sea": return ShardId.PcSea;
+                case "pc-kakao": return ShardId.PcKakao;
+                case "xbox-na": return ShardId.XBoxNa;
+                case "xbox-eu": return ShardId.XBoxEu;
+                case "xbox-as": return ShardId.XBoxAs;
+                case "xbox-oc": return ShardId.XBoxOc;
                 default: return null;
             }
         }
@@ -367,6 +378,17 @@ namespace PUBGLibrary.API
             switch (value)
             {
                 case ShardId.PcNa: serializer.Serialize(writer, "pc-na"); break;
+                case ShardId.PcEu: serializer.Serialize(writer, "pc-eu"); break;
+                case ShardId.PcKrJp: serializer.Serialize(writer, "pc-krjp"); break;
+                case ShardId.PcAs: serializer.Serialize(writer, "pc-as"); break;
+                case ShardId.PcOc: serializer.Serialize(writer, "pc-oc"); break;
+                case ShardId.PcSa: serializer.Serialize(writer, "pc-sa"); break;
+                case ShardId.PcSea: serializer.Serialize(writer, "pc-sea"); break;
+                case ShardId.PcKakao: serializer.Serialize(writer, "pc-kakao"); break;
+                case ShardId.XBoxNa: serializer.Serialize(writer, "xbox-na"); break;
+                case ShardId.XBoxEu: serializer.Serialize(writer, "xbox-eu"); break;
+                case ShardId.XBoxAs: serializer.Serialize(writer, "xbox-as"); break;
+                case ShardId.XBoxOc: serializer.Serialize(writer, "xbox-oc"); break;
             }
         }
     }
