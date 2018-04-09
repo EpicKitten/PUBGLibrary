@@ -72,8 +72,12 @@ namespace PUBGLibrary.Replay
                         KnownRegion = PlatformRegionShard.PC_AS;
                         District = value;
                         break;
-                    case "krjp":
-                        KnownRegion = PlatformRegionShard.PC_KRJP;
+                    case "kr":
+                        KnownRegion = PlatformRegionShard.PC_KR;
+                        District = value;
+                        break;
+                    case "jp":
+                        KnownRegion = PlatformRegionShard.PC_JP;
                         District = value;
                         break;
                     case "eu":

@@ -62,7 +62,6 @@ namespace PUBGLibrary.Replay
             }
             
             string summaryJson = Utils.Utils.UE4StringSerializer(filename, 1);
-            Console.WriteLine(summaryJson);
             return JsonConvert.DeserializeObject<ReplaySummary>(summaryJson);
         }
         /// <summary>

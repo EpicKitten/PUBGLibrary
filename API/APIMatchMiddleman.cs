@@ -11,7 +11,6 @@ namespace PUBGLibrary.API
     using System.Globalization;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
-
     public partial class Phraser
     {
         [JsonProperty("data")]
@@ -132,7 +131,7 @@ namespace PUBGLibrary.API
         public Actor? Actor { get; set; }
 
         [JsonProperty("shardId")]
-        public ShardId? ShardId { get; set; }
+        public PlatformRegionShard? ShardId { get; set; }
 
         [JsonProperty("stats")]
         public APIPlayer Stats { get; set; }
@@ -271,9 +270,6 @@ namespace PUBGLibrary.API
     public enum DatumType { Asset, Participant, Roster };
 
     public enum Actor { Empty };
-
-    public enum ShardId { PcNa };
-
     public enum DeathType { Alive, Byplayer, Suicide };
 
     public enum Won { False, True };
@@ -345,16 +341,24 @@ namespace PUBGLibrary.API
 
     static class ShardIdExtensions
     {
-        public static ShardId? ValueForString(string str)
+        public static PlatformRegionShard? ValueForString(string str)
         {
             switch (str)
             {
-                case "pc-na": return ShardId.PcNa;
+                case "pc-na": return PlatformRegionShard.PC_NA;
+                case "pc-eu": return PlatformRegionShard.PC_EU;
+                case "pc-as": return PlatformRegionShard.PC_AS;
+                case "pc-jp": return PlatformRegionShard.PC_JP;
+                case "pc-kakao": return PlatformRegionShard.PC_KAKAO;
+                case "pc-kr": return PlatformRegionShard.PC_KR;
+                case "pc-oc": return PlatformRegionShard.PC_OC;
+                case "pc-sa": return PlatformRegionShard.PC_SA;
+                case "pc-sea": return PlatformRegionShard.PC_SEA;
                 default: return null;
             }
         }
 
-        public static ShardId ReadJson(JsonReader reader, JsonSerializer serializer)
+        public static PlatformRegionShard ReadJson(JsonReader reader, JsonSerializer serializer)
         {
             var str = serializer.Deserialize<string>(reader);
             var maybeValue = ValueForString(str);
@@ -362,11 +366,11 @@ namespace PUBGLibrary.API
             throw new Exception("Unknown enum case " + str);
         }
 
-        public static void WriteJson(this ShardId value, JsonWriter writer, JsonSerializer serializer)
+        public static void WriteJson(this PlatformRegionShard value, JsonWriter writer, JsonSerializer serializer)
         {
             switch (value)
             {
-                case ShardId.PcNa: serializer.Serialize(writer, "pc-na"); break;
+                case PlatformRegionShard.PC_NA: serializer.Serialize(writer, "pc-na"); break;
             }
         }
     }
@@ -435,7 +439,7 @@ namespace PUBGLibrary.API
 
     internal class Converter2 : JsonConverter
     {
-        public override bool CanConvert(Type t) => t == typeof(DatumType) || t == typeof(Actor) || t == typeof(ShardId) || t == typeof(DeathType) || t == typeof(Won) || t == typeof(DatumType?) || t == typeof(Actor?) || t == typeof(ShardId?) || t == typeof(DeathType?) || t == typeof(Won?);
+        public override bool CanConvert(Type t) => t == typeof(DatumType) || t == typeof(Actor) || t == typeof(PlatformRegionShard) || t == typeof(DeathType) || t == typeof(Won) || t == typeof(DatumType?) || t == typeof(Actor?) || t == typeof(PlatformRegionShard?) || t == typeof(DeathType?) || t == typeof(Won?);
 
         public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
         {
@@ -443,7 +447,7 @@ namespace PUBGLibrary.API
                 return DatumTypeExtensions.ReadJson(reader, serializer);
             if (t == typeof(Actor))
                 return ActorExtensions.ReadJson(reader, serializer);
-            if (t == typeof(ShardId))
+            if (t == typeof(PlatformRegionShard))
                 return ShardIdExtensions.ReadJson(reader, serializer);
             if (t == typeof(DeathType))
                 return DeathTypeExtensions.ReadJson(reader, serializer);
@@ -459,7 +463,7 @@ namespace PUBGLibrary.API
                 if (reader.TokenType == JsonToken.Null) return null;
                 return ActorExtensions.ReadJson(reader, serializer);
             }
-            if (t == typeof(ShardId?))
+            if (t == typeof(PlatformRegionShard?))
             {
                 if (reader.TokenType == JsonToken.Null) return null;
                 return ShardIdExtensions.ReadJson(reader, serializer);
@@ -490,9 +494,9 @@ namespace PUBGLibrary.API
                 ((Actor)value).WriteJson(writer, serializer);
                 return;
             }
-            if (t == typeof(ShardId))
+            if (t == typeof(PlatformRegionShard))
             {
-                ((ShardId)value).WriteJson(writer, serializer);
+                ((PlatformRegionShard)value).WriteJson(writer, serializer);
                 return;
             }
             if (t == typeof(DeathType))

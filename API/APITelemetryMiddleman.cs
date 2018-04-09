@@ -133,25 +133,13 @@ namespace PUBGLibrary.API
         public double? Health { get; set; }
 
         [JsonProperty("location")]
-        public AttackerLocation Location { get; set; }
+        public Position Position { get; set; }
 
         [JsonProperty("ranking")]
         public int? Ranking { get; set; }
 
         [JsonProperty("accountId")]
         public string AccountId { get; set; }
-    }
-
-    public partial class AttackerLocation
-    {
-        [JsonProperty("x")]
-        public double? X { get; set; }
-
-        [JsonProperty("y")]
-        public double? Y { get; set; }
-
-        [JsonProperty("z")]
-        public double? Z { get; set; }
     }
 
     public partial class Character
@@ -166,7 +154,7 @@ namespace PUBGLibrary.API
         public long? Health { get; set; }
 
         [JsonProperty("location")]
-        public PurpleLocation Location { get; set; }
+        public Position Position { get; set; }
 
         [JsonProperty("ranking")]
         public long? Ranking { get; set; }
@@ -175,17 +163,6 @@ namespace PUBGLibrary.API
         public string AccountId { get; set; }
     }
 
-    public partial class PurpleLocation
-    {
-        [JsonProperty("x")]
-        public double? X { get; set; }
-
-        [JsonProperty("y")]
-        public double? Y { get; set; }
-
-        [JsonProperty("z")]
-        public double? Z { get; set; }
-    }
 
     public partial class ChildItem
     {
@@ -254,26 +231,13 @@ namespace PUBGLibrary.API
         [JsonProperty("redZoneRadius")]
         public long? RedZoneRadius { get; set; }
     }
-
-    public partial class Position
-    {
-        [JsonProperty("x")]
-        public double? X { get; set; }
-
-        [JsonProperty("y")]
-        public double? Y { get; set; }
-
-        [JsonProperty("z")]
-        public long? Z { get; set; }
-    }
-
     public partial class ItemPackage
     {
         [JsonProperty("itemPackageId")]
         public string ItemPackageId { get; set; }
 
         [JsonProperty("location")]
-        public AttackerLocation Location { get; set; }
+        public Position Position { get; set; }
 
         [JsonProperty("items")]
         public List<ChildItem> Items { get; set; }
@@ -389,7 +353,7 @@ namespace PUBGLibrary.API
     public enum VehicleId
     {
         AquaRailA01_C,
-        BoatPG117_C,
+        PG117_A_01_C,
         BpMotorbike04_C,
         BpMotorbike04_Desert_C,
         BpMotorbike04_SideCar_C,
@@ -725,7 +689,7 @@ namespace PUBGLibrary.API
             switch (str)
             {
                 case "AquaRail_A_01_C": return VehicleId.AquaRailA01_C;
-                case "Boat_PG117_C": return VehicleId.BoatPG117_C;
+                case "PG117_A_01_C": return VehicleId.PG117_A_01_C;
                 case "BP_Motorbike_04_C": return VehicleId.BpMotorbike04_C;
                 case "BP_Motorbike_04_Desert_C": return VehicleId.BpMotorbike04_Desert_C;
                 case "BP_Motorbike_04_SideCar_C": return VehicleId.BpMotorbike04_SideCar_C;
@@ -776,7 +740,7 @@ namespace PUBGLibrary.API
             switch (value)
             {
                 case VehicleId.AquaRailA01_C: serializer.Serialize(writer, "AquaRail_A_01_C"); break;
-                case VehicleId.BoatPG117_C: serializer.Serialize(writer, "Boat_PG117_C"); break;
+                case VehicleId.PG117_A_01_C: serializer.Serialize(writer, "PG117_A_01_C"); break;
                 case VehicleId.BpMotorbike04_C: serializer.Serialize(writer, "BP_Motorbike_04_C"); break;
                 case VehicleId.BpMotorbike04_Desert_C: serializer.Serialize(writer, "BP_Motorbike_04_Desert_C"); break;
                 case VehicleId.BpMotorbike04_SideCar_C: serializer.Serialize(writer, "BP_Motorbike_04_SideCar_C"); break;

@@ -26,31 +26,58 @@ namespace Net47_LibraryTest
                 Environment.SetEnvironmentVariable("API_KEY", apikey, EnvironmentVariableTarget.User);
             }
 
-            APIStatus APIStatus = new APIStatus();
-            Console.WriteLine("Status - IsOnline = " + APIStatus.bIsOnline);
-            Console.WriteLine("Status - APIVersionRelease = " + APIStatus.APIVersionRelease);
-            Console.WriteLine("Status - ID = " + APIStatus.ID);
+
+            //APIStatus APIStatus = new APIStatus();
+            //Console.WriteLine("Status - IsOnline = " + APIStatus.bIsOnline);
+            //Console.WriteLine("Status - APIVersionRelease = " + APIStatus.APIVersionRelease);
+            //Console.WriteLine("Status - ID = " + APIStatus.ID);
+            //PUBGLibrary.Replay.Replay replay = new PUBGLibrary.Replay.Replay(@"C:\Users\Master\AppData\Local\TslGame\Saved\Demos\match.bro.official.2018-04.na.solo-fpp.2018.04.07.ee7ac4f9-8c89-4319-aeb5-a3cc438a2bf2__USER__865f3c9b8a672f1bb969030577a35239");
+
+            //Console.WriteLine("LongestKill: "+replay.Recorder.LongestDistanceKillInCM);
+
+            
+            //APIRequest request = new APIRequest();
+            //APITelemetry telem = request.TelemetryPhraser(File.ReadAllText(@"C:\Users\Master\Desktop\75cb3ae9-3a2c-11e8-9062-0a5864686d41-telemetry.json"));
+            //Console.WriteLine(telem.LogMatchDefinition.Event_timestamp);
             API pubgapi = new API(apikey);
-            APIRequest pubgapirequest = pubgapi.RequestMatch("b319f99d-fce9-4766-9c2d-b2b45b5ca30a", PlatformRegionShard.PC_NA);
-            if (pubgapirequest.exception != null)
+            APIRequest pubgapirequest = pubgapi.RequestMatch("2d316321-1a54-4dc5-9c76-f50d092fb1ca", PlatformRegionShard.PC_NA);
+            foreach (LogPlayerKill playerkill in pubgapirequest.Telemetry.LogPlayerKillList)
             {
-                Console.WriteLine(pubgapirequest.exception.Message);
+                Console.WriteLine("From killer ("+playerkill.Killer.Location+") to victim ("+playerkill.Victim.Location+") was "+playerkill.Killer.Location.DistanceTo(playerkill.Victim.Location));
             }
-            else
-            {
-                Console.WriteLine(pubgapirequest.Match.BaseJSON);
-                Console.WriteLine(pubgapirequest.Match.TelemetryURL);
-                foreach (PlayerSpecificLog psl in pubgapirequest.Telemetry.PlayerSpecificLogList)
-                {
-                    if (psl.PUBGName == "epickitten")
-                    {
-                        foreach (LogPlayerKill lpk in psl.LogPlayerKillList)
-                        {
-                            Console.WriteLine(lpk.Victim.PUBGName);
-                        }
-                    }
-                }
-            }
+            //foreach (LogPlayerLogout lpl in pubgapirequest.Telemetry.LogPlayerLogoutList)
+            //{
+            //    Console.WriteLine(lpl.AccountID);
+            //    Console.WriteLine(lpl.DateTimeOffset);
+            //    pubgapirequest.Telemetry.GetPlayerSpecificLog(lpl.AccountID);
+            //    foreach (Player p in pubgapirequest.Telemetry.LogMatchEnd.PlayerList)
+            //    {
+            //        if (p.AccountID == lpl.AccountID)
+            //        {
+            //            Console.WriteLine(p.Ranking);
+            //        }
+            //    }
+            //    Console.WriteLine("---------------------------------");
+            //}
+            //if (pubgapirequest.exception != null)
+            //{
+            //    Console.WriteLine(pubgapirequest.exception.Message);
+            //}
+            //else
+            //{
+            //    Console.WriteLine(pubgapirequest.Match.BaseJSON);
+            //    Console.WriteLine(pubgapirequest.Match.TelemetryURL);
+            //    foreach (PlayerSpecificLog psl in pubgapirequest.Telemetry.PlayerSpecificLogList)
+            //    {
+            //        if (psl.PUBGName == "epickitten")
+            //        {
+            //            foreach (LogPlayerKill lpk in psl.LogPlayerKillList)
+            //            {
+            //                Console.WriteLine(lpk.Victim.PUBGName);
+            //            }
+            //        }
+            //    }
+            //}
 
         }
         static void APISearchFunction(APITelemetry telemetry, string AccountID)

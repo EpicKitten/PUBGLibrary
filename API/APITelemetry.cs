@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-
 namespace PUBGLibrary.API
 {
     /// <summary>
@@ -25,15 +25,15 @@ namespace PUBGLibrary.API
         /// </summary>
         public LogMatchEnd LogMatchEnd = new LogMatchEnd();
         /// <summary>
-        /// A list of all the players created by the server at match start, including location, health, and ranking of the player
+        /// A list of all the players created by the server at match start, including Position, health, and ranking of the player
         /// </summary>
         public List<LogPlayerCreate> LogPlayerCreateList = new List<LogPlayerCreate>();
         /// <summary>
-        /// A list of all air drops that land including the carpackage model, location, and all items in the air drop
+        /// A list of all air drops that land including the carpackage model, Position, and all items in the air drop
         /// </summary>
         public List<LogCarePackageLand> LogCarePackageLandList = new List<LogCarePackageLand>();
         /// <summary>
-        /// A list of all air drops that spawn including the carpackage model, location, and all items in the air drop
+        /// A list of all air drops that spawn including the carpackage model, Position, and all items in the air drop
         /// </summary>
         public List<LogCarePackageSpawn> LogCarePackageSpawnList = new List<LogCarePackageSpawn>();
         /// <summary>
@@ -500,7 +500,7 @@ namespace PUBGLibrary.API
         public DateTimeOffset DateTimeOffset = new DateTimeOffset();
     }
     /// <summary>
-    /// A player created by the server at match start, including location, health, and ranking of the player
+    /// A player created by the server at match start, including Position, health, and ranking of the player
     /// </summary>
     public class LogPlayerCreate
     {
@@ -597,7 +597,7 @@ namespace PUBGLibrary.API
     public class CarePackage
     {
         public string CarePackageID;
-        public Location Location = new Location();
+        public Position Position = new Position();
         public List<Item> Items = new List<Item>();
         public DateTimeOffset DateTimeOffset;
     }
@@ -630,14 +630,70 @@ namespace PUBGLibrary.API
         public string AccountID;
         public int TeamID;
         public double Health;
-        public Location Location = new Location();
+        public Position Position = new Position();
         public int Ranking;
     }
-    public class Location
+    public class Position
     {
-        public double X;
-        public double Y;
-        public double Z;
+        public Position(double x, double y, double z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+        }
+        public Position()
+        {
+
+        }
+        [JsonProperty("x")]
+        public double? X;
+        [JsonProperty("y")]
+        public double? Y;
+        [JsonProperty("z")]
+        public double? Z;
+        public override string ToString()
+        {
+            return X + "," + Y + "," + Z;
+        }
+        /// <summary>
+        /// Measures the distance between this position and position in the parameters 
+        /// </summary>
+        /// <param name="ToPosition">The position to measure to</param>
+        /// <returns>The distance between X and Y</returns>
+        public double DistanceTo(Position ToPosition)
+        {
+            double a = ((double)X - (double)ToPosition.X);
+            double b = ((double)Y - (double)ToPosition.Y);
+            double c = (a * a) + (b * b);
+            return Math.Sqrt(c);
+        }
+        public double HeightDifference(Position CompareToPosition)
+        {
+            return ((double)Z - (double)CompareToPosition.Z);
+        }
+        public Level AboveOrBelowCompare(Position CompareToPosition)
+        {
+            double hd = HeightDifference(CompareToPosition);
+            if (hd > 0)
+            {
+                return Level.Above;
+            }
+            else if (hd == 0)
+            {
+                return Level.Below;
+            }
+            else
+            {
+                return Level.SameLevel;
+            }
+        }
+        public enum Level
+        {
+            Above,
+            Below,
+            SameLevel
+
+        }
     }
     
 }

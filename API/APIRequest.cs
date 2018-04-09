@@ -31,6 +31,7 @@ namespace PUBGLibrary.API
         /// <param name="PlatformRegion">The platform-region of the request (xbox-na, pc-oc, etc)</param>
         /// <param name="MatchID">The Match ID of the map</param>
         /// <returns>If null, the request failed</returns>
+        /// 
         public APIRequest RequestSingleMatch(string APIKey, string PlatformRegion, string MatchID)
         {
             APIStatus status = new APIStatus();
@@ -262,9 +263,9 @@ namespace PUBGLibrary.API
                             };
                             logCarePackageLand.CarePackage.Items.Add(item);
                         }
-                        logCarePackageLand.CarePackage.Location.X = (double)telem.ItemPackage.Location.X;
-                        logCarePackageLand.CarePackage.Location.Y = (double)telem.ItemPackage.Location.Y;
-                        logCarePackageLand.CarePackage.Location.Z = (double)telem.ItemPackage.Location.Z;
+                        logCarePackageLand.CarePackage.Position.X = (double)telem.ItemPackage.Position.X;
+                        logCarePackageLand.CarePackage.Position.Y = (double)telem.ItemPackage.Position.Y;
+                        logCarePackageLand.CarePackage.Position.Z = (double)telem.ItemPackage.Position.Z;
                         Telemetry.LogCarePackageLandList.Add(logCarePackageLand);
                         break;
                     case T.LogCarePackageSpawn:
@@ -282,9 +283,9 @@ namespace PUBGLibrary.API
                             };
                             logCarePackageSpawn.CarePackage.Items.Add(item);
                         }
-                        logCarePackageSpawn.CarePackage.Location.X = (double)telem.ItemPackage.Location.X;
-                        logCarePackageSpawn.CarePackage.Location.Y = (double)telem.ItemPackage.Location.Y;
-                        logCarePackageSpawn.CarePackage.Location.Z = (double)telem.ItemPackage.Location.Z;
+                        logCarePackageSpawn.CarePackage.Position.X = (double)telem.ItemPackage.Position.X;
+                        logCarePackageSpawn.CarePackage.Position.Y = (double)telem.ItemPackage.Position.Y;
+                        logCarePackageSpawn.CarePackage.Position.Z = (double)telem.ItemPackage.Position.Z;
                         Telemetry.LogCarePackageSpawnList.Add(logCarePackageSpawn);
                         break;
                     case T.LogGameStatePeriodic:
@@ -313,9 +314,9 @@ namespace PUBGLibrary.API
                         LogItemAttach LogItemAttach = new LogItemAttach();
                         LogItemAttach.Player.AccountID = telem.Character.AccountId;
                         LogItemAttach.Player.Health = (double)telem.Character.Health;
-                        LogItemAttach.Player.Location.X = (double)telem.Character.Location.X;
-                        LogItemAttach.Player.Location.Y = (double)telem.Character.Location.Y;
-                        LogItemAttach.Player.Location.Z = (double)telem.Character.Location.Z;
+                        LogItemAttach.Player.Position.X = (double)telem.Character.Position.X;
+                        LogItemAttach.Player.Position.Y = (double)telem.Character.Position.Y;
+                        LogItemAttach.Player.Position.Z = (double)telem.Character.Position.Z;
                         LogItemAttach.Player.PUBGName = telem.Character.Name;
                         LogItemAttach.Player.Ranking = (int)telem.Character.Ranking;
                         LogItemAttach.Player.TeamID = (int)telem.Character.TeamId;
@@ -334,9 +335,9 @@ namespace PUBGLibrary.API
                         LogItemDetach logItemDetach = new LogItemDetach();
                         logItemDetach.Player.AccountID = telem.Character.AccountId;
                         logItemDetach.Player.Health = (double)telem.Character.Health;
-                        logItemDetach.Player.Location.X = (double)telem.Character.Location.X;
-                        logItemDetach.Player.Location.Y = (double)telem.Character.Location.Y;
-                        logItemDetach.Player.Location.Z = (double)telem.Character.Location.Z;
+                        logItemDetach.Player.Position.X = (double)telem.Character.Position.X;
+                        logItemDetach.Player.Position.Y = (double)telem.Character.Position.Y;
+                        logItemDetach.Player.Position.Z = (double)telem.Character.Position.Z;
                         logItemDetach.Player.PUBGName = telem.Character.Name;
                         logItemDetach.Player.Ranking = (int)telem.Character.Ranking;
                         logItemDetach.Player.TeamID = (int)telem.Character.TeamId;
@@ -357,9 +358,9 @@ namespace PUBGLibrary.API
                         LogItemDrop logItemDrop = new LogItemDrop();
                         logItemDrop.Player.AccountID = telem.Character.AccountId;
                         logItemDrop.Player.Health = (double)telem.Character.Health;
-                        logItemDrop.Player.Location.X = (double)telem.Character.Location.X;
-                        logItemDrop.Player.Location.Y = (double)telem.Character.Location.Y;
-                        logItemDrop.Player.Location.Z = (double)telem.Character.Location.Z;
+                        logItemDrop.Player.Position.X = (double)telem.Character.Position.X;
+                        logItemDrop.Player.Position.Y = (double)telem.Character.Position.Y;
+                        logItemDrop.Player.Position.Z = (double)telem.Character.Position.Z;
                         logItemDrop.Player.PUBGName = telem.Character.Name;
                         logItemDrop.Player.Ranking = (int)telem.Character.Ranking;
                         logItemDrop.Player.TeamID = (int)telem.Character.TeamId;
@@ -374,9 +375,9 @@ namespace PUBGLibrary.API
                         LogItemEquip logItemEquip = new LogItemEquip();
                         logItemEquip.Player.AccountID = telem.Character.AccountId;
                         logItemEquip.Player.Health = (double)telem.Character.Health;
-                        logItemEquip.Player.Location.X = (double)telem.Character.Location.X;
-                        logItemEquip.Player.Location.Y = (double)telem.Character.Location.Y;
-                        logItemEquip.Player.Location.Z = (double)telem.Character.Location.Z;
+                        logItemEquip.Player.Position.X = (double)telem.Character.Position.X;
+                        logItemEquip.Player.Position.Y = (double)telem.Character.Position.Y;
+                        logItemEquip.Player.Position.Z = (double)telem.Character.Position.Z;
                         logItemEquip.Player.PUBGName = telem.Character.Name;
                         logItemEquip.Player.Ranking = (int)telem.Character.Ranking;
                         logItemEquip.Player.TeamID = (int)telem.Character.TeamId;
@@ -391,9 +392,9 @@ namespace PUBGLibrary.API
                         LogItemPickup logItemPickup = new LogItemPickup();
                         logItemPickup.Player.AccountID = telem.Character.AccountId;
                         logItemPickup.Player.Health = (double)telem.Character.Health;
-                        logItemPickup.Player.Location.X = (double)telem.Character.Location.X;
-                        logItemPickup.Player.Location.Y = (double)telem.Character.Location.Y;
-                        logItemPickup.Player.Location.Z = (double)telem.Character.Location.Z;
+                        logItemPickup.Player.Position.X = (double)telem.Character.Position.X;
+                        logItemPickup.Player.Position.Y = (double)telem.Character.Position.Y;
+                        logItemPickup.Player.Position.Z = (double)telem.Character.Position.Z;
                         logItemPickup.Player.PUBGName = telem.Character.Name;
                         logItemPickup.Player.Ranking = (int)telem.Character.Ranking;
                         logItemPickup.Player.TeamID = (int)telem.Character.TeamId;
@@ -408,9 +409,9 @@ namespace PUBGLibrary.API
                         LogItemUnequip logItemUnequip = new LogItemUnequip();
                         logItemUnequip.Player.AccountID = telem.Character.AccountId;
                         logItemUnequip.Player.Health = (double)telem.Character.Health;
-                        logItemUnequip.Player.Location.X = (double)telem.Character.Location.X;
-                        logItemUnequip.Player.Location.Y = (double)telem.Character.Location.Y;
-                        logItemUnequip.Player.Location.Z = (double)telem.Character.Location.Z;
+                        logItemUnequip.Player.Position.X = (double)telem.Character.Position.X;
+                        logItemUnequip.Player.Position.Y = (double)telem.Character.Position.Y;
+                        logItemUnequip.Player.Position.Z = (double)telem.Character.Position.Z;
                         logItemUnequip.Player.PUBGName = telem.Character.Name;
                         logItemUnequip.Player.Ranking = (int)telem.Character.Ranking;
                         logItemUnequip.Player.TeamID = (int)telem.Character.TeamId;
@@ -425,9 +426,9 @@ namespace PUBGLibrary.API
                         LogItemUse logItemUse = new LogItemUse();
                         logItemUse.Player.AccountID = telem.Character.AccountId;
                         logItemUse.Player.Health = (double)telem.Character.Health;
-                        logItemUse.Player.Location.X = (double)telem.Character.Location.X;
-                        logItemUse.Player.Location.Y = (double)telem.Character.Location.Y;
-                        logItemUse.Player.Location.Z = (double)telem.Character.Location.Z;
+                        logItemUse.Player.Position.X = (double)telem.Character.Position.X;
+                        logItemUse.Player.Position.Y = (double)telem.Character.Position.Y;
+                        logItemUse.Player.Position.Z = (double)telem.Character.Position.Z;
                         logItemUse.Player.PUBGName = telem.Character.Name;
                         logItemUse.Player.Ranking = (int)telem.Character.Ranking;
                         logItemUse.Player.TeamID = (int)telem.Character.TeamId;
@@ -452,11 +453,13 @@ namespace PUBGLibrary.API
                             {
                                 AccountID = person.AccountId,
                                 PUBGName = person.Name,
-                                Health = (double)person.Health
+                                Health = (double)person.Health,
+                                Ranking = (int)person.Ranking,
+                                TeamID = (int)person.TeamId
                             };
-                            player.Location.X = (double)person.Location.X;
-                            player.Location.Y = (double)person.Location.Y;
-                            player.Location.Z = (double)person.Location.Z;
+                            player.Position.X = (double)person.Position.X;
+                            player.Position.Y = (double)person.Position.Y;
+                            player.Position.Z = (double)person.Position.Z;
                             Telemetry.LogMatchEnd.PlayerList.Add(player);
                         }
                         break;
@@ -470,11 +473,13 @@ namespace PUBGLibrary.API
                             {
                                 AccountID = person.AccountId,
                                 PUBGName = person.Name,
-                                Health = (double)person.Health
+                                Health = (double)person.Health,
+                                Ranking = (int)person.Ranking,
+                                TeamID = (int)person.TeamId
                             };
-                            player.Location.X = (double)person.Location.X;
-                            player.Location.Y = (double)person.Location.Y;
-                            player.Location.Z = (double)person.Location.Z;
+                            player.Position.X = (double)person.Position.X;
+                            player.Position.Y = (double)person.Position.Y;
+                            player.Position.Z = (double)person.Position.Z;
                             Telemetry.LogMatchStart.PlayerList.Add(player);
                         }
                         break;
@@ -490,9 +495,9 @@ namespace PUBGLibrary.API
                         logPlayerAttack.Transport.vehicleType = telem.Vehicle.VehicleType;
                         logPlayerAttack.Attacker.AccountID = telem.Attacker.AccountId;
                         logPlayerAttack.Attacker.Health = (double)telem.Attacker.Health;
-                        logPlayerAttack.Attacker.Location.X = (double)telem.Attacker.Location.X;
-                        logPlayerAttack.Attacker.Location.Y = (double)telem.Attacker.Location.Y;
-                        logPlayerAttack.Attacker.Location.Z = (double)telem.Attacker.Location.Z;
+                        logPlayerAttack.Attacker.Position.X = (double)telem.Attacker.Position.X;
+                        logPlayerAttack.Attacker.Position.Y = (double)telem.Attacker.Position.Y;
+                        logPlayerAttack.Attacker.Position.Z = (double)telem.Attacker.Position.Z;
                         logPlayerAttack.Attacker.PUBGName = telem.Attacker.Name;
                         logPlayerAttack.Attacker.Ranking = (int)telem.Attacker.Ranking;
                         logPlayerAttack.Attacker.TeamID = (int)telem.Attacker.TeamId;
@@ -510,9 +515,9 @@ namespace PUBGLibrary.API
                         logPlayerCreate.Player.AccountID = telem.Character.AccountId;
                         logPlayerCreate.Player.Ranking = (int)telem.Character.Ranking;
                         logPlayerCreate.Player.TeamID = (int)telem.Character.TeamId;
-                        logPlayerCreate.Player.Location.X = (double)telem.Character.Location.X;
-                        logPlayerCreate.Player.Location.Y = (double)telem.Character.Location.Y;
-                        logPlayerCreate.Player.Location.Z = (double)telem.Character.Location.Z;
+                        logPlayerCreate.Player.Position.X = (double)telem.Character.Position.X;
+                        logPlayerCreate.Player.Position.Y = (double)telem.Character.Position.Y;
+                        logPlayerCreate.Player.Position.Z = (double)telem.Character.Position.Z;
                         Telemetry.LogPlayerCreateList.Add(logPlayerCreate);
                         break;
                     case T.LogPlayerKill:
@@ -522,17 +527,17 @@ namespace PUBGLibrary.API
                         };
                         logPlayerKill.Killer.AccountID = telem.Killer.AccountId;
                         logPlayerKill.Killer.Health = (double)telem.Killer.Health;
-                        logPlayerKill.Killer.Location.X = (double)telem.Killer.Location.X;
-                        logPlayerKill.Killer.Location.Y = (double)telem.Killer.Location.Y;
-                        logPlayerKill.Killer.Location.Z = (double)telem.Killer.Location.Z;
+                        logPlayerKill.Killer.Position.X = (double)telem.Killer.Position.X;
+                        logPlayerKill.Killer.Position.Y = (double)telem.Killer.Position.Y;
+                        logPlayerKill.Killer.Position.Z = (double)telem.Killer.Position.Z;
                         logPlayerKill.Killer.PUBGName = telem.Killer.Name;
                         logPlayerKill.Killer.Ranking = (int)telem.Killer.Ranking;
                         logPlayerKill.Killer.TeamID = (int)telem.Killer.TeamId;
                         logPlayerKill.Victim.AccountID = telem.Victim.AccountId;
                         logPlayerKill.Victim.Health = (double)telem.Victim.Health;
-                        logPlayerKill.Victim.Location.X = (double)telem.Victim.Location.X;
-                        logPlayerKill.Victim.Location.Y = (double)telem.Victim.Location.Y;
-                        logPlayerKill.Victim.Location.Z = (double)telem.Victim.Location.Z;
+                        logPlayerKill.Victim.Position.X = (double)telem.Victim.Position.X;
+                        logPlayerKill.Victim.Position.Y = (double)telem.Victim.Position.Y;
+                        logPlayerKill.Victim.Position.Z = (double)telem.Victim.Position.Z;
                         logPlayerKill.Victim.PUBGName = telem.Victim.Name;
                         logPlayerKill.Victim.Ranking = (int)telem.Victim.Ranking;
                         logPlayerKill.Victim.TeamID = (int)telem.Victim.TeamId;
@@ -561,16 +566,16 @@ namespace PUBGLibrary.API
                         LogPlayerPosition logPlayerPosition = new LogPlayerPosition();
                         logPlayerPosition.LoggedPlayer.AccountID = telem.Character.AccountId;
                         logPlayerPosition.LoggedPlayer.Health = (double)telem.Character.Health;
-                        logPlayerPosition.LoggedPlayer.Location.X = (double)telem.Character.Location.X;
-                        logPlayerPosition.LoggedPlayer.Location.Y = (double)telem.Character.Location.Y;
-                        logPlayerPosition.LoggedPlayer.Location.Z = (double)telem.Character.Location.Z;
+                        logPlayerPosition.LoggedPlayer.Position.X = (double)telem.Character.Position.X;
+                        logPlayerPosition.LoggedPlayer.Position.Y = (double)telem.Character.Position.Y;
+                        logPlayerPosition.LoggedPlayer.Position.Z = (double)telem.Character.Position.Z;
                         logPlayerPosition.LoggedPlayer.PUBGName = telem.Character.Name;
                         logPlayerPosition.LoggedPlayer.Ranking = (int)telem.Character.Ranking;
                         logPlayerPosition.LoggedPlayer.TeamID = (int)telem.Character.TeamId;
                         logPlayerPosition.ElapsedTime = (int)telem.ElapsedTime;
                         logPlayerPosition.numAlivePlayers = (int)telem.NumAlivePlayers;
-                        logPlayerPosition.UnderThirtyFPS = (int)telem.Under30Fps;
-                        logPlayerPosition.UnderSixtyFPS = (int)telem.Under60Fps;
+                        //logPlayerPosition.UnderThirtyFPS = (int)telem.Under30Fps; Depreacted
+                        //logPlayerPosition.UnderSixtyFPS = (int)telem.Under60Fps;  Depreacted
                         logPlayerPosition.DateTimeOffset = (DateTimeOffset)telem.D;
                         Telemetry.LogPlayerPositionList.Add(logPlayerPosition);
                         break;
@@ -578,17 +583,17 @@ namespace PUBGLibrary.API
                         LogPlayerTakeDamage logPlayerTakeDamage = new LogPlayerTakeDamage();
                         logPlayerTakeDamage.Attacker.AccountID = telem.Attacker.AccountId;
                         logPlayerTakeDamage.Attacker.Health = (double)telem.Attacker.Health;
-                        logPlayerTakeDamage.Attacker.Location.X = (double)telem.Attacker.Location.X;
-                        logPlayerTakeDamage.Attacker.Location.Y = (double)telem.Attacker.Location.Y;
-                        logPlayerTakeDamage.Attacker.Location.Z = (double)telem.Attacker.Location.Z;
+                        logPlayerTakeDamage.Attacker.Position.X = (double)telem.Attacker.Position.X;
+                        logPlayerTakeDamage.Attacker.Position.Y = (double)telem.Attacker.Position.Y;
+                        logPlayerTakeDamage.Attacker.Position.Z = (double)telem.Attacker.Position.Z;
                         logPlayerTakeDamage.Attacker.PUBGName = telem.Attacker.Name;
                         logPlayerTakeDamage.Attacker.Ranking = (int)telem.Attacker.Ranking;
                         logPlayerTakeDamage.Attacker.TeamID = (int)telem.Attacker.TeamId;
                         logPlayerTakeDamage.Victim.AccountID = telem.Victim.AccountId;
                         logPlayerTakeDamage.Victim.Health = (double)telem.Victim.Health;
-                        logPlayerTakeDamage.Victim.Location.X = (double)telem.Victim.Location.X;
-                        logPlayerTakeDamage.Victim.Location.Y = (double)telem.Victim.Location.Y;
-                        logPlayerTakeDamage.Victim.Location.Z = (double)telem.Victim.Location.Z;
+                        logPlayerTakeDamage.Victim.Position.X = (double)telem.Victim.Position.X;
+                        logPlayerTakeDamage.Victim.Position.Y = (double)telem.Victim.Position.Y;
+                        logPlayerTakeDamage.Victim.Position.Z = (double)telem.Victim.Position.Z;
                         logPlayerTakeDamage.Victim.PUBGName = telem.Victim.Name;
                         logPlayerTakeDamage.Victim.Ranking = (int)telem.Victim.Ranking;
                         logPlayerTakeDamage.Victim.TeamID = (int)telem.Victim.TeamId;
@@ -603,9 +608,9 @@ namespace PUBGLibrary.API
                         LogVehicleDestroy logVehicleDestroy = new LogVehicleDestroy();
                         logVehicleDestroy.Attacker.AccountID = telem.Attacker.AccountId;
                         logVehicleDestroy.Attacker.Health = (double)telem.Attacker.Health;
-                        logVehicleDestroy.Attacker.Location.X = (double)telem.Attacker.Location.X;
-                        logVehicleDestroy.Attacker.Location.Y = (double)telem.Attacker.Location.Y;
-                        logVehicleDestroy.Attacker.Location.Z = (double)telem.Attacker.Location.Z;
+                        logVehicleDestroy.Attacker.Position.X = (double)telem.Attacker.Position.X;
+                        logVehicleDestroy.Attacker.Position.Y = (double)telem.Attacker.Position.Y;
+                        logVehicleDestroy.Attacker.Position.Z = (double)telem.Attacker.Position.Z;
                         logVehicleDestroy.Attacker.PUBGName = telem.Attacker.Name;
                         logVehicleDestroy.Attacker.Ranking = (int)telem.Attacker.Ranking;
                         logVehicleDestroy.Attacker.TeamID = (int)telem.Attacker.TeamId;
@@ -620,9 +625,9 @@ namespace PUBGLibrary.API
                         LogVehicleLeave logVehicleLeave = new LogVehicleLeave();
                         logVehicleLeave.Player.AccountID = telem.Character.AccountId;
                         logVehicleLeave.Player.Health = (double)telem.Character.Health;
-                        logVehicleLeave.Player.Location.X = (double)telem.Character.Location.X;
-                        logVehicleLeave.Player.Location.Y = (double)telem.Character.Location.Y;
-                        logVehicleLeave.Player.Location.Z = (double)telem.Character.Location.Z;
+                        logVehicleLeave.Player.Position.X = (double)telem.Character.Position.X;
+                        logVehicleLeave.Player.Position.Y = (double)telem.Character.Position.Y;
+                        logVehicleLeave.Player.Position.Z = (double)telem.Character.Position.Z;
                         logVehicleLeave.Player.PUBGName = telem.Character.Name;
                         logVehicleLeave.Player.Ranking = (int)telem.Character.Ranking;
                         logVehicleLeave.Player.TeamID = (int)telem.Character.TeamId;
@@ -637,9 +642,9 @@ namespace PUBGLibrary.API
                         LogVehicleRide logVehicleRide = new LogVehicleRide();
                         logVehicleRide.Player.AccountID = telem.Character.AccountId;
                         logVehicleRide.Player.Health = (double)telem.Character.Health;
-                        logVehicleRide.Player.Location.X = (double)telem.Character.Location.X;
-                        logVehicleRide.Player.Location.Y = (double)telem.Character.Location.Y;
-                        logVehicleRide.Player.Location.Z = (double)telem.Character.Location.Z;
+                        logVehicleRide.Player.Position.X = (double)telem.Character.Position.X;
+                        logVehicleRide.Player.Position.Y = (double)telem.Character.Position.Y;
+                        logVehicleRide.Player.Position.Z = (double)telem.Character.Position.Z;
                         logVehicleRide.Player.PUBGName = telem.Character.Name;
                         logVehicleRide.Player.Ranking = (int)telem.Character.Ranking;
                         logVehicleRide.Player.TeamID = (int)telem.Character.TeamId;

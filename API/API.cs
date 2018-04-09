@@ -155,11 +155,17 @@ namespace PUBGLibrary.API
         [Description("pc-eu")]
         PC_EU,
         /// <summary>
-        /// PC Korea/Japan
+        /// PC Korea
         /// </summary>
-        [JsonProperty("pc-krjp")]
-        [Description("pc-krjp")]
-        PC_KRJP,
+        [JsonProperty("pc-kr")]
+        [Description("pc-kr")]
+        PC_KR,
+        /// <summary>
+        /// PC Japan
+        /// </summary>
+        [JsonProperty("pc-jp")]
+        [Description("pc-jp")]
+        PC_JP,
         /// <summary>
         /// PC Asia
         /// </summary>
