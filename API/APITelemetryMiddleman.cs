@@ -386,6 +386,7 @@ namespace PUBGLibrary.API
         Dacia_A_04_v2_C,
         DummyTransportAircraft_C,
         ParachutePlayer_C,
+        PG117_A_01_C,
         Empty
     }
     
@@ -723,6 +724,7 @@ namespace PUBGLibrary.API
                 case "DummyTransportAircraft_C": return VehicleId.DummyTransportAircraft_C;
                 case "": return VehicleId.Empty;
                 case "ParachutePlayer_C": return VehicleId.ParachutePlayer_C;
+                case "PG117_A_01_C": return VehicleId.PG117_A_01_C;
                 default: return null;
             }
         }
@@ -773,6 +775,7 @@ namespace PUBGLibrary.API
                 case VehicleId.DummyTransportAircraft_C: serializer.Serialize(writer, "DummyTransportAircraft_C"); break;
                 case VehicleId.Empty: serializer.Serialize(writer, ""); break;
                 case VehicleId.ParachutePlayer_C: serializer.Serialize(writer, "ParachutePlayer_C"); break;
+                case VehicleId.PG117_A_01_C: serializer.Serialize(writer, "PG117_A_01_C"); break;
             }
         }
     }
