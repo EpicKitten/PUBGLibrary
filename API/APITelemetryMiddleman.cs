@@ -46,7 +46,7 @@ namespace PUBGLibrary.API
         public Common Common { get; set; }
 
         [JsonProperty("character")]
-        public Attacker Character { get; set; }
+        public Player Character { get; set; }
 
         [JsonProperty("elapsedTime")]
         public long? ElapsedTime { get; set; }
@@ -64,7 +64,7 @@ namespace PUBGLibrary.API
         public long? AttackId { get; set; }
 
         [JsonProperty("attacker")]
-        public Attacker Attacker { get; set; }
+        public Player Attacker { get; set; }
 
         [JsonProperty("attackType")]
         public string AttackType { get; set; }
@@ -85,7 +85,7 @@ namespace PUBGLibrary.API
         public string WeatherId { get; set; }
 
         [JsonProperty("characters")]
-        public List<Character> Characters { get; set; }
+        public List<Player> Characters { get; set; }
 
         [JsonProperty("gameState")]
         public gameState GameState { get; set; }
@@ -97,7 +97,7 @@ namespace PUBGLibrary.API
         public ChildItem ChildItem { get; set; }
 
         [JsonProperty("victim")]
-        public Attacker Victim { get; set; }
+        public Player Victim { get; set; }
 
         [JsonProperty("damageTypeCategory")]
         public string DamageTypeCategory { get; set; }
@@ -112,7 +112,7 @@ namespace PUBGLibrary.API
         public string DamageCauserName { get; set; }
 
         [JsonProperty("killer")]
-        public Attacker Killer { get; set; }
+        public Player Killer { get; set; }
 
         [JsonProperty("distance")]
         public double? Distance { get; set; }
@@ -120,50 +120,6 @@ namespace PUBGLibrary.API
         [JsonProperty("itemPackage")]
         public ItemPackage ItemPackage { get; set; }
     }
-
-    public partial class Attacker
-    {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("teamId")]
-        public int? TeamId { get; set; }
-
-        [JsonProperty("health")]
-        public double? Health { get; set; }
-
-        [JsonProperty("location")]
-        public Position Position { get; set; }
-
-        [JsonProperty("ranking")]
-        public int? Ranking { get; set; }
-
-        [JsonProperty("accountId")]
-        public string AccountId { get; set; }
-    }
-
-    public partial class Character
-    {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("teamId")]
-        public long? TeamId { get; set; }
-
-        [JsonProperty("health")]
-        public long? Health { get; set; }
-
-        [JsonProperty("location")]
-        public Position Position { get; set; }
-
-        [JsonProperty("ranking")]
-        public long? Ranking { get; set; }
-
-        [JsonProperty("accountId")]
-        public string AccountId { get; set; }
-    }
-
-
     public partial class ChildItem
     {
         [JsonProperty("itemId")]
@@ -354,6 +310,7 @@ namespace PUBGLibrary.API
     {
         AquaRailA01_C,
         PG117_A_01_C,
+        Boat_PG117_C,
         BpMotorbike04_C,
         BpMotorbike04_Desert_C,
         BpMotorbike04_SideCar_C,
@@ -386,7 +343,6 @@ namespace PUBGLibrary.API
         Dacia_A_04_v2_C,
         DummyTransportAircraft_C,
         ParachutePlayer_C,
-        PG117_A_01_C,
         Empty
     }
     
@@ -691,6 +647,7 @@ namespace PUBGLibrary.API
             {
                 case "AquaRail_A_01_C": return VehicleId.AquaRailA01_C;
                 case "PG117_A_01_C": return VehicleId.PG117_A_01_C;
+                case "Boat_PG117_C": return VehicleId.Boat_PG117_C;
                 case "BP_Motorbike_04_C": return VehicleId.BpMotorbike04_C;
                 case "BP_Motorbike_04_Desert_C": return VehicleId.BpMotorbike04_Desert_C;
                 case "BP_Motorbike_04_SideCar_C": return VehicleId.BpMotorbike04_SideCar_C;
@@ -724,7 +681,6 @@ namespace PUBGLibrary.API
                 case "DummyTransportAircraft_C": return VehicleId.DummyTransportAircraft_C;
                 case "": return VehicleId.Empty;
                 case "ParachutePlayer_C": return VehicleId.ParachutePlayer_C;
-                case "PG117_A_01_C": return VehicleId.PG117_A_01_C;
                 default: return null;
             }
         }
@@ -743,6 +699,7 @@ namespace PUBGLibrary.API
             {
                 case VehicleId.AquaRailA01_C: serializer.Serialize(writer, "AquaRail_A_01_C"); break;
                 case VehicleId.PG117_A_01_C: serializer.Serialize(writer, "PG117_A_01_C"); break;
+                case VehicleId.Boat_PG117_C: serializer.Serialize(writer, "Boat_PG117_C"); break;
                 case VehicleId.BpMotorbike04_C: serializer.Serialize(writer, "BP_Motorbike_04_C"); break;
                 case VehicleId.BpMotorbike04_Desert_C: serializer.Serialize(writer, "BP_Motorbike_04_Desert_C"); break;
                 case VehicleId.BpMotorbike04_SideCar_C: serializer.Serialize(writer, "BP_Motorbike_04_SideCar_C"); break;
@@ -775,7 +732,6 @@ namespace PUBGLibrary.API
                 case VehicleId.DummyTransportAircraft_C: serializer.Serialize(writer, "DummyTransportAircraft_C"); break;
                 case VehicleId.Empty: serializer.Serialize(writer, ""); break;
                 case VehicleId.ParachutePlayer_C: serializer.Serialize(writer, "ParachutePlayer_C"); break;
-                case VehicleId.PG117_A_01_C: serializer.Serialize(writer, "PG117_A_01_C"); break;
             }
         }
     }

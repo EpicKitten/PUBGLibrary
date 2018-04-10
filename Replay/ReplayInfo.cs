@@ -170,7 +170,7 @@ namespace PUBGLibrary
             set
             {
                 TimeStamp = value;
-                TimeStampISO = (new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local)).AddMilliseconds(value);
+                TimeStampISO = Utils.Utils.UnixTimestampToDateTime(value);
             }
             get
             {

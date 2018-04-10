@@ -156,5 +156,9 @@ namespace PUBGLibrary.Utils
                 return "failed";
             }
         }
+        public static DateTime UnixTimestampToDateTime(double unixtimestamp)
+        {
+            return (new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local)).AddSeconds(unixtimestamp);
+        }
     }
 }

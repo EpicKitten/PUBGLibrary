@@ -44,8 +44,8 @@ namespace PUBGLibrary.API
         /// <summary>
         /// A list of all times a ttachment is being attached
         /// </summary>
-        public List<LogItemAttach> logItemAttachList = new List<LogItemAttach>();
-        public List<LogPlayerAttack> logPlayerAttackList = new List<LogPlayerAttack>();
+        public List<LogItemAttach> LogItemAttachList = new List<LogItemAttach>();
+        public List<LogPlayerAttack> LogPlayerAttackList = new List<LogPlayerAttack>();
         public List<LogPlayerKill> LogPlayerKillList = new List<LogPlayerKill>();
         public List<LogPlayerPosition> LogPlayerPositionList = new List<LogPlayerPosition>();
         public List<LogPlayerLogout> LogPlayerLogoutList = new List<LogPlayerLogout>();
@@ -96,14 +96,14 @@ namespace PUBGLibrary.API
                             playerSpecificLog.LogPlayerLoginList.Add(loggedinPlayer);
                         }
                     }
-                    foreach (LogItemAttach attacheditem in logItemAttachList)
+                    foreach (LogItemAttach attacheditem in LogItemAttachList)
                     {
                         if (attacheditem.Player.AccountID == player.AccountID)
                         {
                             playerSpecificLog.logItemAttachList.Add(attacheditem);
                         }
                     }
-                    foreach (LogPlayerAttack playerattack in logPlayerAttackList)
+                    foreach (LogPlayerAttack playerattack in LogPlayerAttackList)
                     {
                         if (playerattack.Attacker.AccountID == player.AccountID)
                         {
@@ -626,12 +626,18 @@ namespace PUBGLibrary.API
     }
     public class Player
     {
+        [JsonProperty("name")]
         public string PUBGName;
+        [JsonProperty("accountId")]
         public string AccountID;
-        public int TeamID;
-        public double Health;
-        public Position Position = new Position();
-        public int Ranking;
+        [JsonProperty("health")]
+        public double? Health;
+        [JsonProperty("location")]
+        public Position Position;
+        [JsonProperty("teamId")]
+        public int? TeamID;
+        [JsonProperty("ranking")]
+        public int? Ranking;
     }
     public class Position
     {
