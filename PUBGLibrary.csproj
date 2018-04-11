@@ -10,7 +10,7 @@
     <RepositoryUrl>https://github.com/EpicKitten/PUBGLibrary</RepositoryUrl>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <VersionPrefix>1.0.6</VersionPrefix>
+    <VersionPrefix>1.0.7</VersionPrefix>
     <ApplicationIcon />
     <Win32Resource />
     <Authors>epickitten</Authors>

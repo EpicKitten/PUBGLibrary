@@ -16,7 +16,6 @@ namespace PUBGLibrary.API
         /// The API key used during requests
         /// </summary>
         private string APIKey;
-        
         /// <summary>
         /// The base class for the PUBG API
         /// </summary>
@@ -115,6 +114,13 @@ namespace PUBGLibrary.API
         {
             APIRequest request = new APIRequest();
             return request.RequestMultiUser(APIKey, GetEnumDescription(platformRegionShard), IDSToSearch, userSearchType);
+        }
+        public APIWatchdog WatchSingleUser(string IDToWatch, PlatformRegionShard platformRegionShard, UserSearchType userSearchType = UserSearchType.PUBGName)
+        {
+            APIWatchdog watchdog = new APIWatchdog();
+            watchdog.WatchSingleUser(APIKey, IDToWatch, GetEnumDescription(platformRegionShard), userSearchType);
+            return watchdog;
+            
         }
         /// <summary>
         /// Gets the description tag from Enums

@@ -127,7 +127,7 @@ namespace PUBGLibrary.API
         /// </summary>
         /// <param name="APIKey">The API key to use during the request</param>
         /// <param name="PlatformRegion">The Platform-Region to search (i.e pc-na, xbox-eu)</param>
-        /// <param name="ID">The list of PUBG Names or AccountIDs to search</param>
+        /// <param name="ID">The list of PUBG Names or AccountIDs to search, max is 6</param>
         /// <param name="SearchType"></param>
         /// <returns></returns>
         public List<APIUser> RequestMultiUser(string APIKey, string PlatformRegion, List<string> ID, UserSearchType SearchType = UserSearchType.PUBGName)
