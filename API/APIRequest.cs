@@ -81,56 +81,14 @@ namespace PUBGLibrary.API
             return APIRequest;
         }
         /// <summary>
-        /// Requests a single user from the PUBG Developer API
-        /// </summary>
-        /// <param name="APIKey">The API key to use during the request</param>
-        /// <param name="PlatformRegion">The Platform-Region to search (i.e pc-na, xbox-eu)</param>
-        /// <param name="AccountID">The Account ID to look up (i.e account.a417e7c0271d4fc88f307e355142dc7)</param>
-        public APIUser RequestSingleUser(string APIKey, string PlatformRegion, string AccountID)
-        {
-            APIStatus status = new APIStatus();
-            APIUser user = new APIUser();
-            if (status.bIsOnline)
-            {
-                try
-                {
-                    string APIURL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/players/" + AccountID;
-                    var webRequest = WebRequest.Create(APIURL);
-                    var HTTPAPIRequest = (HttpWebRequest)webRequest;
-                    HTTPAPIRequest.PreAuthenticate = true;
-                    HTTPAPIRequest.Headers.Add("Authorization", "Bearer " + APIKey);
-                    HTTPAPIRequest.Headers.Add("Access-Control-Allow-Origins", "*");
-                    HTTPAPIRequest.Headers.Add("Access-Control-Expose-Headers", "Content-Length");
-                    HTTPAPIRequest.Accept = "application/json";
-                    using (var APIResponse = HTTPAPIRequest.GetResponse())
-                    {
-                        using (var responseStream = APIResponse.GetResponseStream())
-                        {
-                            var myStreamReader = new StreamReader(responseStream, Encoding.Default);
-                            return UserPhraser(myStreamReader.ReadToEnd());
-                        }
-                    }
-                }
-                catch (WebException e)
-                {
-                    user = new APIUser
-                    {
-                        WebException = e
-                    };
-                    return user;
-                }
-            }
-            return user;
-        }
-        /// <summary>
-        /// Requests multi users from the PUBG Developer API
+        /// Request a single or multiple users from the PUBG Developer API
         /// </summary>
         /// <param name="APIKey">The API key to use during the request</param>
         /// <param name="PlatformRegion">The Platform-Region to search (i.e pc-na, xbox-eu)</param>
         /// <param name="ID">The list of PUBG Names or AccountIDs to search, max is 6</param>
         /// <param name="SearchType"></param>
         /// <returns></returns>
-        public List<APIUser> RequestMultiUser(string APIKey, string PlatformRegion, List<string> ID, UserSearchType SearchType = UserSearchType.PUBGName)
+        public List<APIUser> RequestUser(string APIKey, string PlatformRegion, List<string> ID, UserSearchType SearchType = UserSearchType.PUBGName)
         {
             string filterstring = string.Empty;
             switch (SearchType)
@@ -142,15 +100,13 @@ namespace PUBGLibrary.API
                     filterstring = "?filter[playerIds]=";
                     break;
             }
-
-            
             List<APIUser> users = new List<APIUser>();
             APIStatus status = new APIStatus();
             if (status.bIsOnline)
             {
                 try
                 {
-                    string APIURL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/players" + filterstring + string.Join(",",ID.ToArray());
+                    string APIURL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/players" + filterstring + string.Join(",", ID.ToArray());
                     var webRequest = WebRequest.Create(APIURL);
                     var HTTPAPIRequest = (HttpWebRequest)webRequest;
                     HTTPAPIRequest.PreAuthenticate = true;

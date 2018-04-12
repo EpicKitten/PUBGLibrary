@@ -93,34 +93,81 @@ namespace PUBGLibrary.API
 
         }
         /// <summary>
-        /// Request a single user using their AccountID
+        /// Request a single user or multipe users on the same platform and region
         /// </summary>
-        /// <param name="AccountID"></param>
-        /// <param name="platformRegionShard"></param>
+        /// <param name="PlayerID1">The first user to request</param>
+        /// <param name="PlayerID2">The second user to request</param>
+        /// <param name="PlayerID3">The thrid user to request</param>
+        /// <param name="PlayerID4">The forth user to request</param>
+        /// <param name="PlayerID5">The fifth user to request</param>
+        /// <param name="PlayerID6">The sixth user to request</param>
+        /// <param name="platformRegionShard">The Platform-Region shard to search in</param>
+        /// <param name="userSearchType">The type of ID to search by</param>
         /// <returns></returns>
-        public APIUser RequestSingleUser(string AccountID, PlatformRegionShard platformRegionShard)
+        public List<APIUser> RequestUser(string PlayerID1, PlatformRegionShard platformRegionShard = PlatformRegionShard.PC_NA, UserSearchType userSearchType = UserSearchType.PUBGName, string PlayerID2 = "", string PlayerID3 = "", string PlayerID4 = "", string PlayerID5 = "", string PlayerID6 = "")
         {
+            List<string> IDsToSearch = new List<string>() { PlayerID1 };
+            if (PlayerID2 != "")
+            {
+                IDsToSearch.Add(PlayerID2);
+            }
+            if (PlayerID3 != "")
+            {
+                IDsToSearch.Add(PlayerID3);
+            }
+            if (PlayerID4 != "")
+            {
+                IDsToSearch.Add(PlayerID4);
+            }
+            if (PlayerID5 != "")
+            {
+                IDsToSearch.Add(PlayerID5);
+            }
+            if (PlayerID6 != "")
+            {
+                IDsToSearch.Add(PlayerID6);
+            }
             APIRequest request = new APIRequest();
-            return request.RequestSingleUser(APIKey, GetEnumDescription(platformRegionShard), AccountID);
+            return request.RequestUser(APIKey, GetEnumDescription(platformRegionShard), IDsToSearch, userSearchType);
         }
         /// <summary>
-        /// Reuest multiple users using either their Account ID or their PUBG Name
+        /// Watch a single user or multipe users on the same platform and region
         /// </summary>
-        /// <param name="IDSToSearch">The list of names/ID to search</param>
-        /// <param name="platformRegionShard">The Platform-Region to search</param>
-        /// <param name="userSearchType">The type of search</param>
+        /// <param name="PlayerID1">The first user to watch</param>
+        /// <param name="PlayerID2">The second user to watch</param>
+        /// <param name="PlayerID3">The thrid user to watch</param>
+        /// <param name="PlayerID4">The forth user to watch</param>
+        /// <param name="PlayerID5">The fifth user to watch</param>
+        /// <param name="PlayerID6">The sixth user to watch</param>
+        /// <param name="platformRegionShard">That platform to watch</param>
+        /// <param name="userSearchType">The </param>
         /// <returns></returns>
-        public List<APIUser> RequestMultiUser(List<string> IDSToSearch, PlatformRegionShard platformRegionShard, UserSearchType userSearchType = UserSearchType.PUBGName)
-        {
-            APIRequest request = new APIRequest();
-            return request.RequestMultiUser(APIKey, GetEnumDescription(platformRegionShard), IDSToSearch, userSearchType);
-        }
-        public APIWatchdog WatchSingleUser(string IDToWatch, PlatformRegionShard platformRegionShard, UserSearchType userSearchType = UserSearchType.PUBGName)
+        public APIWatchdog WatchUser(string PlayerID1, PlatformRegionShard platformRegionShard = PlatformRegionShard.PC_NA, UserSearchType userSearchType = UserSearchType.PUBGName, string PlayerID2 = "", string PlayerID3 = "", string PlayerID4 = "", string PlayerID5 = "", string PlayerID6 = "")
         {
             APIWatchdog watchdog = new APIWatchdog();
-            watchdog.WatchSingleUser(APIKey, IDToWatch, GetEnumDescription(platformRegionShard), userSearchType);
+            List<string> IDsToWatch = new List<string>() { PlayerID1 };
+            if (PlayerID2 != "")
+            {
+                IDsToWatch.Add(PlayerID2);
+            }
+            if (PlayerID3 != "")
+            {
+                IDsToWatch.Add(PlayerID3);
+            }
+            if (PlayerID4 != "")
+            {
+                IDsToWatch.Add(PlayerID4);
+            }
+            if (PlayerID5 != "")
+            {
+                IDsToWatch.Add(PlayerID5);
+            }
+            if (PlayerID6 != "")
+            {
+                IDsToWatch.Add(PlayerID6);
+            }
+            watchdog.WatchMultiUser(APIKey, IDsToWatch, GetEnumDescription(platformRegionShard), userSearchType);
             return watchdog;
-            
         }
         /// <summary>
         /// Gets the description tag from Enums

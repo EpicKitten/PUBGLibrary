@@ -5,26 +5,39 @@ using System.Threading;
 
 namespace PUBGLibrary.API
 {
-    public class APIWatchdogMatchEventArgs : EventArgs
+    public class APIWatchdogMatchUpdateEventArgs : EventArgs
     {
+        public APIUser User { get; set; }
         public string MatchID { get; set; }
     }
     public class APIWatchdogSleepEventArgs : EventArgs
     {
         public int SleepTime { get; set; }
     }
+    public class APIWatchdogNoUpdate : EventArgs
+    {
+        public APIUser User { get; set; }
+    }
     public class APIWatchdog
     {
-        public event EventHandler<APIWatchdogMatchEventArgs> UserMatchListUpdated;
+        public event EventHandler<APIWatchdogMatchUpdateEventArgs> UserMatchListUpdated;
         public event EventHandler WatchdogThreadStarted;
         public event EventHandler WatchdogLoopStarted;
         public event EventHandler<APIWatchdogSleepEventArgs> WatchdogSleeping;
         public event EventHandler WatchdogRequesting;
         public event EventHandler WatchdogComparing;
+        public event EventHandler<APIWatchdogNoUpdate> WatchdogNoUpdate;
         public Thread WatchdogThread;
-        public void WatchSingleUser(string APIKey, string IDToWatch, string platformRegionShard, UserSearchType userSearchType = UserSearchType.PUBGName)
+        /// <summary>
+        /// Watch up to 6 users at once and trigger events when new matches are added
+        /// </summary>
+        /// <param name="APIKey">The API key to use during requests</param>
+        /// <param name="IDToWatch">The PUBG names or Account IDs to watch</param>
+        /// <param name="platformRegionShard">The region to watch</param>
+        /// <param name="userSearchType">Watch by either PUBG names or Account ID</param>
+        public void WatchMultiUser(string APIKey, List<string> IDsToWatch, string platformRegionShard, UserSearchType userSearchType = UserSearchType.PUBGName)
         {
-            WatchdogThread = new Thread(() => Watchdog_Thread(APIKey, new List<string> { IDToWatch },platformRegionShard,userSearchType));
+            WatchdogThread = new Thread(() => Watchdog_Thread(APIKey, IDsToWatch, platformRegionShard, userSearchType));
             WatchdogThread.Start();
         }
         private void Watchdog_Thread(string APIKey, List<string> IDsToWatch, string platformRegionShard, UserSearchType userSearchType = UserSearchType.PUBGName)
@@ -37,12 +50,12 @@ namespace PUBGLibrary.API
             {
                 OnWatchdogLoopStart();
                 OnWatchdogRequest();
-                List<APIUser> firstRequest = request.RequestMultiUser(APIKey, platformRegionShard, IDsToWatch, userSearchType);//Fecth all the users matches
+                List<APIUser> firstRequest = request.RequestUser(APIKey, platformRegionShard, IDsToWatch, userSearchType);//Fecth all the users matches
                 sleeptime = rnd.Next(10000, 60000);
                 OnWatchdogSleep(sleeptime);
                 Thread.Sleep(sleeptime);//Wait 10 to 60 seconds
                 OnWatchdogRequest();
-                List<APIUser> secondRequest = request.RequestMultiUser(APIKey, platformRegionShard, IDsToWatch, userSearchType);//Fetch them all again
+                List<APIUser> secondRequest = request.RequestUser(APIKey, platformRegionShard, IDsToWatch, userSearchType);//Fetch them all again
                 OnWatchdogCompare();
                 foreach (APIUser firstuser in firstRequest)//For each APIUser in the first request...
                 {
@@ -52,7 +65,11 @@ namespace PUBGLibrary.API
                         {
                             if (firstuser.ListOfMatches[0] != seconduser.ListOfMatches[0])//if the list of matches from the first and second request are different...
                             {
-                                OnUserMatchListUpdated(seconduser.ListOfMatches[0]);
+                                OnUserMatchListUpdated(seconduser, seconduser.ListOfMatches[0]);
+                            }
+                            else
+                            {
+                                OnUserMatchListNotUpdated(seconduser);
                             }
                         }
                     }
@@ -60,9 +77,14 @@ namespace PUBGLibrary.API
             }
         }
 
-        protected virtual void OnUserMatchListUpdated(string matchid)
+        protected virtual void OnUserMatchListNotUpdated(APIUser notupdateduser)
         {
-            UserMatchListUpdated?.Invoke(this, new APIWatchdogMatchEventArgs() { MatchID = matchid});
+            WatchdogNoUpdate?.Invoke(this, new APIWatchdogNoUpdate { User = notupdateduser });
+        }
+
+        protected virtual void OnUserMatchListUpdated(APIUser updateduser, string matchid)
+        {
+            UserMatchListUpdated?.Invoke(this, new APIWatchdogMatchUpdateEventArgs() {User = updateduser, MatchID = matchid});
         }
         protected virtual void OnWatchdogThreadStart()
         {

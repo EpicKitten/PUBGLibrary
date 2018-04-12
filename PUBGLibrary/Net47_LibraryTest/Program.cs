@@ -25,14 +25,15 @@ namespace Net47_LibraryTest
                 Environment.SetEnvironmentVariable("API_KEY", apikey, EnvironmentVariableTarget.User);
             }
             API pubgapi = new API(apikey);
-            APIWatchdog watchdog = pubgapi.WatchSingleUser("epickitten", PlatformRegionShard.PC_NA);
+            //APIWatchdog watchdog = pubgapi.WatchSingleUser("TImmy_Turner_", PlatformRegionShard.PC_NA);
+            APIWatchdog watchdog = pubgapi.WatchUser("Expiredtaco",PlatformRegionShard.PC_NA,UserSearchType.PUBGName, "TImmy_Turner_", "epickitten", "Tandrael");
             watchdog.UserMatchListUpdated += Watchdog_UserMatchListUpdated;
             watchdog.WatchdogThreadStarted += Watchdog_WatchdogThreadStarted;
             watchdog.WatchdogSleeping += Watchdog_WatchdogSleeping;
             watchdog.WatchdogRequesting += Watchdog_WatchdogRequesting;
             watchdog.WatchdogLoopStarted += Watchdog_WatchdogLoopStarted;
             watchdog.WatchdogComparing += Watchdog_WatchdogComparing;
-            
+            watchdog.WatchdogNoUpdate += Watchdog_WatchdogNoUpdate;
            //APIRequest match = pubgapi.RequestMatch(Console.ReadLine(),PlatformRegionShard.PC_NA);
            //Console.WriteLine("+------------------------------------------------------------------------------------+");
            //Console.WriteLine("|                                   Match Stats                                      |");
@@ -61,9 +62,18 @@ namespace Net47_LibraryTest
 
         }
 
+        private static void Watchdog_WatchdogNoUpdate(object sender, APIWatchdogNoUpdate args)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Watchdog hasn't detected any changes on " + args.User.PUBGName + "'s account");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
         private static void Watchdog_WatchdogComparing(object sender, EventArgs e)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Watchdog is comparing the requests...");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         private static void Watchdog_WatchdogLoopStarted(object sender, EventArgs e)
@@ -73,12 +83,16 @@ namespace Net47_LibraryTest
 
         private static void Watchdog_WatchdogRequesting(object sender, EventArgs e)
         {
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Watchdog is making a request!");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         private static void Watchdog_WatchdogSleeping(object sender, APIWatchdogSleepEventArgs args)
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("Watchdog is sleeping for "+args.SleepTime+" miliseconds to prevent API overload...");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         private static void Watchdog_WatchdogThreadStarted(object source, EventArgs args)
@@ -86,10 +100,11 @@ namespace Net47_LibraryTest
             Console.WriteLine("Watchdog Thread Started! Go play!");
         }
 
-        private static void Watchdog_UserMatchListUpdated(object source, APIWatchdogMatchEventArgs args)
+        private static void Watchdog_UserMatchListUpdated(object source, APIWatchdogMatchUpdateEventArgs args)
         {
-            Console.WriteLine("New match! The new match id is: " + args.MatchID);
-            Console.ReadLine();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("New match on " + args.User.PUBGName + "'s account! The new match id is: " + args.MatchID);
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }
