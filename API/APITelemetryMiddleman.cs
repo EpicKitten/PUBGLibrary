@@ -342,6 +342,8 @@ namespace PUBGLibrary.API
         Dacia_A_03_v2_C,
         Dacia_A_04_v2_C,
         DummyTransportAircraft_C,
+        WarModeTransportAircraft_C,
+        ParachutePlayer_Warmode_C,
         ParachutePlayer_C,
         Empty
     }
@@ -679,6 +681,8 @@ namespace PUBGLibrary.API
                 case "Dacia_A_03_v2_C": return VehicleId.Dacia_A_03_v2_C;
                 case "Dacia_A_04_v2_C": return VehicleId.Dacia_A_04_v2_C;
                 case "DummyTransportAircraft_C": return VehicleId.DummyTransportAircraft_C;
+                case "WarModeTransportAircraft_C": return VehicleId.WarModeTransportAircraft_C;
+                case "ParachutePlayer_Warmode_C": return VehicleId.ParachutePlayer_Warmode_C;
                 case "": return VehicleId.Empty;
                 case "ParachutePlayer_C": return VehicleId.ParachutePlayer_C;
                 default: return null;
@@ -730,6 +734,8 @@ namespace PUBGLibrary.API
                 case VehicleId.Uaz_B_01_C: serializer.Serialize(writer, "Uaz_B_01_C"); break;
                 case VehicleId.Uaz_C_01_C: serializer.Serialize(writer, "Uaz_C_01_C"); break;
                 case VehicleId.DummyTransportAircraft_C: serializer.Serialize(writer, "DummyTransportAircraft_C"); break;
+                case VehicleId.WarModeTransportAircraft_C: serializer.Serialize(writer, "WarModeTransportAircraft_C"); break;
+                case VehicleId.ParachutePlayer_Warmode_C: serializer.Serialize(writer, "ParachutePlayer_Warmode_C"); break;
                 case VehicleId.Empty: serializer.Serialize(writer, ""); break;
                 case VehicleId.ParachutePlayer_C: serializer.Serialize(writer, "ParachutePlayer_C"); break;
             }

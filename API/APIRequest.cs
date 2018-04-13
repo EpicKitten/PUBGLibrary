@@ -147,7 +147,10 @@ namespace PUBGLibrary.API
             var jsonmatch = Phraser.FromJson(JSONstring);
             APIMatch Match = new APIMatch
             {
-                BaseJSON = JSONstring
+                BaseJSON = JSONstring,
+                MapName = jsonmatch.Data.Attributes.MapName,
+                Gamemode = jsonmatch.Data.Attributes.GameMode,
+                Duration = (int)jsonmatch.Data.Attributes.Duration
             };
             foreach (var item in jsonmatch.Included)
             {

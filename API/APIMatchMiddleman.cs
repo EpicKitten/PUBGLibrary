@@ -50,13 +50,17 @@ namespace PUBGLibrary.API
         public DateTimeOffset? CreatedAt { get; set; }
 
         [JsonProperty("duration")]
-        public long? Duration { get; set; }
+        public int? Duration { get; set; }
 
         [JsonProperty("gameMode")]
         public string GameMode { get; set; }
 
+        [JsonProperty("mapName")]
+        public string MapName { get; set; }
+
         [JsonProperty("patchVersion")]
         public string PatchVersion { get; set; }
+
 
         [JsonProperty("shardId")]
         public string ShardId { get; set; }
@@ -206,6 +210,7 @@ namespace PUBGLibrary.API
         public string Name { get; set; }
 
         [JsonProperty("playerId")]
+        //AccountID
         public string PlayerId { get; set; }
 
         [JsonProperty("revives")]
@@ -270,7 +275,7 @@ namespace PUBGLibrary.API
     public enum DatumType { Asset, Participant, Roster };
 
     public enum Actor { Empty };
-    public enum DeathType { Alive, Byplayer, Suicide };
+    public enum DeathType { Alive, Byplayer, Suicide, logout };
 
     public enum Won { False, True };
 
@@ -384,6 +389,7 @@ namespace PUBGLibrary.API
                 case "alive": return DeathType.Alive;
                 case "byplayer": return DeathType.Byplayer;
                 case "suicide": return DeathType.Suicide;
+                case "logout": return DeathType.logout;
                 default: return null;
             }
         }
@@ -403,6 +409,7 @@ namespace PUBGLibrary.API
                 case DeathType.Alive: serializer.Serialize(writer, "alive"); break;
                 case DeathType.Byplayer: serializer.Serialize(writer, "byplayer"); break;
                 case DeathType.Suicide: serializer.Serialize(writer, "suicide"); break;
+                case DeathType.logout: serializer.Serialize(writer, "logout"); break;
             }
         }
     }

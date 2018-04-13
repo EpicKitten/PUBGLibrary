@@ -30,6 +30,10 @@ namespace PUBGLibrary.API
         /// <remarks>Might be the same as the Gamemode enum</remarks>
         public string Gamemode;
         /// <summary>
+        /// The name of the map
+        /// </summary>
+        public string MapName;
+        /// <summary>
         /// The Platform-Region shard 
         /// </summary>
         public PlatformRegionShard PRS_ID;

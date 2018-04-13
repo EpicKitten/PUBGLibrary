@@ -142,7 +142,7 @@ namespace PUBGLibrary.API
         /// <param name="platformRegionShard">That platform to watch</param>
         /// <param name="userSearchType">The </param>
         /// <returns></returns>
-        public APIWatchdog WatchUser(string PlayerID1, PlatformRegionShard platformRegionShard = PlatformRegionShard.PC_NA, UserSearchType userSearchType = UserSearchType.PUBGName, string PlayerID2 = "", string PlayerID3 = "", string PlayerID4 = "", string PlayerID5 = "", string PlayerID6 = "")
+        public APIWatchdog WatchUser(string PlayerID1, PlatformRegionShard platformRegionShard = PlatformRegionShard.PC_NA, UserSearchType userSearchType = UserSearchType.PUBGName, string PlayerID2 = "", string PlayerID3 = "", string PlayerID4 = "")
         {
             APIWatchdog watchdog = new APIWatchdog();
             List<string> IDsToWatch = new List<string>() { PlayerID1 };
@@ -157,14 +157,6 @@ namespace PUBGLibrary.API
             if (PlayerID4 != "")
             {
                 IDsToWatch.Add(PlayerID4);
-            }
-            if (PlayerID5 != "")
-            {
-                IDsToWatch.Add(PlayerID5);
-            }
-            if (PlayerID6 != "")
-            {
-                IDsToWatch.Add(PlayerID6);
             }
             watchdog.WatchMultiUser(APIKey, IDsToWatch, GetEnumDescription(platformRegionShard), userSearchType);
             return watchdog;

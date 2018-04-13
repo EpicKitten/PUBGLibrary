@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using NotificationLibrary.Notification_Services.DiscordWebhooks;
 using PUBGLibrary.API;
 
 namespace Net47_LibraryTest
@@ -26,7 +28,7 @@ namespace Net47_LibraryTest
             }
             API pubgapi = new API(apikey);
             //APIWatchdog watchdog = pubgapi.WatchSingleUser("TImmy_Turner_", PlatformRegionShard.PC_NA);
-            APIWatchdog watchdog = pubgapi.WatchUser("Expiredtaco",PlatformRegionShard.PC_NA,UserSearchType.PUBGName, "TImmy_Turner_", "epickitten", "Tandrael");
+            APIWatchdog watchdog = pubgapi.WatchUser("epickitten", PlatformRegionShard.PC_NA, UserSearchType.PUBGName, "TImmy_Turner_", "Tandrael", "Expiredtaco");
             watchdog.UserMatchListUpdated += Watchdog_UserMatchListUpdated;
             watchdog.WatchdogThreadStarted += Watchdog_WatchdogThreadStarted;
             watchdog.WatchdogSleeping += Watchdog_WatchdogSleeping;
@@ -34,6 +36,7 @@ namespace Net47_LibraryTest
             watchdog.WatchdogLoopStarted += Watchdog_WatchdogLoopStarted;
             watchdog.WatchdogComparing += Watchdog_WatchdogComparing;
             watchdog.WatchdogNoUpdate += Watchdog_WatchdogNoUpdate;
+
            //APIRequest match = pubgapi.RequestMatch(Console.ReadLine(),PlatformRegionShard.PC_NA);
            //Console.WriteLine("+------------------------------------------------------------------------------------+");
            //Console.WriteLine("|                                   Match Stats                                      |");
@@ -104,6 +107,29 @@ namespace Net47_LibraryTest
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("New match on " + args.User.PUBGName + "'s account! The new match id is: " + args.MatchID);
+            API pubgapi = new API(Environment.GetEnvironmentVariable("API_KEY", EnvironmentVariableTarget.User));
+            APIRequest matchrequest = pubgapi.RequestMatch(args.MatchID, PlatformRegionShard.PC_NA);
+            DiscordWebhooks webhooks = new DiscordWebhooks("");
+            DiscordEmbedField kills = new DiscordEmbedField();
+            DiscordEmbedField heals = new DiscordEmbedField();
+            DiscordEmbedField winplace = new DiscordEmbedField();
+            DiscordEmbedField headshotkill = new DiscordEmbedField();
+            DiscordEmbedField longestkill = new DiscordEmbedField();
+            DiscordEmbedField killstreak = new DiscordEmbedField();
+            foreach (APIPlayer player in matchrequest.Match.PlayerList)
+            {
+                if (player.PlayerId == args.User.AccountID)
+                {
+                    kills = new DiscordEmbedField() { Name = "Kills", Value = player.Kills.ToString(), Inline = true };
+                    killstreak = new DiscordEmbedField() { Name = "Kill Streak", Value = player.KillStreaks.ToString(), Inline = true };
+                    longestkill = new DiscordEmbedField() { Name = "Longest Kill", Value = player.LongestKill.ToString()+" m.", Inline = true };
+                    headshotkill = new DiscordEmbedField() { Name = "Headshot Kills", Value = player.HeadshotKills.ToString(), Inline = true };
+                    heals = new DiscordEmbedField() { Name = "Heals", Value = player.Heals.ToString(), Inline = true };
+                    winplace = new DiscordEmbedField() { Name = "Win Place", Value = player.WinPlace.ToString(), Inline = true };
+                }
+            }
+            DiscordembedAuthor author = new DiscordembedAuthor() { Name = "", URL = "", Icon_URL = "" };
+            webhooks.MessageChannel(args.User.PUBGName + "'s Most Recent Match", matchrequest.Match.Gamemode + " on " + matchrequest.Match.MapName, author, new List<DiscordEmbedField>() { kills, heals, winplace, killstreak, longestkill, headshotkill }, "", 231, 163, 54);
             Console.ForegroundColor = ConsoleColor.White;
         }
     }
