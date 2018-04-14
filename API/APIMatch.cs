@@ -12,6 +12,7 @@ namespace PUBGLibrary.API
         /// The bare JSON of the request;
         /// </summary>
         public string BaseJSON;
+        public string MatchID;
         /// <summary>
         /// Time of match completion
         /// </summary>

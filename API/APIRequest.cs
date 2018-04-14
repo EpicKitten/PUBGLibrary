@@ -148,6 +148,7 @@ namespace PUBGLibrary.API
             APIMatch Match = new APIMatch
             {
                 BaseJSON = JSONstring,
+                MatchID = jsonmatch.Data.Id,
                 MapName = jsonmatch.Data.Attributes.MapName,
                 Gamemode = jsonmatch.Data.Attributes.GameMode,
                 Duration = (int)jsonmatch.Data.Attributes.Duration

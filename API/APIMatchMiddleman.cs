@@ -359,6 +359,10 @@ namespace PUBGLibrary.API
                 case "pc-oc": return PlatformRegionShard.PC_OC;
                 case "pc-sa": return PlatformRegionShard.PC_SA;
                 case "pc-sea": return PlatformRegionShard.PC_SEA;
+                case "xbox-na": return PlatformRegionShard.Xbox_NA;
+                case "xbox-eu": return PlatformRegionShard.Xbox_EU;
+                case "xbox-as": return PlatformRegionShard.Xbox_AS;
+                case "xbox-oc": return PlatformRegionShard.Xbox_OC;
                 default: return null;
             }
         }
