@@ -22,7 +22,7 @@ Looking up matches is easy!
 So is looking up players
 ```csharp
             API pubgapi = new API(<API-Key-Here>);
-            APIRequest userrequest = pubgapi.RequestSingleUser("account.3654e255b77b409e87b10dcb086ab00d", PlatformRegionShard.PC_NA);
+            APIRequest userrequest = pubgapi.RequestUser("account.3654e255b77b409e87b10dcb086ab00d", PlatformRegionShard.PC_NA);
 ```
 ## Nuget
 This package is also on Nuget!
