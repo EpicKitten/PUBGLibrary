@@ -160,5 +160,26 @@ namespace PUBGLibrary.Utils
         {
             return (new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local)).AddSeconds(unixtimestamp);
         }
+        public static double DistanceConvert(double DistanceToConvert, Distances DistanceToConvertTo = Distances.Centimeters)
+        {
+            switch (DistanceToConvertTo)
+            {
+                case Distances.Meters:
+                    return (DistanceToConvert / 100);
+                case Distances.Centimeters:
+                    return DistanceToConvert;
+                case Distances.Kilometers:
+                    return (DistanceToConvert / 100000);
+            }
+            return DistanceToConvert;
+        }
+
     }
+    public enum Distances
+    {
+        Meters,
+        Centimeters,
+        Kilometers
+    }
+
 }

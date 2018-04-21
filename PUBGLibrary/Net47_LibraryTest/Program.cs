@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using NotificationLibrary.Notification_Services.DiscordWebhooks;
 using PUBGLibrary.API;
 
@@ -27,42 +28,55 @@ namespace Net47_LibraryTest
                 Environment.SetEnvironmentVariable("API_KEY", apikey, EnvironmentVariableTarget.User);
             }
             API pubgapi = new API(apikey);
+            List<string> samples = pubgapi.FetchMatchSamples(PlatformRegionShard.PC_NA);
+            Console.WriteLine(samples.Count);
+            //APIRequest match = pubgapi.RequestMatch(samples[samples.Count-1], PlatformRegionShard.PC_NA);
+            //Console.WriteLine(match.Match.CreatedAt);
             //APIWatchdog watchdog = pubgapi.WatchSingleUser("TImmy_Turner_", PlatformRegionShard.PC_NA);
-           //APIWatchdog watchdog = pubgapi.WatchUser("epickitten", PlatformRegionShard.PC_NA, UserSearchType.PUBGName, "TImmy_Turner_", "Tandrael", "Expiredtaco");
-           //watchdog.UserMatchListUpdated += Watchdog_UserMatchListUpdated;
-           //watchdog.WatchdogThreadStarted += Watchdog_WatchdogThreadStarted;
-           //watchdog.WatchdogSleeping += Watchdog_WatchdogSleeping;
-           //watchdog.WatchdogRequesting += Watchdog_WatchdogRequesting;
-           //watchdog.WatchdogLoopStarted += Watchdog_WatchdogLoopStarted;
-           //watchdog.WatchdogComparing += Watchdog_WatchdogComparing;
-           //watchdog.WatchdogNoUpdate += Watchdog_WatchdogNoUpdate;
+            //APIWatchdog watchdog = pubgapi.WatchUser("epickitten", PlatformRegionShard.PC_NA, UserSearchType.PUBGName);
+            //watchdog.UserMatchListUpdated += Watchdog_UserMatchListUpdated;
+            //watchdog.WatchdogThreadStarted += Watchdog_WatchdogThreadStarted;
+            //watchdog.WatchdogSleeping += Watchdog_WatchdogSleeping;
+            //watchdog.WatchdogRequesting += Watchdog_WatchdogRequesting;
+            //watchdog.WatchdogLoopStarted += Watchdog_WatchdogLoopStarted;
+            //watchdog.WatchdogComparing += Watchdog_WatchdogComparing;
+            //watchdog.WatchdogNoUpdate += Watchdog_WatchdogNoUpdate;
 
-           APIRequest match = pubgapi.RequestMatch("cb7f201f-b756-401c-a294-098a60422c6f", PlatformRegionShard.Xbox_NA);
-           Console.WriteLine("+------------------------------------------------------------------------------------+");
-           Console.WriteLine("|                                   Match Stats for                                       |");
-           Console.WriteLine("+------------------------------------------------------------------------------------+");
-           Console.WriteLine("| " + match.Telemetry.LogCarePackageLandList.Count + " Airdrops landed                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogCarePackageSpawnList.Count + " Airdrops spawned                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogGameStatePeriodicList.Count + " GameStates Logged                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogItemAttachList.Count + " Items attached                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogItemDetachList.Count + " Items detached                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogItemPickupList.Count + " Items picked up                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogItemDropList.Count + " Items dropped                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogItemEquipList.Count + " Items equipped                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogItemUnequipList.Count + " Items unequiped                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogItemUseList.Count + " Items used (like bandages)                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogPlayerAttackList.Count + " times a player attacked another                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogPlayerCreateList.Count + " Players Created                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogPlayerKillList.Count + " Players Killed other players                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogPlayerLoginList.Count + " Player Logged In                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogPlayerLogoutList.Count + " Player Logged Out                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogPlayerPositionList.Count + " Player Position Logs                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogPlayerTakeDamageList.Count + " Players took damage                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogVehicleDestroyList.Count + " Vehicles Destroyed                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogVehicleLeaveList.Count + " times players left vehicles                                           |");
-           Console.WriteLine("| " + match.Telemetry.LogVehicleRideList.Count + " times players entered vehicles                                           |");
-           Console.WriteLine("+------------------------------------------------------------------------------------+");
-
+            //APIRequest match = pubgapi.RequestMatch("ea99944c-d689-4bb6-9744-d4f34c11e2c9", PlatformRegionShard.PC_SA);
+            //Console.WriteLine("+------------------------------------------------------------------------------------+");
+            //Console.WriteLine("|                                   Match Stats for                                       |");
+            //Console.WriteLine("+------------------------------------------------------------------------------------+");
+            //Console.WriteLine("| " + match.Telemetry.LogCarePackageLandList.Count + " Airdrops landed                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogCarePackageSpawnList.Count + " Airdrops spawned                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogGameStatePeriodicList.Count + " GameStates Logged                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogItemAttachList.Count + " Items attached                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogItemDetachList.Count + " Items detached                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogItemPickupList.Count + " Items picked up                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogItemDropList.Count + " Items dropped                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogItemEquipList.Count + " Items equipped                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogItemUnequipList.Count + " Items unequiped                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogItemUseList.Count + " Items used (like bandages)                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogPlayerAttackList.Count + " times a player attacked another                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogPlayerCreateList.Count + " Players Created                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogPlayerKillList.Count + " Players Killed other players                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogPlayerLoginList.Count + " Player Logged In                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogPlayerLogoutList.Count + " Player Logged Out                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogPlayerPositionList.Count + " Player Position Logs                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogPlayerTakeDamageList.Count + " Players took damage                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogVehicleDestroyList.Count + " Vehicles Destroyed                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogVehicleLeaveList.Count + " times players left vehicles                                           |");
+            //Console.WriteLine("| " + match.Telemetry.LogVehicleRideList.Count + " times players entered vehicles                                           |");
+            //Console.WriteLine("+------------------------------------------------------------------------------------+");
+            // foreach (PlayerSpecificLog psl in match.Telemetry.PlayerSpecificLogList)
+            // {
+            //     if (psl.PUBGName == "JINGMEIFALANG")
+            //     {
+            //         foreach (LogPlayerKill lpk in psl.LogPlayerKillList)
+            //         {
+            //             Console.WriteLine(lpk);
+            //         }
+            //     }
+            // }
         }
 
         private static void Watchdog_WatchdogNoUpdate(object sender, APIWatchdogNoUpdate args)
@@ -107,6 +121,11 @@ namespace Net47_LibraryTest
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("New match on " + args.User.PUBGName + "'s account! The new match id is: " + args.MatchID);
+
+
+            Console.ReadLine();
+
+
             API pubgapi = new API(Environment.GetEnvironmentVariable("API_KEY", EnvironmentVariableTarget.User));
             APIRequest matchrequest = pubgapi.RequestMatch(args.MatchID, PlatformRegionShard.PC_NA);
             DiscordWebhooks webhooks = new DiscordWebhooks("");

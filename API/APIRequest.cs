@@ -137,6 +137,47 @@ namespace PUBGLibrary.API
             }
             return users;
         }
+        public List<string> RequestSamples(string APIKey, string PlatformRegion)
+        {
+            APIStatus status = new APIStatus();
+            List<string> MatchList = new List<string>();
+            if (status.bIsOnline)
+            {
+
+                try
+                {
+                    string APIURL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/samples";
+                    var webRequest = WebRequest.Create(APIURL);
+                    var HTTPAPIRequest = (HttpWebRequest)webRequest;
+                    HTTPAPIRequest.PreAuthenticate = true;
+                    HTTPAPIRequest.Headers.Add("Authorization", "Bearer " + APIKey);
+                    HTTPAPIRequest.Headers.Add("Access-Control-Allow-Origins", "*");
+                    HTTPAPIRequest.Headers.Add("Access-Control-Expose-Headers", "Content-Length");
+                    HTTPAPIRequest.Accept = "application/json";
+                    using (var APIResponse = HTTPAPIRequest.GetResponse())
+                    {
+                        using (var responseStream = APIResponse.GetResponseStream())
+                        {
+                            var myStreamReader = new StreamReader(responseStream, Encoding.Default);
+                            
+                            foreach (JObject matchitem in JObject.Parse(myStreamReader.ReadToEnd())["data"]["relationships"]["matches"]["data"])
+                            {
+                                MatchList.Add((string)matchitem["id"]);
+                            }
+                            return MatchList;
+                        }
+                    }
+                }
+                catch (WebException e)
+                {
+                    APIUser user = new APIUser
+                    {
+                        WebException = e
+                    };
+                }
+            }
+            return MatchList;
+        }
         /// <summary>
         /// Parses the match JSON string from the API
         /// </summary>
@@ -564,5 +605,17 @@ namespace PUBGLibrary.API
         /// Searching using
         /// </summary>
         AccountID
+    }
+    public class RequestOptions
+    {
+        public bool SaveMatch { get; set; }
+        public bool SaveMatchTelemetry { get; set; }
+        public string Folderpath { get; set; }
+        public static readonly RequestOptions Default = new RequestOptions()
+        {
+            SaveMatch = false,
+            SaveMatchTelemetry = false,
+            Folderpath = ""
+        };
     }
 }

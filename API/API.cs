@@ -161,6 +161,11 @@ namespace PUBGLibrary.API
             watchdog.WatchMultiUser(APIKey, IDsToWatch, GetEnumDescription(platformRegionShard), userSearchType);
             return watchdog;
         }
+        public List<string> FetchMatchSamples(PlatformRegionShard platformRegionShard = PlatformRegionShard.PC_NA)
+        {
+            APIRequest request = new APIRequest();
+            return request.RequestSamples(APIKey, GetEnumDescription(platformRegionShard));
+        }
         /// <summary>
         /// Gets the description tag from Enums
         /// </summary>

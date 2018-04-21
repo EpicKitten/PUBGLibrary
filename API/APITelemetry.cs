@@ -417,6 +417,10 @@ namespace PUBGLibrary.API
         public Player Victim = new Player();
         public DamageCauser DamageCauser = new DamageCauser();
         public DateTimeOffset DateTimeOffset = new DateTimeOffset();
+        public override string ToString()
+        {
+            return "At " + DateTimeOffset + " " + Killer.PUBGName + " (" + Killer.AccountID + ", " + Killer.Health + ") killed " + Victim.PUBGName + " (" + Victim.AccountID + ", " + Victim.Health + ") with " + DamageCauser.DamageCauserName + " from " + Utils.Utils.DistanceConvert(Killer.Position.DistanceTo(Victim.Position), Utils.Distances.Meters) + " meters away";
+        }
     }
     public class LogPlayerAttack
     {
