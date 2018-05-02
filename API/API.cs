@@ -166,6 +166,11 @@ namespace PUBGLibrary.API
             APIRequest request = new APIRequest();
             return request.RequestSamples(APIKey, GetEnumDescription(platformRegionShard));
         }
+        public List<APISeason> RequestPlatformRegionSeasons(PlatformRegionShard platformRegionShard = PlatformRegionShard.PC_NA)
+        {
+            APIRequest request = new APIRequest();
+            return request.RequestRegionSeasons(APIKey, GetEnumDescription(platformRegionShard));
+        }
         /// <summary>
         /// Gets the description tag from Enums
         /// </summary>

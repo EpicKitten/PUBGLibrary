@@ -178,6 +178,317 @@ namespace PUBGLibrary.API
             }
             return MatchList;
         }
+        public List<APISeason> RequestRegionSeasons(string APIKey, string PlatformRegion)
+        {
+            APIStatus status = new APIStatus();
+            List<APISeason> SeasonList = new List<APISeason>();
+            if (status.bIsOnline)
+            {
+
+                try
+                {
+                    string APIURL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/seasons";
+                    var webRequest = WebRequest.Create(APIURL);
+                    var HTTPAPIRequest = (HttpWebRequest)webRequest;
+                    HTTPAPIRequest.PreAuthenticate = true;
+                    HTTPAPIRequest.Headers.Add("Authorization", "Bearer " + APIKey);
+                    HTTPAPIRequest.Headers.Add("Access-Control-Allow-Origins", "*");
+                    HTTPAPIRequest.Headers.Add("Access-Control-Expose-Headers", "Content-Length");
+                    HTTPAPIRequest.Accept = "application/json";
+                    using (var APIResponse = HTTPAPIRequest.GetResponse())
+                    {
+                        using (var responseStream = APIResponse.GetResponseStream())
+                        {
+                            var myStreamReader = new StreamReader(responseStream, Encoding.Default);
+                            foreach (JObject seasonitem in JObject.Parse(myStreamReader.ReadToEnd())["data"])
+                            {
+                                SeasonList.Add(new APISeason() {
+                                    SeasonType = (string)seasonitem["type"],
+                                    SeasonName = (string)seasonitem["id"],
+                                    isCurrentSeason = (bool)seasonitem["attributes"]["isCurrentSeason"],
+                                    isOffseason = (bool)seasonitem["attributes"]["isOffseason"]
+                                });
+                            }
+                            return SeasonList;
+                        }
+                    }
+                }
+                catch (WebException e)
+                {
+                    APIUser user = new APIUser
+                    {
+                        WebException = e
+                    };
+                }
+            }
+            return SeasonList;
+        }
+        public APIPlayerSeason RequestPlayerSeason(string APIKey, string AccountID, string SeasonName, string PlatformRegion)
+        {
+            APIStatus status = new APIStatus();
+            APIPlayerSeason PlayerSeason = new APIPlayerSeason();
+            if (status.bIsOnline)
+            {
+
+                try
+                {
+                    string APIURL = "https://api.playbattlegrounds.com/shards/" + PlatformRegion + "/players/" + AccountID + "/seasons/" + SeasonName;
+                    var webRequest = WebRequest.Create(APIURL);
+                    var HTTPAPIRequest = (HttpWebRequest)webRequest;
+                    HTTPAPIRequest.PreAuthenticate = true;
+                    HTTPAPIRequest.Headers.Add("Authorization", "Bearer " + APIKey);
+                    HTTPAPIRequest.Headers.Add("Access-Control-Allow-Origins", "*");
+                    HTTPAPIRequest.Headers.Add("Access-Control-Expose-Headers", "Content-Length");
+                    HTTPAPIRequest.Accept = "application/json";
+                    using (var APIResponse = HTTPAPIRequest.GetResponse())
+                    {
+                        using (var responseStream = APIResponse.GetResponseStream())
+                        {
+                            var myStreamReader = new StreamReader(responseStream, Encoding.Default);
+                            JObject stats = JObject.Parse(myStreamReader.ReadToEnd());
+                            PlayerSeason.Duo = new APIPlayerSeasonStats()
+                            {
+                                Assists = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["assists"],
+                                Boosts = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["boosts"],
+                                DBNOs = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["dBNOs"],
+                                DailyKills = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["dailyKills"],
+                                DamageDealt = (double)stats["data"]["attributes"]["gameModeStats"]["duo"]["damageDealt"],
+                                Days = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["days"],
+                                HeadshotKills = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["headshotKills"],
+                                Heals = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["heals"],
+                                KillPoints = (double)stats["data"]["attributes"]["gameModeStats"]["duo"]["killPoints"],
+                                Kills = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["kills"],
+                                LongestKill = (double)stats["data"]["attributes"]["gameModeStats"]["duo"]["longestKill"],
+                                LongestTimeSurvived = (double)stats["data"]["attributes"]["gameModeStats"]["duo"]["longestTimeSurvived"],
+                                Losses = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["losses"],
+                                MaxKillStreaks = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["maxKillStreaks"],
+                                MostSurvivalTime = (double)stats["data"]["attributes"]["gameModeStats"]["duo"]["mostSurvivalTime"],
+                                Revives = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["revives"],
+                                RideDistance = (double)stats["data"]["attributes"]["gameModeStats"]["duo"]["rideDistance"],
+                                RoadKills = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["roadKills"],
+                                RoundMostKills = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["roundMostKills"],
+                                RoundsPlayed = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["roundsPlayed"],
+                                Suicides = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["suicides"],
+                                TeamKills = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["teamKills"],
+                                TimeSurvived = (double)stats["data"]["attributes"]["gameModeStats"]["duo"]["timeSurvived"],
+                                Top10s = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["top10s"],
+                                VehicleDestroys = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["vehicleDestroys"],
+                                WalkDistance = (double)stats["data"]["attributes"]["gameModeStats"]["duo"]["walkDistance"],
+                                WeaponsAcquired = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["weaponsAcquired"],
+                                WeeklyKills = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["weeklyKills"],
+                                WinPoints = (double)stats["data"]["attributes"]["gameModeStats"]["duo"]["winPoints"],
+                                Wins = (int)stats["data"]["attributes"]["gameModeStats"]["duo"]["wins"],
+
+                            };
+                            PlayerSeason.Duo_FPP = new APIPlayerSeasonStats()
+                            {
+                                Assists = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["assists"],
+                                Boosts = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["boosts"],
+                                DBNOs = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["dBNOs"],
+                                DailyKills = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["dailyKills"],
+                                DamageDealt = (double)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["damageDealt"],
+                                Days = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["days"],
+                                HeadshotKills = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["headshotKills"],
+                                Heals = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["heals"],
+                                KillPoints = (double)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["killPoints"],
+                                Kills = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["kills"],
+                                LongestKill = (double)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["longestKill"],
+                                LongestTimeSurvived = (double)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["longestTimeSurvived"],
+                                Losses = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["losses"],
+                                MaxKillStreaks = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["maxKillStreaks"],
+                                MostSurvivalTime = (double)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["mostSurvivalTime"],
+                                Revives = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["revives"],
+                                RideDistance = (double)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["rideDistance"],
+                                RoadKills = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["roadKills"],
+                                RoundMostKills = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["roundMostKills"],
+                                RoundsPlayed = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["roundsPlayed"],
+                                Suicides = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["suicides"],
+                                TeamKills = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["teamKills"],
+                                TimeSurvived = (double)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["timeSurvived"],
+                                Top10s = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["top10s"],
+                                VehicleDestroys = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["vehicleDestroys"],
+                                WalkDistance = (double)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["walkDistance"],
+                                WeaponsAcquired = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["weaponsAcquired"],
+                                WeeklyKills = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["weeklyKills"],
+                                WinPoints = (double)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["winPoints"],
+                                Wins = (int)stats["data"]["attributes"]["gameModeStats"]["duo-fpp"]["wins"],
+                            };
+                            PlayerSeason.Solo = new APIPlayerSeasonStats()
+                            {
+                                Assists = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["assists"],
+                                Boosts = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["boosts"],
+                                DBNOs = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["dBNOs"],
+                                DailyKills = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["dailyKills"],
+                                DamageDealt = (double)stats["data"]["attributes"]["gameModeStats"]["solo"]["damageDealt"],
+                                Days = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["days"],
+                                HeadshotKills = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["headshotKills"],
+                                Heals = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["heals"],
+                                KillPoints = (double)stats["data"]["attributes"]["gameModeStats"]["solo"]["killPoints"],
+                                Kills = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["kills"],
+                                LongestKill = (double)stats["data"]["attributes"]["gameModeStats"]["solo"]["longestKill"],
+                                LongestTimeSurvived = (double)stats["data"]["attributes"]["gameModeStats"]["solo"]["longestTimeSurvived"],
+                                Losses = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["losses"],
+                                MaxKillStreaks = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["maxKillStreaks"],
+                                MostSurvivalTime = (double)stats["data"]["attributes"]["gameModeStats"]["solo"]["mostSurvivalTime"],
+                                Revives = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["revives"],
+                                RideDistance = (double)stats["data"]["attributes"]["gameModeStats"]["solo"]["rideDistance"],
+                                RoadKills = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["roadKills"],
+                                RoundMostKills = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["roundMostKills"],
+                                RoundsPlayed = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["roundsPlayed"],
+                                Suicides = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["suicides"],
+                                TeamKills = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["teamKills"],
+                                TimeSurvived = (double)stats["data"]["attributes"]["gameModeStats"]["solo"]["timeSurvived"],
+                                Top10s = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["top10s"],
+                                VehicleDestroys = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["vehicleDestroys"],
+                                WalkDistance = (double)stats["data"]["attributes"]["gameModeStats"]["solo"]["walkDistance"],
+                                WeaponsAcquired = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["weaponsAcquired"],
+                                WeeklyKills = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["weeklyKills"],
+                                WinPoints = (double)stats["data"]["attributes"]["gameModeStats"]["solo"]["winPoints"],
+                                Wins = (int)stats["data"]["attributes"]["gameModeStats"]["solo"]["wins"],
+                            };
+                            PlayerSeason.Solo_FPP = new APIPlayerSeasonStats()
+                            {
+                                Assists = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["assists"],
+                                Boosts = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["boosts"],
+                                DBNOs = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["dBNOs"],
+                                DailyKills = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["dailyKills"],
+                                DamageDealt = (double)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["damageDealt"],
+                                Days = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["days"],
+                                HeadshotKills = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["headshotKills"],
+                                Heals = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["heals"],
+                                KillPoints = (double)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["killPoints"],
+                                Kills = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["kills"],
+                                LongestKill = (double)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["longestKill"],
+                                LongestTimeSurvived = (double)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["longestTimeSurvived"],
+                                Losses = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["losses"],
+                                MaxKillStreaks = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["maxKillStreaks"],
+                                MostSurvivalTime = (double)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["mostSurvivalTime"],
+                                Revives = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["revives"],
+                                RideDistance = (double)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["rideDistance"],
+                                RoadKills = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["roadKills"],
+                                RoundMostKills = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["roundMostKills"],
+                                RoundsPlayed = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["roundsPlayed"],
+                                Suicides = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["suicides"],
+                                TeamKills = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["teamKills"],
+                                TimeSurvived = (double)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["timeSurvived"],
+                                Top10s = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["top10s"],
+                                VehicleDestroys = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["vehicleDestroys"],
+                                WalkDistance = (double)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["walkDistance"],
+                                WeaponsAcquired = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["weaponsAcquired"],
+                                WeeklyKills = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["weeklyKills"],
+                                WinPoints = (double)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["winPoints"],
+                                Wins = (int)stats["data"]["attributes"]["gameModeStats"]["solo-fpp"]["wins"],
+                            };
+                            PlayerSeason.Squad = new APIPlayerSeasonStats()
+                            {
+                                Assists = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["assists"],
+                                Boosts = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["boosts"],
+                                DBNOs = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["dBNOs"],
+                                DailyKills = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["dailyKills"],
+                                DamageDealt = (double)stats["data"]["attributes"]["gameModeStats"]["squad"]["damageDealt"],
+                                Days = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["days"],
+                                HeadshotKills = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["headshotKills"],
+                                Heals = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["heals"],
+                                KillPoints = (double)stats["data"]["attributes"]["gameModeStats"]["squad"]["killPoints"],
+                                Kills = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["kills"],
+                                LongestKill = (double)stats["data"]["attributes"]["gameModeStats"]["squad"]["longestKill"],
+                                LongestTimeSurvived = (double)stats["data"]["attributes"]["gameModeStats"]["squad"]["longestTimeSurvived"],
+                                Losses = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["losses"],
+                                MaxKillStreaks = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["maxKillStreaks"],
+                                MostSurvivalTime = (double)stats["data"]["attributes"]["gameModeStats"]["squad"]["mostSurvivalTime"],
+                                Revives = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["revives"],
+                                RideDistance = (double)stats["data"]["attributes"]["gameModeStats"]["squad"]["rideDistance"],
+                                RoadKills = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["roadKills"],
+                                RoundMostKills = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["roundMostKills"],
+                                RoundsPlayed = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["roundsPlayed"],
+                                Suicides = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["suicides"],
+                                TeamKills = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["teamKills"],
+                                TimeSurvived = (double)stats["data"]["attributes"]["gameModeStats"]["squad"]["timeSurvived"],
+                                Top10s = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["top10s"],
+                                VehicleDestroys = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["vehicleDestroys"],
+                                WalkDistance = (double)stats["data"]["attributes"]["gameModeStats"]["squad"]["walkDistance"],
+                                WeaponsAcquired = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["weaponsAcquired"],
+                                WeeklyKills = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["weeklyKills"],
+                                WinPoints = (double)stats["data"]["attributes"]["gameModeStats"]["squad"]["winPoints"],
+                                Wins = (int)stats["data"]["attributes"]["gameModeStats"]["squad"]["wins"],
+                            };
+                            PlayerSeason.Squad_FPP = new APIPlayerSeasonStats()
+                            {
+                                Assists = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["assists"],
+                                Boosts = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["boosts"],
+                                DBNOs = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["dBNOs"],
+                                DailyKills = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["dailyKills"],
+                                DamageDealt = (double)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["damageDealt"],
+                                Days = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["days"],
+                                HeadshotKills = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["headshotKills"],
+                                Heals = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["heals"],
+                                KillPoints = (double)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["killPoints"],
+                                Kills = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["kills"],
+                                LongestKill = (double)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["longestKill"],
+                                LongestTimeSurvived = (double)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["longestTimeSurvived"],
+                                Losses = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["losses"],
+                                MaxKillStreaks = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["maxKillStreaks"],
+                                MostSurvivalTime = (double)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["mostSurvivalTime"],
+                                Revives = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["revives"],
+                                RideDistance = (double)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["rideDistance"],
+                                RoadKills = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["roadKills"],
+                                RoundMostKills = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["roundMostKills"],
+                                RoundsPlayed = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["roundsPlayed"],
+                                Suicides = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["suicides"],
+                                TeamKills = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["teamKills"],
+                                TimeSurvived = (double)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["timeSurvived"],
+                                Top10s = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["top10s"],
+                                VehicleDestroys = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["vehicleDestroys"],
+                                WalkDistance = (double)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["walkDistance"],
+                                WeaponsAcquired = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["weaponsAcquired"],
+                                WeeklyKills = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["weeklyKills"],
+                                WinPoints = (double)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["winPoints"],
+                                Wins = (int)stats["data"]["attributes"]["gameModeStats"]["squad-fpp"]["wins"],
+                            };
+                            PlayerSeason.Squad_Matches = new List<string>() { };
+                            foreach (JObject matchitem in stats["data"]["relationships"]["matchesSquad"]["data"])
+                            {
+                               PlayerSeason.Squad_Matches.Add((string)matchitem["id"]);
+                            }
+                            PlayerSeason.Squad_FPP_Matches = new List<string>() { };
+                            foreach (JObject matchitem in stats["data"]["relationships"]["matchesSquadFPP"]["data"])
+                            {
+                                PlayerSeason.Squad_FPP_Matches.Add((string)matchitem["id"]);
+                            }
+                            PlayerSeason.Solo_Matches = new List<string>() { };
+                            foreach (JObject matchitem in stats["data"]["relationships"]["matchesSolo"]["data"])
+                            {
+                                PlayerSeason.Solo_Matches.Add((string)matchitem["id"]);
+                            }
+                            PlayerSeason.Solo_FPP_Matches = new List<string>() { };
+                            foreach (JObject matchitem in stats["data"]["relationships"]["matchesSoloFPP"]["data"])
+                            {
+                                PlayerSeason.Solo_FPP_Matches.Add((string)matchitem["id"]);
+                            }
+                            PlayerSeason.Duo_Matches = new List<string>() { };
+                            foreach (JObject matchitem in stats["data"]["relationships"]["matchesDuo"]["data"])
+                            {
+                                PlayerSeason.Duo_Matches.Add((string)matchitem["id"]);
+                            }
+                            PlayerSeason.Duo_FPP_Matches = new List<string>() { };
+                            foreach (JObject matchitem in stats["data"]["relationships"]["matchesDuoFPP"]["data"])
+                            {
+                                PlayerSeason.Duo_FPP_Matches.Add((string)matchitem["id"]);
+                            }
+                            return PlayerSeason;
+                        }
+                    }
+                }
+                catch (WebException e)
+                {
+                    APIUser user = new APIUser
+                    {
+                        WebException = e
+                    };
+                }
+            }
+            return PlayerSeason;
+        }
         /// <summary>
         /// Parses the match JSON string from the API
         /// </summary>

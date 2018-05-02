@@ -28,8 +28,19 @@ namespace Net47_LibraryTest
                 Environment.SetEnvironmentVariable("API_KEY", apikey, EnvironmentVariableTarget.User);
             }
             API pubgapi = new API(apikey);
-            List<string> samples = pubgapi.FetchMatchSamples(PlatformRegionShard.PC_NA);
-            Console.WriteLine(samples.Count);
+            //foreach (APISeason apis in pubgapi.RequestPlatformRegionSeasons(PlatformRegionShard.PC_NA))
+            //{
+            //    Console.WriteLine(apis.SeasonName);
+            //}
+            APIRequest request = new APIRequest();
+            APIPlayerSeason playerSeason = request.RequestPlayerSeason(apikey, "account.6544028c9b6e4fe5b70a05e306015088", "division.bro.official.2018-04", "pc-na");
+            Console.WriteLine("Duo Wins: " + playerSeason.Duo.Wins);
+            foreach (var item in playerSeason.Squad_Matches)
+            {
+                Console.WriteLine(item);
+            }
+            //List<string> samples = pubgapi.FetchMatchSamples(PlatformRegionShard.PC_NA);
+            //Console.WriteLine(samples.Count);
             //APIRequest match = pubgapi.RequestMatch(samples[samples.Count-1], PlatformRegionShard.PC_NA);
             //Console.WriteLine(match.Match.CreatedAt);
             //APIWatchdog watchdog = pubgapi.WatchSingleUser("TImmy_Turner_", PlatformRegionShard.PC_NA);
