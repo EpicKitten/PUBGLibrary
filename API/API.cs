@@ -30,7 +30,7 @@ namespace PUBGLibrary.API
         /// <param name="MatchID">The MatchID to look up</param>
         /// <param name="platformRegionShard">The region the match was played in</param>
         /// <returns></returns>
-        public APIRequest RequestMatch(string MatchID, PlatformRegionShard platformRegionShard, bool DownloadTelemetryAutomatically )
+        public APIRequest RequestMatch(string MatchID, PlatformRegionShard platformRegionShard, bool DownloadTelemetryAutomatically = true )
         {
             APIRequest APIRequest = new APIRequest();
             APIRequest request = APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(platformRegionShard), MatchID, DownloadTelemetryAutomatically );
@@ -41,7 +41,7 @@ namespace PUBGLibrary.API
         /// </summary>
         /// <param name="ReplayDirectoryPath">The replay to look up</param>
         /// <returns></returns>
-        public APIRequest RequestMatch(string ReplayDirectoryPath, bool DownloadTelemetryAutomatically )
+        public APIRequest RequestMatch(string ReplayDirectoryPath, bool DownloadTelemetryAutomatically = true )
         {
             Replay.Replay replay = new Replay.Replay(ReplayDirectoryPath);
             APIRequest APIRequest = new APIRequest();
@@ -52,7 +52,7 @@ namespace PUBGLibrary.API
         /// </summary>
         /// <param name="replay">The replay to read</param>
         /// <returns></returns>
-        public APIRequest RequestMatch(Replay.Replay replay, bool DownloadTelemetryAutomatically)
+        public APIRequest RequestMatch(Replay.Replay replay, bool DownloadTelemetryAutomatically = true )
         {
             APIRequest APIRequest = new APIRequest();
             return APIRequest.RequestSingleMatch(APIKey, GetEnumDescription(replay.Summary.KnownRegion), replay.Info.MatchID, DownloadTelemetryAutomatically );

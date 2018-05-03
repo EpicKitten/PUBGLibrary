@@ -66,9 +66,13 @@ namespace PUBGLibrary.API
                                     APIRequest.Telemetry = TelemetryPhraser( client.DownloadString( APIRequest.Match.TelemetryURL ) );
                                 }
                             }
-                            APIRequest.RateLimit = int.Parse(APIResponse.Headers.GetValues("X-Ratelimit-Limit")[0]);
-                            APIRequest.RateLimitReset = Utils.Utils.UnixTimestampToDateTime(double.Parse(APIResponse.Headers.GetValues("X-Ratelimit-Reset")[0]));
-                            APIRequest.RateLimitRemaining = int.Parse(APIResponse.Headers.GetValues("X-Ratelimit-Remaining")[0]);
+                            else
+                            {
+                                APIRequest.Telemetry = new APITelemetry();
+                            }
+                            APIRequest.RateLimit = int.Parse( APIResponse.Headers.GetValues( "X-Ratelimit-Limit" )[0] );
+                            APIRequest.RateLimitReset = Utils.Utils.UnixTimestampToDateTime( double.Parse( APIResponse.Headers.GetValues( "X-Ratelimit-Reset" )[0] ) );
+                            APIRequest.RateLimitRemaining = int.Parse( APIResponse.Headers.GetValues( "X-Ratelimit-Remaining" )[0] );
                             return APIRequest;
                         }
                     }
@@ -905,6 +909,22 @@ namespace PUBGLibrary.API
                 user.ListOfMatches.Add((string)matchitem["id"]);
             }
             return user;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public APITelemetry PopulateTelemetry()
+        {
+            if( Telemetry.BaseJSON == null || Telemetry.BaseJSON.Trim().Length == 0 )
+            {
+                Telemetry.BaseJSON = "";
+                using ( WebClient client = new WebClient() )
+                {
+                    Telemetry = TelemetryPhraser( client.DownloadString( Match.TelemetryURL ) );
+                }
+            }
+            return Telemetry;
         }
     }
     /// <summary>
