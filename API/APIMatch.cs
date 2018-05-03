@@ -16,7 +16,7 @@ namespace PUBGLibrary.API
         /// <summary>
         /// Time of match completion
         /// </summary>
-        public DateTime CreatedAt;
+        public DateTimeOffset? CreatedAt;
         /// <summary>
         /// List of players with stats included
         /// </summary>
