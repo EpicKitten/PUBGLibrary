@@ -511,7 +511,8 @@ namespace PUBGLibrary.API
                 MatchID = jsonmatch.Data.Id,
                 MapName = jsonmatch.Data.Attributes.MapName,
                 Gamemode = jsonmatch.Data.Attributes.GameMode,
-                Duration = (int)jsonmatch.Data.Attributes.Duration
+                Duration = (int)jsonmatch.Data.Attributes.Duration,
+                CreatedAt = jsonmatch.Data.Attributes.CreatedAt
             };
             foreach (var item in jsonmatch.Included)
             {
