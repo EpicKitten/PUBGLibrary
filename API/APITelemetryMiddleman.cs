@@ -325,6 +325,9 @@ namespace PUBGLibrary.API
         BpPickupTruckB03_C,
         BpPickupTruckB04_C,
         BpPickupTruckB05_C,
+        BP_Mirado_A_02_C,
+        BP_Mirado_Open_03_C,
+        BP_Mirado_Open_04_C,
         BpVanA01_C,
         BpVanA02_C,
         BpVanA03_C,
@@ -664,6 +667,9 @@ namespace PUBGLibrary.API
                 case "BP_PickupTruck_B_03_C": return VehicleId.BpPickupTruckB03_C;
                 case "BP_PickupTruck_B_04_C": return VehicleId.BpPickupTruckB04_C;
                 case "BP_PickupTruck_B_05_C": return VehicleId.BpPickupTruckB05_C;
+                case "BP_Mirado_A_02_C": return VehicleId.BP_Mirado_A_02_C;
+                case "BP_Mirado_Open_03_C": return VehicleId.BP_Mirado_Open_03_C;
+                case "BP_Mirado_Open_04_C": return VehicleId.BP_Mirado_Open_04_C;
                 case "BP_Van_A_01_C": return VehicleId.BpVanA01_C;
                 case "BP_Van_A_02_C": return VehicleId.BpVanA02_C;
                 case "BP_Van_A_03_C": return VehicleId.BpVanA03_C;
@@ -718,6 +724,9 @@ namespace PUBGLibrary.API
                 case VehicleId.BpPickupTruckB03_C: serializer.Serialize(writer, "BP_PickupTruck_B_03_C"); break;
                 case VehicleId.BpPickupTruckB04_C: serializer.Serialize(writer, "BP_PickupTruck_B_04_C"); break;
                 case VehicleId.BpPickupTruckB05_C: serializer.Serialize(writer, "BP_PickupTruck_B_05_C"); break;
+                case VehicleId.BP_Mirado_A_02_C: serializer.Serialize( writer, "BP_Mirado_A_02_C" ); break;
+                case VehicleId.BP_Mirado_Open_03_C: serializer.Serialize( writer, "BP_Mirado_Open_03_C" ); break;
+                case VehicleId.BP_Mirado_Open_04_C: serializer.Serialize( writer, "BP_Mirado_Open_04_C" ); break;
                 case VehicleId.BpVanA01_C: serializer.Serialize(writer, "BP_Van_A_01_C"); break;
                 case VehicleId.BpVanA02_C: serializer.Serialize(writer, "BP_Van_A_02_C"); break;
                 case VehicleId.BpVanA03_C: serializer.Serialize(writer, "BP_Van_A_03_C"); break;
